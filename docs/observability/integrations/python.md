@@ -12,7 +12,7 @@ A comprehensive guide to instrumenting Python applications with OpenTelemetry. P
 ## Prerequisites
 
 - Python 3.8+ (3.11+ recommended)
-- OpenTelemetry Collector running (see [Single-Node Setup](/blog/single-node-observability-setup))
+- OpenTelemetry Collector running (see [Single-Node Setup](https://shivamm.info/blog/blog/single-node-observability-setup))
 - pip or poetry package manager
 
 ## Installation

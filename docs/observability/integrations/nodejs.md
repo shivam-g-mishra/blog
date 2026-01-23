@@ -12,7 +12,7 @@ A comprehensive guide to instrumenting Node.js applications with OpenTelemetry. 
 ## Prerequisites
 
 - Node.js 18+ (LTS recommended)
-- OpenTelemetry Collector running (see [Single-Node Setup](/blog/single-node-observability-setup))
+- OpenTelemetry Collector running (see [Single-Node Setup](https://shivamm.info/blog/blog/single-node-observability-setup))
 - npm or yarn package manager
 
 ## Installation

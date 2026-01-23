@@ -12,7 +12,7 @@ A comprehensive guide to instrumenting Java applications with OpenTelemetry. Jav
 ## Prerequisites
 
 - Java 11+ (17+ recommended)
-- OpenTelemetry Collector running (see [Single-Node Setup](/blog/single-node-observability-setup))
+- OpenTelemetry Collector running (see [Single-Node Setup](https://shivamm.info/blog/blog/single-node-observability-setup))
 - Maven or Gradle
 
 ## Integration Options
