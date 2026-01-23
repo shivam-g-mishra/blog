@@ -128,4 +128,15 @@ flowchart TD
 
 ---
 
+## Setting Up Your Observability Stack
+
+Once you've instrumented your code, you need infrastructure to receive and visualize the telemetry. Check out these guides:
+
+| Guide | What It Covers |
+|-------|---------------|
+| [Single-Node Setup](/blog/single-node-observability-setup) | Jaeger, Prometheus, Loki, and Grafana on one machine |
+| [Scalable Architecture](/blog/scalable-observability-architecture) | Production-grade distributed setup |
+
+---
+
 Choose your language guide to get started with detailed, production-ready instrumentation.

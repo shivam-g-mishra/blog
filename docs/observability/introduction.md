@@ -80,4 +80,53 @@ The real power comes from **correlation**—the ability to jump from a metric al
 
 ---
 
+## Learning Path
+
+New to observability? Here's the recommended reading order:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         RECOMMENDED LEARNING PATH                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  1. START HERE                     2. DEEP DIVES                            │
+│     ↓                                 ↓                                     │
+│  ┌─────────────────┐              ┌─────────────────┐                       │
+│  │ Three Pillars   │ ──────────►  │ Tracing         │ Follow requests       │
+│  │ Overview        │              │ Metrics         │ across services       │
+│  └─────────────────┘              │ Logging         │                       │
+│                                   └─────────────────┘                       │
+│                                          ↓                                  │
+│  3. TAKE ACTION                   4. THE STANDARD                           │
+│     ↓                                 ↓                                     │
+│  ┌─────────────────┐              ┌─────────────────┐                       │
+│  │ Alerting        │ ──────────►  │ OpenTelemetry   │ Vendor-neutral        │
+│  │ Best Practices  │              │                 │ instrumentation       │
+│  └─────────────────┘              └─────────────────┘                       │
+│                                          ↓                                  │
+│                                   5. IMPLEMENT                              │
+│                                      ↓                                      │
+│                                   ┌─────────────────┐                       │
+│                                   │ Integration     │ Go, Python, Java,     │
+│                                   │ Guides          │ .NET, Node.js         │
+│                                   └─────────────────┘                       │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+## Deep Dive Guides
+
+| Topic | Document | What You'll Learn |
+|-------|----------|-------------------|
+| **Overview** | [Three Pillars →](./three-pillars) | How traces, metrics, and logs work together |
+| **Tracing** | [Distributed Tracing →](./tracing) | Trace IDs, spans, context propagation, debugging microservices |
+| **Metrics** | [Metrics That Matter →](./metrics) | Metric types, golden signals, dashboards |
+| **Logging** | [Logging Done Right →](./logging) | Structured logging, log levels, canonical log lines |
+| **Alerting** | [Alerting Best Practices →](./alerting) | Alert design, SLO-based alerting, runbooks, on-call |
+| **Standard** | [OpenTelemetry →](./opentelemetry) | The vendor-neutral instrumentation standard |
+| **Reference** | [Glossary →](./glossary) | Terms and concepts quick reference |
+| **Code** | [Integration Guides →](./integrations/overview) | Language-specific implementation guides |
+
+---
+
 **Next**: [The Three Pillars Deep Dive →](./three-pillars)

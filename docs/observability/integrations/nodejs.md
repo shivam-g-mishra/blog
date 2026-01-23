@@ -12,7 +12,7 @@ A comprehensive guide to instrumenting Node.js applications with OpenTelemetry. 
 ## Prerequisites
 
 - Node.js 18+ (LTS recommended)
-- OpenTelemetry Collector running (see [Single-Node Setup](https://shivamm.info/blog/blog/single-node-observability-setup))
+- OpenTelemetry Collector running (see [Single-Node Setup](/blog/single-node-observability-setup))
 - npm or yarn package manager
 
 ## Installation
@@ -102,25 +102,30 @@ const sdk = new NodeSDK({
   traceExporter,
   metricReader: new PeriodicExportingMetricReader({
     exporter: metricExporter,
-    exportIntervalMillis: 15000, // Export metrics every 15 seconds
+    exportIntervalMillis: 15000, // Export metrics every 15 seconds (balance between freshness and overhead)
   }),
-  logRecordProcessor: new BatchLogRecordProcessor(logExporter),
+  logRecordProcessor: new BatchLogRecordProcessor(logExporter), // Batch logs for efficiency
   instrumentations: [
     getNodeAutoInstrumentations({
-      // Disable noisy instrumentations
+      // Disable noisy instrumentations that create too many spans
+      // fs instrumentation creates spans for every file read/write - too verbose for most apps
       '@opentelemetry/instrumentation-fs': {
         enabled: false,
       },
+      // DNS creates spans for every hostname resolution - usually not useful
       '@opentelemetry/instrumentation-dns': {
         enabled: false,
       },
-      // Configure HTTP instrumentation
+      // Configure HTTP instrumentation - filter out noise
       '@opentelemetry/instrumentation-http': {
+        // Don't trace health checks or metrics endpoints (high volume, low value)
         ignoreIncomingPaths: ['/health', '/ready', '/metrics'],
-        ignoreOutgoingUrls: [/localhost:4317/], // Don't trace OTel calls
+        // Don't trace calls to the OTel collector itself (would create infinite loops)
+        ignoreOutgoingUrls: [/localhost:4317/],
       },
       // Configure Express instrumentation
       '@opentelemetry/instrumentation-express': {
+        // Skip middleware spans - they add noise; keep route handler spans
         ignoreLayersType: ['middleware'],
       },
     }),

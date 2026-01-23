@@ -12,7 +12,7 @@ A comprehensive guide to instrumenting .NET applications with OpenTelemetry. .NE
 ## Prerequisites
 
 - .NET 6.0 or later (examples use .NET 8)
-- OpenTelemetry Collector running (see [Single-Node Setup](https://shivamm.info/blog/blog/single-node-observability-setup))
+- OpenTelemetry Collector running (see [Single-Node Setup](/blog/single-node-observability-setup))
 - Visual Studio, VS Code, or Rider
 
 ## Installation
@@ -66,25 +66,31 @@ builder.Services.AddOpenTelemetry()
                 builder.Environment.EnvironmentName),
         }))
     .WithTracing(tracing => tracing
+        // Automatically trace incoming HTTP requests to your API
         .AddAspNetCoreInstrumentation(opts =>
         {
-            opts.RecordException = true;
+            opts.RecordException = true;  // Capture exception details in spans for debugging
+            // Filter out health checks - they're high volume, low value for tracing
             opts.Filter = ctx => !ctx.Request.Path.StartsWithSegments("/health");
         })
+        // Automatically trace outgoing HTTP calls to other services
         .AddHttpClientInstrumentation(opts =>
         {
             opts.RecordException = true;
         })
+        // Trace database queries - essential for finding slow queries
         .AddSqlClientInstrumentation(opts =>
         {
-            opts.SetDbStatementForText = true;
+            opts.SetDbStatementForText = true;  // Include SQL text (careful with PII!)
             opts.RecordException = true;
         })
+        // Same for Entity Framework - traces all DB operations
         .AddEntityFrameworkCoreInstrumentation(opts =>
         {
             opts.SetDbStatementForText = true;
         })
-        .AddSource(serviceName) // For custom ActivitySource
+        // Register your custom ActivitySource for manual instrumentation
+        .AddSource(serviceName)
         .AddOtlpExporter(opts =>
         {
             opts.Endpoint = new Uri(

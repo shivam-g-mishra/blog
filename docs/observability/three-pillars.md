@@ -53,6 +53,8 @@ With this trace, you can immediately see that the 850ms response time is primari
 - "What's the actual call path between my services?"
 - "Which downstream service is causing my latency?"
 
+**📖 Deep Dive:** [Distributed Tracing Explained →](./tracing)
+
 ### Trace Instrumentation Example
 
 ```go
@@ -122,6 +124,8 @@ Google's Site Reliability Engineering book defines four golden signals that capt
 - "Are we approaching capacity limits?"
 - "How does today's latency compare to yesterday?"
 - "Should I wake someone up?" (alerting)
+
+**📖 Deep Dive:** [Metrics That Matter →](./metrics)
 
 ### Metric Types
 
@@ -195,6 +199,8 @@ Now you can:
 - "Are there audit requirements I need to satisfy?"
 - "What was the full error message and stack trace?"
 
+**📖 Deep Dive:** [Logging Done Right →](./logging)
+
 ---
 
 ## The Real Power: Correlation
@@ -243,4 +249,17 @@ This investigation took 10 minutes with proper observability. Without it? Could 
 
 ---
 
-**Next**: [Understanding OpenTelemetry →](./opentelemetry)
+## Go Deeper
+
+Now that you understand the three pillars, dive into each one:
+
+| Pillar | Deep Dive | What You'll Learn |
+|--------|-----------|-------------------|
+| **Traces** | [Distributed Tracing Explained →](./tracing) | Trace IDs, spans, context propagation, debugging microservices |
+| **Metrics** | [Metrics That Matter →](./metrics) | Metric types, golden signals, dashboards |
+| **Logs** | [Logging Done Right →](./logging) | Structured logging, log levels, canonical log lines |
+| **Alerting** | [Alerting Best Practices →](./alerting) | Alert design, SLO-based alerting, runbooks, on-call |
+
+After exploring the pillars and alerting, learn about the standard that unifies them all:
+
+**Next**: [Distributed Tracing Explained →](./tracing)

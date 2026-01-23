@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 8
 title: Observability Glossary
 description: Common terms and concepts in observability, distributed tracing, and the OpenTelemetry ecosystem.
 keywords: [observability glossary, MTTD, MTTR, SLO, SLI, cardinality, span, trace]
@@ -56,6 +56,9 @@ The practice of keeping only a subset of traces to reduce storage and processing
 ### Baggage
 Key-value pairs that propagate across service boundaries along with trace context. Useful for passing request-scoped data.
 
+### Waterfall View
+A visualization of a distributed trace showing spans as horizontal bars on a timeline. The hierarchical layout reveals parent-child relationships, parallel vs. sequential execution, and where time is spent. Also called a Gantt chart view or trace timeline.
+
 ---
 
 ## Metrics
@@ -71,6 +74,9 @@ A metric that can increase or decrease. Examples: current queue depth, temperatu
 
 ### Histogram
 A metric that captures the distribution of values. Enables calculating percentiles (p50, p95, p99).
+
+### Exemplar
+A sample trace ID attached to a metric observation, enabling direct navigation from a metric data point to an example trace. When you see high p99 latency, exemplars let you jump directly to a specific slow request trace.
 
 ### Cardinality
 The number of unique combinations of label values for a metric. High cardinality (e.g., user_id as a label) can overwhelm metrics systems.
@@ -104,8 +110,45 @@ Severity classification for log entries:
 ### Log Aggregation
 Collecting logs from multiple sources into a centralized system for searching and analysis.
 
+### Canonical Log Line
+A logging pattern where one comprehensive log entry is emitted per request containing all relevant information (timing, user context, business data, outcome). Reduces log volume while improving queryability compared to scattered partial log entries.
+
 ### Log Correlation
 Linking logs to related traces using trace_id, enabling navigation from log entries to distributed traces.
+
+---
+
+## Alerting
+
+### Alert
+A notification triggered when a defined condition is met, intended to prompt human action. Good alerts are actionable, significant, and require immediate attention.
+
+### Alert Fatigue
+The phenomenon where responders become desensitized to alerts due to high volume or low signal-to-noise ratio. Leads to slow response times and missed incidents.
+
+### Burn Rate
+The rate at which error budget is being consumed relative to the sustainable rate. A burn rate of 2x means budget will be exhausted in half the expected time.
+
+### Runbook
+A documented procedure for responding to a specific alert or incident type. Contains diagnosis steps, common causes, and remediation actions.
+
+### On-Call
+The practice of having engineers available to respond to production incidents outside normal working hours. Typically involves rotating schedules and escalation paths.
+
+### Escalation
+The process of involving additional or more senior responders when an incident isn't resolved within expected timeframes or requires additional expertise.
+
+### Paging
+The act of sending an urgent notification (typically via phone/SMS/app) to an on-call responder requiring immediate attention.
+
+### Severity
+Classification of alert importance. Common levels: Critical (page immediately), Warning (address soon), Info (no action needed).
+
+### Inhibition
+Suppressing alerts when a related, more significant alert is already firing. Prevents alert storms during cascading failures.
+
+### Deduplication
+Grouping multiple instances of the same alert into a single notification. Reduces noise during widespread issues.
 
 ---
 
@@ -230,7 +273,7 @@ Tempo Query Language for querying traces. Example:
 | RPS | Requests Per Second |
 | SDK | Software Development Kit |
 | SRE | Site Reliability Engineering |
-| TSB | Time Series Database |
+| TSDB | Time Series Database |
 | USE | Utilization, Saturation, Errors |
 
 ---

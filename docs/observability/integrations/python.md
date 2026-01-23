@@ -12,7 +12,7 @@ A comprehensive guide to instrumenting Python applications with OpenTelemetry. P
 ## Prerequisites
 
 - Python 3.8+ (3.11+ recommended)
-- OpenTelemetry Collector running (see [Single-Node Setup](https://shivamm.info/blog/blog/single-node-observability-setup))
+- OpenTelemetry Collector running (see [Single-Node Setup](/blog/single-node-observability-setup))
 - pip or poetry package manager
 
 ## Installation
@@ -106,12 +106,14 @@ def setup_telemetry() -> trace.Tracer:
     )
     
     trace_provider = TracerProvider(resource=resource)
+    # BatchSpanProcessor groups spans before export to reduce network overhead
+    # This is more efficient than exporting each span immediately
     trace_provider.add_span_processor(
         BatchSpanProcessor(
             trace_exporter,
-            max_queue_size=2048,
-            max_export_batch_size=512,
-            schedule_delay_millis=5000,
+            max_queue_size=2048,           # Buffer size - prevents memory issues under high load
+            max_export_batch_size=512,     # Spans per batch - balance between latency and efficiency
+            schedule_delay_millis=5000,    # Max wait before sending a batch (5 seconds)
         )
     )
     trace.set_tracer_provider(trace_provider)

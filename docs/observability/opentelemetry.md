@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 7
 title: Understanding OpenTelemetry
 description: A comprehensive guide to OpenTelemetry - the vendor-neutral standard for instrumenting applications and collecting telemetry data.
 keywords: [opentelemetry, otel, instrumentation, OTLP, collector, distributed tracing]
@@ -387,6 +387,16 @@ Best of both worlds:
 3. **The Collector is your Swiss Army knife** — use it for receiving, processing, and routing
 4. **Auto-instrumentation gets you 80% there** — add custom spans for business logic
 5. **Start simple** — sidecar pattern first, evolve to gateway as you scale
+
+---
+
+## Ready to Implement?
+
+| Next Step | Link |
+|-----------|------|
+| **Set up infrastructure** | [Single-Node Setup](/blog/single-node-observability-setup) — Get Jaeger, Prometheus, Loki running |
+| **Instrument your code** | [Integration Guides →](./integrations/overview) — Language-specific implementation |
+| **Scale for production** | [Scalable Architecture](/blog/scalable-observability-architecture) — Distributed, HA setup |
 
 ---
 

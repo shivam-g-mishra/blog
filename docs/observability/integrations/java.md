@@ -12,7 +12,7 @@ A comprehensive guide to instrumenting Java applications with OpenTelemetry. Jav
 ## Prerequisites
 
 - Java 11+ (17+ recommended)
-- OpenTelemetry Collector running (see [Single-Node Setup](https://shivamm.info/blog/blog/single-node-observability-setup))
+- OpenTelemetry Collector running (see [Single-Node Setup](/blog/single-node-observability-setup))
 - Maven or Gradle
 
 ## Integration Options
@@ -249,13 +249,14 @@ public class TelemetryConfig {
             .setTimeout(Duration.ofSeconds(10))
             .build();
 
-        // Create tracer provider
+        // Create tracer provider with batch processing
+        // BatchSpanProcessor groups spans before export to reduce network overhead
         SdkTracerProvider tracerProvider = SdkTracerProvider.builder()
             .setResource(resource)
             .addSpanProcessor(BatchSpanProcessor.builder(spanExporter)
-                .setScheduleDelay(Duration.ofSeconds(5))
-                .setMaxExportBatchSize(512)
-                .setMaxQueueSize(2048)
+                .setScheduleDelay(Duration.ofSeconds(5))  // Max wait before sending a batch
+                .setMaxExportBatchSize(512)               // Spans per batch (tune for your payload size)
+                .setMaxQueueSize(2048)                    // Buffer size - prevents OOM under high load
                 .build())
             .build();
 

@@ -12,7 +12,7 @@ A comprehensive guide to instrumenting Go applications with OpenTelemetry. Go's 
 ## Prerequisites
 
 - Go 1.21+ (for structured logging with `slog`)
-- OpenTelemetry Collector running (see [Single-Node Setup](https://shivamm.info/blog/blog/single-node-observability-setup))
+- OpenTelemetry Collector running (see [Single-Node Setup](/blog/single-node-observability-setup))
 - Basic familiarity with Go modules
 
 ## Installation
@@ -127,14 +127,18 @@ func Initialize(ctx context.Context, cfg Config) (*Telemetry, func(context.Conte
     }
 
     // Initialize tracer provider with batching
+    // Batching reduces network overhead by sending spans in groups rather than individually
     tracerProvider := trace.NewTracerProvider(
         trace.WithResource(res),
         trace.WithBatcher(traceExporter,
-            trace.WithBatchTimeout(5*time.Second),
-            trace.WithMaxExportBatchSize(512),
-            trace.WithMaxQueueSize(2048),
+            trace.WithBatchTimeout(5*time.Second),    // Max time to wait before sending a batch
+            trace.WithMaxExportBatchSize(512),        // Max spans per batch (tune based on payload size)
+            trace.WithMaxQueueSize(2048),             // Buffer size - prevents memory issues under load
         ),
-        // Use AlwaysSample for dev, ParentBased for production
+        // Sampling strategy:
+        // - ParentBased: If parent span was sampled, sample this one too (maintains trace continuity)
+        // - TraceIDRatioBased(1.0): Sample 100% of root spans (change to 0.1 for 10% in high-traffic prod)
+        // For production with high traffic, use 0.1 or lower to reduce costs while keeping errors
         trace.WithSampler(trace.ParentBased(trace.TraceIDRatioBased(1.0))),
     )
 
