@@ -5,35 +5,45 @@ slug: /intro
 
 # Welcome to My Docs
 
-This documentation section contains in-depth guides, tutorials, and reference materials on topics I work with daily.
+This documentation section contains in-depth guides, tutorials, and reference materials on topics I work with daily. The content is organized into focused areas, each with comprehensive guides you can follow step-by-step.
 
 ## What You'll Find Here
 
-### 🏗️ Infrastructure
-- Kubernetes deployment patterns
-- CI/CD pipeline architectures
-- Infrastructure as Code with Terraform
-- Container orchestration best practices
+### Observability
 
-### 💻 Development
-- React patterns and performance optimization
-- TypeScript tips and advanced types
-- API design principles (REST & GraphQL)
-- Node.js scalability patterns
+Complete guides to building production-grade observability systems. Start with the fundamentals, then dive into language-specific instrumentation guides for **Go**, **Python**, **Java**, **C#/.NET**, and **Node.js**.
 
-### 📊 Observability
-- Prometheus and Grafana setup guides
-- ELK stack configuration
-- Distributed tracing implementation
-- SLO/SLI/SLA definitions
+- [Introduction to Observability](/docs/observability/introduction) — Why observability matters
+- [The Three Pillars](/docs/observability/three-pillars) — Logs, metrics, and traces explained
+- [Understanding OpenTelemetry](/docs/observability/opentelemetry) — The vendor-neutral standard
+- [Language Integrations](/docs/observability/integrations/overview) — Step-by-step instrumentation guides
 
-### ✅ Best Practices
-- Code review guidelines
-- Testing strategies
-- Documentation standards
-- Security checklists
+### Infrastructure & CI/CD
+
+Kubernetes deployment patterns and CI/CD pipeline architectures.
+
+- [Kubernetes Basics](/docs/infrastructure/kubernetes-basics) — Core concepts and patterns
+- [CI/CD Patterns](/docs/infrastructure/ci-cd-patterns) — Pipeline design and best practices
+
+### Development
+
+Modern development practices and language-specific patterns.
+
+- [API Design](/docs/development/api-design) — RESTful API principles
+- [React Patterns](/docs/development/react-patterns) — Component patterns and optimization
+- [TypeScript Tips](/docs/development/typescript-tips) — Advanced types and patterns
+
+### Best Practices
+
+Guidelines for code quality, testing, and documentation.
+
+- [Code Review](/docs/best-practices/code-review) — Review guidelines and checklists
+- [Testing Strategies](/docs/best-practices/testing-strategies) — Unit, integration, and E2E testing
+- [Documentation](/docs/best-practices/documentation) — Writing effective technical docs
 
 ## Getting Started
+
+If you're new here, I'd recommend starting with **Observability** — it's the most comprehensive section and provides practical, hands-on guidance you can apply immediately. The [instrumentation blog post](/blog/instrumenting-code-for-observability) gives a high-level overview before diving into the detailed guides.
 
 Browse the sidebar to explore topics, or check out the [blog](/blog) for shorter-form content and insights.
 

@@ -169,9 +169,12 @@ const config: Config = {
         'go',
         'python',
         'java',
+        'csharp',
+        'typescript',
         'sql',
         'nginx',
         'toml',
+        'properties',
       ],
     },
 
