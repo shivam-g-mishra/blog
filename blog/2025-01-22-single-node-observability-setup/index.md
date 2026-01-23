@@ -12,9 +12,9 @@ A practical guide to deploying a complete observability stack with OpenTelemetry
 <!-- truncate -->
 
 This is **Part 2** of our observability series:
-1. [Fundamentals](/blog/observability-fundamentals-architects-guide) — Core concepts and architecture
+1. [Fundamentals](../observability-fundamentals-architects-guide) — Core concepts and architecture
 2. **Single-Node Setup** (this article) — Practical deployment guide
-3. [Scalable Architecture](/blog/scalable-observability-architecture) — Enterprise patterns
+3. [Scalable Architecture](../scalable-observability-architecture) — Enterprise patterns
 
 ## Why Start with Single-Node?
 
@@ -482,7 +482,7 @@ This setup handles most workloads, but consider scaling when:
 - Query latency increasing
 - "Dropped spans/metrics" alerts firing
 
-The [next article in this series](/blog/scalable-observability-architecture) covers the scalable multi-node architecture for these scenarios.
+The [next article in this series](../scalable-observability-architecture) covers the scalable multi-node architecture for these scenarios.
 
 ## Production Checklist
 
@@ -513,7 +513,7 @@ Start here. Scale when you hit real limitations, not imagined ones.
 
 - **GitHub Repository**: [opensource-otel-setup](https://github.com/shivam-g-mishra/opensource-otel-setup)
 - **Full Integration Guides**: [Go](/docs/observability/integrations/go) | [.NET](/docs/observability/integrations/dotnet) | [Java](/docs/observability/integrations/java) | [Node.js](/docs/observability/integrations/nodejs) | [Python](/docs/observability/integrations/python)
-- **Next**: [Scalable Architecture →](/blog/scalable-observability-architecture)
+- **Next**: [Scalable Architecture →](../scalable-observability-architecture)
 
 ---
 

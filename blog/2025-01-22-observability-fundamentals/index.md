@@ -22,8 +22,8 @@ The on-call engineer sees elevated error rates but can't pinpoint the cause. Is 
 This article is the first in a three-part series on building production-grade observability infrastructure:
 
 1. **Fundamentals** (this article) — Core concepts, the three pillars, and OpenTelemetry
-2. **[Single-Node Setup](/blog/single-node-observability-setup)** — A practical implementation guide
-3. **[Scalable Architecture](/blog/scalable-observability-architecture)** — Enterprise-grade design patterns
+2. **[Single-Node Setup](../single-node-observability-setup)** — A practical implementation guide
+3. **[Scalable Architecture](../scalable-observability-architecture)** — Enterprise-grade design patterns
 
 ## Observability vs. Monitoring: A Critical Distinction
 
@@ -296,13 +296,13 @@ The right choice depends on your team's infrastructure expertise and whether obs
 
 This article covered the conceptual foundation of observability. In the next two parts of this series, we'll get practical:
 
-**[Part 2: Single-Node Setup](/blog/single-node-observability-setup)**
+**[Part 2: Single-Node Setup](../single-node-observability-setup)**
 - Docker Compose deployment
 - OpenTelemetry Collector configuration
 - Connecting applications
 - Operational best practices
 
-**[Part 3: Scalable Architecture](/blog/scalable-observability-architecture)**
+**[Part 3: Scalable Architecture](../scalable-observability-architecture)**
 - Five-layer architecture design
 - Kafka buffering for reliability
 - Kubernetes deployment
