@@ -11,27 +11,16 @@ This documentation section contains in-depth guides, tutorials, and reference ma
 
 ### Observability
 
-Complete guides to building production-grade observability systems. Start with the fundamentals, then dive into language-specific instrumentation guides for **Go**, **Python**, **Java**, **C#/.NET**, and **Node.js**.
+Complete guides to building production-grade observability systems. Start with the fundamentals, then dive into each pillar in detail, followed by language-specific instrumentation guides for **Go**, **Python**, **Java**, **C#/.NET**, and **Node.js**.
 
 - [Introduction to Observability](/docs/observability/introduction) — Why observability matters
 - [The Three Pillars](/docs/observability/three-pillars) — Logs, metrics, and traces explained
+- [Logging](/docs/observability/logging) — Structured logging best practices
+- [Metrics](/docs/observability/metrics) — Collection, aggregation, and visualization
+- [Tracing](/docs/observability/tracing) — Distributed tracing implementation
+- [Alerting](/docs/observability/alerting) — Effective alerting strategies
 - [Understanding OpenTelemetry](/docs/observability/opentelemetry) — The vendor-neutral standard
 - [Language Integrations](/docs/observability/integrations/overview) — Step-by-step instrumentation guides
-
-### Infrastructure & CI/CD
-
-Kubernetes deployment patterns and CI/CD pipeline architectures.
-
-- [Kubernetes Basics](/docs/infrastructure/kubernetes-basics) — Core concepts and patterns
-- [CI/CD Patterns](/docs/infrastructure/ci-cd-patterns) — Pipeline design and best practices
-
-### Development
-
-Modern development practices and language-specific patterns.
-
-- [API Design](/docs/development/api-design) — RESTful API principles
-- [React Patterns](/docs/development/react-patterns) — Component patterns and optimization
-- [TypeScript Tips](/docs/development/typescript-tips) — Advanced types and patterns
 
 ### Best Practices
 
