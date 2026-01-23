@@ -375,7 +375,7 @@ Self-hosting isn't free. Budget for:
 | Upgrades/patches | Monthly |
 
 **When to stay commercial:**
-- Team < 10 engineers
+- Team fewer than 10 engineers
 - No Kubernetes/infrastructure expertise
 - Observability isn't core competency
 - Budget isn't a constraint

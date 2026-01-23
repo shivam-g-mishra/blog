@@ -339,9 +339,9 @@ make metrics         # Show collector throughput
 
 | Metric | Light Load | Moderate | Heavy |
 |--------|------------|----------|-------|
-| Spans/second | <1,000 | 1K-10K | 10K-50K |
-| Metric series | <100K | 100K-500K | 500K-1M |
-| Log lines/second | <1,000 | 1K-10K | 10K-50K |
+| Spans/second | &lt;1,000 | 1K-10K | 10K-50K |
+| Metric series | &lt;100K | 100K-500K | 500K-1M |
+| Log lines/second | &lt;1,000 | 1K-10K | 10K-50K |
 | Connected apps | 1-5 | 5-20 | 20-50 |
 
 ---
