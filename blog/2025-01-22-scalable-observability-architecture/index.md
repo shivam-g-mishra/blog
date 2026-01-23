@@ -12,8 +12,8 @@ A deep dive into scalable observability architecture—the five-layer design pat
 <!-- truncate -->
 
 This is **Part 3** of our observability series:
-1. [Fundamentals](../observability-fundamentals-architects-guide) — Core concepts and architecture
-2. [Single-Node Setup](../single-node-observability-setup) — Practical deployment guide
+1. [Fundamentals](./observability-fundamentals-architects-guide) — Core concepts and architecture
+2. [Single-Node Setup](./single-node-observability-setup) — Practical deployment guide
 3. **Scalable Architecture** (this article) — Enterprise patterns
 
 ## The Cost That Started It All
@@ -28,7 +28,7 @@ That's when we decided to build something different.
 
 ## When You Need to Scale
 
-The [single-node setup](../single-node-observability-setup) handles most workloads, but you need more when:
+The [single-node setup](./single-node-observability-setup) handles most workloads, but you need more when:
 
 | Trigger | Why It Matters |
 |---------|----------------|

@@ -3,7 +3,7 @@
   text-align: center;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #0f0f23 100%);
+  background: linear-gradient(135deg, #0d0d0d 0%, #141414 50%, #0d0d0d 100%);
 }
 
 .heroDescription {
@@ -23,33 +23,33 @@
 }
 
 .buttons .button {
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   padding: 0.75rem 2rem;
   font-weight: 600;
   transition: all 0.3s ease;
 }
 
 .buttons .button--secondary {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  background: linear-gradient(135deg, #84cc16, #00e5e5);
   border: none;
-  color: white;
+  color: #0d0d0d;
 }
 
 .buttons .button--secondary:hover {
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  background: linear-gradient(135deg, #65a30d, #00cccc);
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 10px 30px rgba(132, 204, 22, 0.3);
 }
 
 .buttons .button--outline {
-  border: 2px solid rgba(99, 102, 241, 0.5);
+  border: 2px solid rgba(132, 204, 22, 0.5);
   background: transparent;
-  color: #a5b4fc;
+  color: #a3e635;
 }
 
 .buttons .button--outline:hover {
-  border-color: #6366f1;
-  background: rgba(99, 102, 241, 0.1);
+  border-color: #84cc16;
+  background: rgba(132, 204, 22, 0.1);
 }
 
 .features {
@@ -57,7 +57,7 @@
   align-items: center;
   padding: 4rem 0;
   width: 100%;
-  background: #0a0a1a;
+  background: #0a0a0a;
 }
 
 .featureEmoji {

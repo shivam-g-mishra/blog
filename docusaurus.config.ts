@@ -74,8 +74,8 @@ const config: Config = {
     announcementBar: {
       id: 'welcome',
       content: 'Welcome to my blog! Sharing insights from building scalable systems at NVIDIA.',
-      backgroundColor: '#6366f1',
-      textColor: '#ffffff',
+      backgroundColor: '#84cc16',
+      textColor: '#0d0d0d',
       isCloseable: true,
     },
 
@@ -94,8 +94,8 @@ const config: Config = {
           label: 'Docs',
         },
         {
-          href: 'https://shivam.dev',
-          label: 'Portfolio',
+          href: 'https://shivamm.info',
+          label: 'Home',
           position: 'right',
         },
         {
@@ -148,7 +148,7 @@ const config: Config = {
           title: 'More',
           items: [
             {
-              label: 'Portfolio',
+              label: 'Landing Site',
               href: 'https://shivamm.info',
             },
           ],

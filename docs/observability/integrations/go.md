@@ -12,7 +12,7 @@ A comprehensive guide to instrumenting Go applications with OpenTelemetry. Go's 
 ## Prerequisites
 
 - Go 1.21+ (for structured logging with `slog`)
-- OpenTelemetry Collector running (see [Single-Node Setup](/single-node-observability-setup))
+- OpenTelemetry Collector running (see [Single-Node Setup](/blog/single-node-observability-setup))
 - Basic familiarity with Go modules
 
 ## Installation

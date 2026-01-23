@@ -12,7 +12,7 @@ A comprehensive guide to instrumenting .NET applications with OpenTelemetry. .NE
 ## Prerequisites
 
 - .NET 6.0 or later (examples use .NET 8)
-- OpenTelemetry Collector running (see [Single-Node Setup](/single-node-observability-setup))
+- OpenTelemetry Collector running (see [Single-Node Setup](/blog/single-node-observability-setup))
 - Visual Studio, VS Code, or Rider
 
 ## Installation
