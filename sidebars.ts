@@ -27,6 +27,10 @@ const sidebars: SidebarsConfig = {
       items: [
         'observability/introduction',
         'observability/three-pillars',
+        'observability/logging',
+        'observability/metrics',
+        'observability/tracing',
+        'observability/alerting',
         'observability/opentelemetry',
         {
           type: 'category',
@@ -44,35 +48,6 @@ const sidebars: SidebarsConfig = {
           ],
         },
         'observability/glossary',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Infrastructure & CI/CD',
-      link: {
-        type: 'generated-index',
-        title: 'Infrastructure & CI/CD',
-        description: 'Kubernetes deployment patterns, CI/CD pipeline architectures, and infrastructure best practices.',
-        slug: '/infrastructure',
-      },
-      items: [
-        'infrastructure/kubernetes-basics',
-        'infrastructure/ci-cd-patterns',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Development',
-      link: {
-        type: 'generated-index',
-        title: 'Development',
-        description: 'Modern development practices, API design principles, and language-specific patterns.',
-        slug: '/development',
-      },
-      items: [
-        'development/api-design',
-        'development/react-patterns',
-        'development/typescript-tips',
       ],
     },
     {
