@@ -17,11 +17,20 @@ const sidebars: SidebarsConfig = {
     'intro',
     {
       type: 'category',
+      label: 'Observability',
+      items: [
+        'observability/introduction',
+        'observability/three-pillars',
+        'observability/opentelemetry',
+        'observability/glossary',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Infrastructure',
       items: [
         'infrastructure/kubernetes-basics',
         'infrastructure/ci-cd-patterns',
-        'infrastructure/observability',
       ],
     },
     {

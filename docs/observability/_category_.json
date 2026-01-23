@@ -1,0 +1,8 @@
+{
+  "label": "Observability",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Enterprise-grade observability practices: distributed tracing, metrics collection, log aggregation, and the OpenTelemetry ecosystem."
+  }
+}

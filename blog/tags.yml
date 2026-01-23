@@ -35,6 +35,21 @@ jenkins:
   permalink: /jenkins
 
 # Observability
+observability:
+  label: Observability
+  description: Distributed tracing, metrics, and log aggregation
+  permalink: /observability
+
+opentelemetry:
+  label: OpenTelemetry
+  description: Vendor-neutral observability framework
+  permalink: /opentelemetry
+
+distributed-systems:
+  label: Distributed Systems
+  description: Distributed systems architecture and patterns
+  permalink: /distributed-systems
+
 monitoring:
   label: Monitoring
   description: System and application monitoring
@@ -50,6 +65,31 @@ grafana:
   description: Metrics visualization and dashboards
   permalink: /grafana
 
+jaeger:
+  label: Jaeger
+  description: Distributed tracing platform
+  permalink: /jaeger
+
+loki:
+  label: Loki
+  description: Log aggregation system by Grafana
+  permalink: /loki
+
+tempo:
+  label: Tempo
+  description: Distributed tracing backend by Grafana
+  permalink: /tempo
+
+mimir:
+  label: Mimir
+  description: Scalable metrics backend by Grafana
+  permalink: /mimir
+
+kafka:
+  label: Kafka
+  description: Apache Kafka event streaming
+  permalink: /kafka
+
 elasticsearch:
   label: Elasticsearch
   description: Search and log analytics
@@ -64,6 +104,11 @@ elk-stack:
   label: ELK Stack
   description: Elasticsearch, Logstash, Kibana stack
   permalink: /elk-stack
+
+enterprise:
+  label: Enterprise
+  description: Enterprise-scale solutions and patterns
+  permalink: /enterprise
 
 # Development
 react:
