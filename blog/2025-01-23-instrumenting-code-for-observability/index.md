@@ -4,7 +4,6 @@ title: "Instrumenting Your Code for Observability: A Practical Guide for Senior 
 authors: [shivam]
 tags: [observability, opentelemetry, distributed-systems, architecture, best-practices]
 description: A hands-on guide to adding metrics, traces, and structured logging to your applications using OpenTelemetry. Written for senior engineers who want to understand the why and how of instrumentation.
-image: ./social-card.png
 ---
 
 When your service starts throwing errors at 2 AM, the difference between a 15-minute fix and a 3-hour investigation often comes down to one thing: how well you instrumented your code. I've been on both sides of this—debugging blind through log files hoping for a clue, and watching a distributed trace light up the exact line of code causing the problem. The latter is significantly more pleasant.
@@ -40,15 +39,17 @@ Regardless of which language you're using, the setup follows the same pattern:
 3. **Enable auto-instrumentation** for common frameworks
 4. **Add custom spans and metrics** for business logic
 
+These steps look different in each language—Go is explicit about everything, Python can be zero-code, Java has an agent—but the concepts are identical. Once you understand the pattern in one language, the others are just syntax.
+
 The OpenTelemetry Collector should already be running in your environment. If it isn't, you'll want to set that up first—check out the [single-node observability setup](/blog/single-node-observability-setup) guide for a complete walkthrough. For now, assume you have a collector accepting OTLP on port 4317 (gRPC) or 4318 (HTTP).
 
-Let's look at how this works in practice. Choose your language below and follow along.
+Choose your language below and follow along. Each section is self-contained—feel free to skip to the one you need.
 
 ---
 
 ## Go
 
-Go's explicit nature means you have full control over instrumentation. There's no magic—you'll see exactly what's happening. Some developers find this verbose; I find it clarifying.
+Go doesn't hide complexity. You'll see exactly what's happening—every provider, every exporter, every configuration option. Some developers find this verbose, but when something goes wrong with your telemetry pipeline, you'll appreciate knowing exactly what you configured.
 
 ### Setting Up the SDK
 
@@ -195,6 +196,14 @@ func main() {
 For business logic that doesn't get auto-instrumented, create spans manually:
 
 ```go
+import (
+    "net/http"
+    
+    "go.opentelemetry.io/otel"
+    "go.opentelemetry.io/otel/attribute"
+    "go.opentelemetry.io/otel/trace"
+)
+
 func handleOrders(w http.ResponseWriter, r *http.Request) {
     ctx := r.Context()
     tracer := otel.Tracer("my-go-service")
@@ -209,7 +218,7 @@ func handleOrders(w http.ResponseWriter, r *http.Request) {
     )
     
     // Child span for database operation
-    ctx, dbSpan := tracer.Start(ctx, "db.insertOrder",
+    _, dbSpan := tracer.Start(ctx, "db.insertOrder",
         trace.WithSpanKind(trace.SpanKindClient),
     )
     dbSpan.SetAttributes(
@@ -217,7 +226,7 @@ func handleOrders(w http.ResponseWriter, r *http.Request) {
         attribute.String("db.operation", "INSERT"),
     )
     
-    // Your database logic here
+    // Your database logic would go here
     
     dbSpan.End()
     
@@ -325,7 +334,7 @@ def create_order():
             kind=SpanKind.CLIENT
         ) as db_span:
             db_span.set_attribute("db.system", "postgresql")
-            # Your database logic here
+            # save_order would be your database logic
             order_id = save_order(data)
         
         span.set_attribute("order.id", order_id)
@@ -338,7 +347,7 @@ For the complete Python guide covering FastAPI, async patterns, Celery integrati
 
 ## Java
 
-Java offers two paths: the zero-code Java Agent and SDK integration. I recommend the agent for existing applications and SDK integration for new projects where you want more control.
+If you're coming from Go or Python, Java's approach will feel familiar but with more ceremony—that's just Java being Java. Java offers two paths: the zero-code Java Agent and SDK integration. I recommend the agent for existing applications and SDK integration for new projects where you want more control.
 
 ### Java Agent (Zero-Code)
 
@@ -380,14 +389,18 @@ otel:
 
 ### Custom Spans in Services
 
+The Tracer gets injected via Spring's dependency injection. You'll need imports from `io.opentelemetry.api.trace` for `Span`, `Tracer`, `SpanKind`, `StatusCode`, and `Scope`:
+
 ```java
 @Service
 public class OrderService {
     
     private final Tracer tracer;
+    private final PaymentService paymentService;
     
-    public OrderService(Tracer tracer) {
+    public OrderService(Tracer tracer, PaymentService paymentService) {
         this.tracer = tracer;
+        this.paymentService = paymentService;
     }
     
     public OrderResult createOrder(CreateOrderRequest request) {
@@ -413,6 +426,7 @@ public class OrderService {
                 paymentSpan.end();
             }
             
+            // saveOrder would persist to your database
             String orderId = saveOrder(request);
             span.setAttribute("order.id", orderId);
             
@@ -434,7 +448,7 @@ The complete Java guide with Spring Boot configuration, metrics, structured logg
 
 ## C# / .NET
 
-.NET has first-class OpenTelemetry support through the native `System.Diagnostics` API. The integration is clean and idiomatic.
+.NET takes a different approach than the other languages here. Rather than wrapping an external API, .NET has first-class OpenTelemetry support through the native `System.Diagnostics` API. The integration feels natural to .NET developers—you're using Activity and ActivitySource, not Span and Tracer.
 
 ### ASP.NET Core Setup
 
@@ -506,11 +520,9 @@ The complete .NET guide covering Entity Framework, background services, structur
 
 ## Node.js
 
-Node.js auto-instrumentation is excellent—it captures Express, Fastify, database drivers, and HTTP clients automatically.
+Node.js rounds out our tour of language ecosystems. Its auto-instrumentation is excellent—it captures Express, Fastify, database drivers, and HTTP clients automatically. The main gotcha is load order: instrumentation must be loaded before any other modules.
 
 ### SDK Setup
-
-The key with Node.js is loading instrumentation before any other modules:
 
 ```typescript
 // instrumentation.ts - MUST be loaded first
@@ -546,32 +558,36 @@ import express from 'express';
 import { trace, SpanKind, SpanStatusCode } from '@opentelemetry/api';
 
 const app = express();
+app.use(express.json());
+
 const tracer = trace.getTracer('my-nodejs-service');
 
 app.post('/api/orders', async (req, res) => {
     const { userId, items, total } = req.body;
     
-    // HTTP span is created automatically
-    const span = trace.getActiveSpan();
-    span?.setAttribute('order.user_id', userId);
+    // HTTP span is created automatically by auto-instrumentation
+    const currentSpan = trace.getActiveSpan();
+    currentSpan?.setAttribute('order.user_id', userId);
     
     try {
         const result = await tracer.startActiveSpan(
             'processOrder',
             async (orderSpan) => {
-                // Database operation
-                await tracer.startActiveSpan(
+                // Database operation as a child span
+                const orderId = await tracer.startActiveSpan(
                     'db.insertOrder',
                     { kind: SpanKind.CLIENT },
                     async (dbSpan) => {
                         dbSpan.setAttribute('db.system', 'postgresql');
-                        const orderId = await saveOrder({ userId, items, total });
-                        dbSpan.setAttribute('order.id', orderId);
+                        // saveOrder would be your database logic
+                        const id = await saveOrder({ userId, items, total });
+                        dbSpan.setAttribute('order.id', id);
                         dbSpan.end();
-                        return orderId;
+                        return id;
                     }
                 );
                 
+                orderSpan.setAttribute('order.id', orderId);
                 orderSpan.end();
                 return { orderId, status: 'created' };
             }
@@ -579,8 +595,8 @@ app.post('/api/orders', async (req, res) => {
         
         res.status(201).json(result);
     } catch (error) {
-        span?.recordException(error);
-        span?.setStatus({ code: SpanStatusCode.ERROR });
+        currentSpan?.recordException(error as Error);
+        currentSpan?.setStatus({ code: SpanStatusCode.ERROR });
         res.status(500).json({ error: 'Order creation failed' });
     }
 });
