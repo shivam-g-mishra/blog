@@ -1,0 +1,191 @@
+# Infrastructure & DevOps
+kubernetes:
+  label: Kubernetes
+  description: Container orchestration, deployments, and cluster management
+  permalink: /kubernetes
+
+devops:
+  label: DevOps
+  description: Development operations, automation, and tooling
+  permalink: /devops
+
+cicd:
+  label: CI/CD
+  description: Continuous Integration and Continuous Deployment
+  permalink: /cicd
+
+docker:
+  label: Docker
+  description: Containerization and Docker best practices
+  permalink: /docker
+
+gitops:
+  label: GitOps
+  description: Git-based operations and deployment strategies
+  permalink: /gitops
+
+argocd:
+  label: ArgoCD
+  description: GitOps continuous delivery for Kubernetes
+  permalink: /argocd
+
+jenkins:
+  label: Jenkins
+  description: Jenkins CI/CD automation
+  permalink: /jenkins
+
+# Observability
+monitoring:
+  label: Monitoring
+  description: System and application monitoring
+  permalink: /monitoring
+
+prometheus:
+  label: Prometheus
+  description: Metrics collection and alerting
+  permalink: /prometheus
+
+grafana:
+  label: Grafana
+  description: Metrics visualization and dashboards
+  permalink: /grafana
+
+elasticsearch:
+  label: Elasticsearch
+  description: Search and log analytics
+  permalink: /elasticsearch
+
+logging:
+  label: Logging
+  description: Application and infrastructure logging
+  permalink: /logging
+
+elk-stack:
+  label: ELK Stack
+  description: Elasticsearch, Logstash, Kibana stack
+  permalink: /elk-stack
+
+# Development
+react:
+  label: React
+  description: React.js frontend development
+  permalink: /react
+
+typescript:
+  label: TypeScript
+  description: TypeScript development and patterns
+  permalink: /typescript
+
+javascript:
+  label: JavaScript
+  description: JavaScript development
+  permalink: /javascript
+
+nodejs:
+  label: Node.js
+  description: Node.js backend development
+  permalink: /nodejs
+
+graphql:
+  label: GraphQL
+  description: GraphQL API development
+  permalink: /graphql
+
+rest:
+  label: REST
+  description: RESTful API design
+  permalink: /rest
+
+# Architecture
+architecture:
+  label: Architecture
+  description: Software and system architecture
+  permalink: /architecture
+
+microservices:
+  label: Microservices
+  description: Microservices architecture patterns
+  permalink: /microservices
+
+api-gateway:
+  label: API Gateway
+  description: API gateway patterns and implementation
+  permalink: /api-gateway
+
+performance:
+  label: Performance
+  description: Performance optimization
+  permalink: /performance
+
+security:
+  label: Security
+  description: Application and infrastructure security
+  permalink: /security
+
+# Testing
+testing:
+  label: Testing
+  description: Software testing strategies
+  permalink: /testing
+
+automation:
+  label: Automation
+  description: Test and process automation
+  permalink: /automation
+
+selenium:
+  label: Selenium
+  description: Browser automation testing
+  permalink: /selenium
+
+integration:
+  label: Integration
+  description: Integration testing
+  permalink: /integration
+
+# Career & Best Practices
+career:
+  label: Career
+  description: Career growth and development
+  permalink: /career
+
+best-practices:
+  label: Best Practices
+  description: Software engineering best practices
+  permalink: /best-practices
+
+code-review:
+  label: Code Review
+  description: Code review practices and techniques
+  permalink: /code-review
+
+nvidia:
+  label: NVIDIA
+  description: Experiences and learnings from NVIDIA
+  permalink: /nvidia
+
+# Other
+frontend:
+  label: Frontend
+  description: Frontend development
+  permalink: /frontend
+
+websockets:
+  label: WebSockets
+  description: Real-time communication
+  permalink: /websockets
+
+redux:
+  label: Redux
+  description: State management with Redux
+  permalink: /redux
+
+containers:
+  label: Containers
+  description: Container technologies
+  permalink: /containers
+
+migration:
+  label: Migration
+  description: System and code migrations
+  permalink: /migration

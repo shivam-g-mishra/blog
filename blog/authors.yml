@@ -1,0 +1,15 @@
+shivam:
+  name: Shivam Mishra
+  title: Senior Software Engineer @ NVIDIA
+  url: https://shivam.dev
+  image_url: https://github.com/shivam-g-mishra.png
+  email: shivam.g.mishra@gmail.com
+  page: true
+  socials:
+    linkedin: shivam-g-mishra
+    github: shivam-g-mishra
+    email: mailto:shivam.g.mishra@gmail.com
+  description: >
+    Senior Software Engineer at NVIDIA with 9+ years of experience building
+    scalable web applications, CI/CD platforms, and observability systems.
+    Based in Santa Clara, California.
