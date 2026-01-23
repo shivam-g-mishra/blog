@@ -24,20 +24,20 @@ OpenTelemetry (OTel) is three things:
 The key insight is **separation of concerns**. Your application code instruments itself using the OpenTelemetry SDK, speaking a standard protocol (OTLP). Where that data goes—Jaeger, Datadog, Honeycomb, your own backends—is a deployment-time decision, not a code-time decision.
 
 ```
-┌───────────────────────────────────────────────────────────────┐
+┌────────────────────────────────────────────────────────────────┐
 │                    YOUR APPLICATION CODE                       │
 │    ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐     │
 │    │  Go SDK  │  │ Java SDK │  │ .NET SDK │  │  Python  │     │
 │    └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘     │
-│         │             │             │             │            │
-│         └─────────────┴──────┬──────┴─────────────┘            │
-│                              │                                 │
-│                        OTLP Protocol                           │
-│                       (Open Standard)                          │
+│         │             │             │             │           │
+│         └─────────────┴──────┬──────┴─────────────┘           │
+│                              │                                │
+│                        OTLP Protocol                          │
+│                       (Open Standard)                         │
 └──────────────────────────────┬─────────────────────────────────┘
                                │
                                ▼
-┌───────────────────────────────────────────────────────────────┐
+┌────────────────────────────────────────────────────────────────┐
 │                   OPENTELEMETRY COLLECTOR                      │
 │              Receive → Process → Export (your choice)          │
 └──────────────────────────────┬─────────────────────────────────┘
@@ -110,20 +110,20 @@ The Collector is the component that gives you flexibility. It's a standalone ser
 ### Collector Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    OTEL COLLECTOR                           │
-│                                                             │
-│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐     │
-│  │  Receivers  │ → │  Processors  │ → │  Exporters  │     │
-│  │             │    │             │    │             │     │
-│  │ • otlp      │    │ • batch     │    │ • otlp      │     │
-│  │ • jaeger    │    │ • memory    │    │ • jaeger    │     │
-│  │ • prometheus│    │ • filter    │    │ • prometheus│     │
-│  │ • zipkin    │    │ • sampling  │    │ • loki      │     │
-│  │ • syslog    │    │ • transform │    │ • datadog   │     │
-│  └─────────────┘    └─────────────┘    └─────────────┘     │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│                    OTEL COLLECTOR                          │
+│                                                            │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    │
+│  │  Receivers  │ →  │  Processors │ →  │  Exporters  │    │
+│  │             │    │             │    │             │    │
+│  │ • otlp      │    │ • batch     │    │ • otlp      │    │
+│  │ • jaeger    │    │ • memory    │    │ • jaeger    │    │
+│  │ • prometheus│    │ • filter    │    │ • prometheus│    │
+│  │ • zipkin    │    │ • sampling  │    │ • loki      │    │
+│  │ • syslog    │    │ • transform │    │ • datadog   │    │
+│  └─────────────┘    └─────────────┘    └─────────────┘    │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
 ```
 
 ### Receivers: Accepting Data

@@ -26,36 +26,36 @@ A trace is a complete record of a single request's journey through your distribu
 Here's the mental model that helped me understand it:
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                           THE STORY OF REQUEST #a]b7x9                       │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  Chapter 1: "User clicks Buy Now"                                           │
-│  ├── Who: API Gateway                                                       │
+┌────────────────────────────────────────────────────────────────────────────┐
+│                      THE STORY OF REQUEST #a]b7x9                          │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│  Chapter 1: "User clicks Buy Now"                                          │
+│  ├── Who: API Gateway                                                      │
 │  ├── When: 14:23:45.100 → 14:23:46.250 (1150ms total)                      │
-│  └── What happened: Received request, validated auth, routed to order svc   │
-│                                                                             │
-│      Chapter 2: "Processing the order"                                      │
-│      ├── Who: Order Service                                                 │
+│  └── What happened: Received request, validated auth, routed to order svc  │
+│                                                                            │
+│      Chapter 2: "Processing the order"                                     │
+│      ├── Who: Order Service                                                │
 │      ├── When: 14:23:45.115 → 14:23:46.200 (1085ms)                        │
-│      └── What happened: Validated cart, checked inventory, processed pay    │
-│                                                                             │
-│          Chapter 3: "Checking if items are available"                       │
-│          ├── Who: Inventory Service                                         │
+│      └── What happened: Validated cart, checked inventory, processed pay   │
+│                                                                            │
+│          Chapter 3: "Checking if items are available"                      │
+│          ├── Who: Inventory Service                                        │
 │          ├── When: 14:23:45.200 → 14:23:45.650 (450ms) ← SLOW!             │
-│          └── What happened: Queried database for 3 SKUs                     │
-│                                                                             │
-│              Chapter 4: "The database query"                                │
-│              ├── Who: Inventory DB                                          │
+│          └── What happened: Queried database for 3 SKUs                    │
+│                                                                            │
+│              Chapter 4: "The database query"                               │
+│              ├── Who: Inventory DB                                         │
 │              ├── When: 14:23:45.210 → 14:23:45.640 (430ms) ← FOUND IT!     │
-│              └── What happened: SELECT with missing index                   │
-│                                                                             │
-│          Chapter 5: "Charging the customer"                                 │
-│          ├── Who: Payment Service                                           │
+│              └── What happened: SELECT with missing index                  │
+│                                                                            │
+│          Chapter 5: "Charging the customer"                                │
+│          ├── Who: Payment Service                                          │
 │          ├── When: 14:23:45.660 → 14:23:46.150 (490ms)                     │
-│          └── What happened: Called Stripe API, got approval                 │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+│          └── What happened: Called Stripe API, got approval                │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 Looking at this "story," I can immediately see:
@@ -89,15 +89,15 @@ This single ID connects every operation across every service. When you're debugg
 Each operation within a trace is a **span**. Every span has:
 
 ```
-┌────────────────────────────────────────────────────────────────┐
+┌─────────────────────────────────────────────────────────────────┐
 │  SPAN: "POST /api/orders"                                       │
-├────────────────────────────────────────────────────────────────┤
-│  trace_id:    4bf92f3577b34da6a3ce929d0e0e4736                 │
+├─────────────────────────────────────────────────────────────────┤
+│  trace_id:    4bf92f3577b34da6a3ce929d0e0e4736                  │
 │  span_id:     00f067aa0ba902b7                                  │
-│  parent_id:   (none - this is the root span)                   │
+│  parent_id:   (none - this is the root span)                    │
 │                                                                 │
-│  start_time:  2024-06-15T14:23:45.100Z                         │
-│  end_time:    2024-06-15T14:23:46.250Z                         │
+│  start_time:  2024-06-15T14:23:45.100Z                          │
+│  end_time:    2024-06-15T14:23:46.250Z                          │
 │  duration:    1150ms                                            │
 │                                                                 │
 │  status:      OK                                                │
@@ -109,7 +109,7 @@ Each operation within a trace is a **span**. Every span has:
 │    user.id:            usr_456                                  │
 │    order.id:           ord_789                                  │
 │    order.item_count:   3                                        │
-└────────────────────────────────────────────────────────────────┘
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ### Parent-Child Relationships: Building the Tree
@@ -181,38 +181,38 @@ tracestate: vendor1=value1,vendor2=value2
 Here's what happens when Order Service calls Payment Service:
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                          ORDER SERVICE                                       │
-│                                                                             │
-│  // Current context                                                          │
-│  trace_id = "4bf92f3577b34da6a3ce929d0e0e4736"                              │
-│  current_span_id = "bbb222"                                                  │
-│                                                                             │
-│  // Make HTTP call to Payment Service                                       │
-│  POST /api/payments HTTP/1.1                                                │
-│  Host: payment-service                                                       │
-│  traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-bbb222-01                 │
-│  Content-Type: application/json                                             │
-│  ...                                                                        │
-└─────────────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────────┐
+│                            ORDER SERVICE                                   │
+│                                                                            │
+│  // Current context                                                        │
+│  trace_id = "4bf92f3577b34da6a3ce929d0e0e4736"                             │
+│  current_span_id = "bbb222"                                                │
+│                                                                            │
+│  // Make HTTP call to Payment Service                                      │
+│  POST /api/payments HTTP/1.1                                               │
+│  Host: payment-service                                                     │
+│  traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-bbb222-01                │
+│  Content-Type: application/json                                            │
+│  ...                                                                       │
+└────────────────────────────────────────────────────────────────────────────┘
                                       │
                                       │ HTTP Request
                                       ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                         PAYMENT SERVICE                                      │
-│                                                                             │
-│  // Extract context from incoming request                                   │
+┌────────────────────────────────────────────────────────────────────────────┐
+│                           PAYMENT SERVICE                                  │
+│                                                                            │
+│  // Extract context from incoming request                                  │
 │  traceparent header → trace_id = "4bf92f3577b34da6a3ce929d0e0e4736"        │
-│                     → parent_span_id = "bbb222"                             │
-│                                                                             │
-│  // Create new span as child of the incoming context                        │
-│  new_span = {                                                               │
+│                     → parent_span_id = "bbb222"                            │
+│                                                                            │
+│  // Create new span as child of the incoming context                       │
+│  new_span = {                                                              │
 │    trace_id: "4bf92f3577b34da6a3ce929d0e0e4736",  // Same trace!           │
-│    span_id: "ddd444",                              // New span ID           │
-│    parent_id: "bbb222"                             // Order Service's span  │
-│  }                                                                          │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+│    span_id: "ddd444",                              // New span ID          │
+│    parent_id: "bbb222"                             // Order Service's span │
+│  }                                                                         │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 This is why OpenTelemetry (or any tracing library) needs to be configured in every service. Without it, the chain breaks.
@@ -381,22 +381,22 @@ High-cardinality attributes are incredibly valuable for debugging specific issue
 Sometimes you need to record something that happened during a span, but it's not a separate operation worth its own span. That's what **span events** are for.
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│  SPAN: "process_payment" (500ms)                                    │
-│                                                                     │
+┌────────────────────────────────────────────────────────────────────┐
+│  SPAN: "process_payment" (500ms)                                   │
+│                                                                    │
 │  ├── EVENT @ +50ms: "payment_validated"                            │
 │  │   └── attributes: {validation_rules: 5, passed: true}           │
-│  │                                                                  │
+│  │                                                                 │
 │  ├── EVENT @ +120ms: "fraud_check_completed"                       │
 │  │   └── attributes: {risk_score: 0.15, threshold: 0.7}            │
-│  │                                                                  │
+│  │                                                                 │
 │  ├── EVENT @ +180ms: "gateway_request_sent"                        │
 │  │   └── attributes: {provider: "stripe", idempotency_key: "xyz"}  │
-│  │                                                                  │
+│  │                                                                 │
 │  └── EVENT @ +480ms: "gateway_response_received"                   │
 │      └── attributes: {status: "succeeded", provider_id: "pi_123"}  │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
+│                                                                    │
+└────────────────────────────────────────────────────────────────────┘
 ```
 
 ### When to Use Events vs. Child Spans
@@ -460,40 +460,40 @@ Every log entry should include trace context:
 Here's how I actually use traces and logs together during an incident:
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  STEP 1: Alert fires                                                        │
-│  "Payment failure rate > 5%"                                                │
-└────────────────────────────────────────────┬────────────────────────────────┘
-                                             │
-                                             ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  STEP 2: Find example failures in traces                                    │
-│  Query: status = ERROR AND service.name = "payment-service"                 │
-│  Result: Several traces showing failures, pick one to examine               │
-└────────────────────────────────────────────┬────────────────────────────────┘
-                                             │
-                                             ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  STEP 3: Examine the trace waterfall                                        │
-│  See: Payment span has error, but the error came from Stripe API span       │
-│  See: Stripe API span took 50ms (fast), so not a timeout                    │
-│  See: Attributes show decline_code = "do_not_honor"                         │
-└────────────────────────────────────────────┬────────────────────────────────┘
-                                             │
-                                             ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  STEP 4: Jump to logs for this trace_id                                     │
+┌────────────────────────────────────────────────────────────────────────────┐
+│  STEP 1: Alert fires                                                       │
+│  "Payment failure rate > 5%"                                               │
+└───────────────────────────────────────┬────────────────────────────────────┘
+                                        │
+                                        ▼
+┌────────────────────────────────────────────────────────────────────────────┐
+│  STEP 2: Find example failures in traces                                   │
+│  Query: status = ERROR AND service.name = "payment-service"                │
+│  Result: Several traces showing failures, pick one to examine              │
+└───────────────────────────────────────┬────────────────────────────────────┘
+                                        │
+                                        ▼
+┌────────────────────────────────────────────────────────────────────────────┐
+│  STEP 3: Examine the trace waterfall                                       │
+│  See: Payment span has error, but the error came from Stripe API span      │
+│  See: Stripe API span took 50ms (fast), so not a timeout                   │
+│  See: Attributes show decline_code = "do_not_honor"                        │
+└───────────────────────────────────────┬────────────────────────────────────┘
+                                        │
+                                        ▼
+┌────────────────────────────────────────────────────────────────────────────┐
+│  STEP 4: Jump to logs for this trace_id                                    │
 │  Query: trace_id = "4bf92f3577b34da6a3ce929d0e0e4736"                       │
-│  See full error details, retry attempts, exact request/response data        │
-└────────────────────────────────────────────┬────────────────────────────────┘
-                                             │
-                                             ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  STEP 5: Widen the search                                                   │
+│  See full error details, retry attempts, exact request/response data       │
+└───────────────────────────────────────┬────────────────────────────────────┘
+                                        │
+                                        ▼
+┌────────────────────────────────────────────────────────────────────────────┐
+│  STEP 5: Widen the search                                                  │
 │  Query logs: decline_code = "do_not_honor" AND time = last_hour            │
 │  Find: 500+ failures, all from same BIN range (card issuer)                │
-│  Root cause: Card issuer is having issues, not our system                   │
-└─────────────────────────────────────────────────────────────────────────────┘
+│  Root cause: Card issuer is having issues, not our system                  │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 This investigation took 5 minutes. Without correlation? I'd still be guessing.
@@ -640,25 +640,25 @@ AND timestamp > now() - 30m
 ### Step 2: Examine a Representative Trace
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│ Trace: 8f2e4a1b7c9d3e5f                                                     │
-│ Status: ERROR                                                               │
-│ Duration: 5,234ms                                                           │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│ [API Gateway] POST /api/orders ─────────────────────────────── 5,234ms ERROR│
-│   │                                                                         │
-│   └─► [Order Service] process_order ────────────────────────── 5,180ms ERROR│
-│         │                                                                   │
-│         ├─► [Inventory Service] check_availability ────────────── 45ms OK   │
-│         │                                                                   │
-│         └─► [Payment Service] process_payment ──────────────── 5,100ms ERROR│
-│               │                                                             │
-│               └─► [Stripe API] charge ────────────────────────── 5,050ms ERR│
-│                     │                                                       │
-│                     └─► exception: "Connection timeout after 5000ms"        │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────────┐
+│ Trace: 8f2e4a1b7c9d3e5f                                                    │
+│ Status: ERROR                                                              │
+│ Duration: 5,234ms                                                          │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│ [API Gateway] POST /api/orders ────────────────────────────── 5,234ms ERROR│
+│   │                                                                        │
+│   └─► [Order Service] process_order ───────────────────────── 5,180ms ERROR│
+│         │                                                                  │
+│         ├─► [Inventory Service] check_availability ─────────────── 45ms OK │
+│         │                                                                  │
+│         └─► [Payment Service] process_payment ─────────────── 5,100ms ERROR│
+│               │                                                            │
+│               └─► [Stripe API] charge ───────────────────────── 5,050ms ERR│
+│                     │                                                      │
+│                     └─► exception: "Connection timeout after 5000ms"       │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 **Immediate insight:** The Stripe API is timing out. Not our code—external dependency.

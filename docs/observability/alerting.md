@@ -156,20 +156,20 @@ The cause-based approach wakes someone up for something that fixed itself. The s
 Some "causes" are worth ticketing (not paging) because they predict future symptoms:
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                        LEADING INDICATOR ALERTS                              │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│   These create tickets, not pages:                                          │
-│                                                                             │
+┌────────────────────────────────────────────────────────────────────────────┐
+│                       LEADING INDICATOR ALERTS                             │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│   These create tickets, not pages:                                         │
+│                                                                            │
 │   • Disk space > 80%  →  "We'll run out in ~3 days at current growth"      │
 │   • Certificate expires in 14 days  →  "Renew before it's critical"        │
 │   • Error budget burn rate high  →  "Slow down or we'll miss SLO"          │
 │   • Dependency end-of-life  →  "Upgrade before security issues"            │
-│                                                                             │
+│                                                                            │
 │   These give you time to act before there's customer impact.               │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -201,35 +201,35 @@ If you're burning budget at 10x the sustainable rate, you'll exhaust it in ~4 da
 Instead of alerting on instantaneous errors, alert on how fast you're consuming your error budget:
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                           BURN RATE ALERTING                                 │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
+┌────────────────────────────────────────────────────────────────────────────┐
+│                          BURN RATE ALERTING                                │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
 │   Error Budget: 43.2 minutes/month (99.9% SLO)                             │
 │   Sustainable burn rate: 1x (uses exactly the budget over 30 days)         │
-│                                                                             │
-│   ┌─────────────────────────────────────────────────────────────────────┐   │
-│   │  ALERT: PAGE                                                        │   │
+│                                                                            │
+│   ┌────────────────────────────────────────────────────────────────────┐   │
+│   │  ALERT: PAGE                                                       │   │
 │   │  Condition: Burn rate > 14x for 1 hour                             │   │
 │   │  Meaning: At this rate, budget exhausted in ~2 days                │   │
-│   │  Action: Investigate immediately                                    │   │
-│   └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                             │
-│   ┌─────────────────────────────────────────────────────────────────────┐   │
-│   │  ALERT: PAGE                                                        │   │
+│   │  Action: Investigate immediately                                   │   │
+│   └────────────────────────────────────────────────────────────────────┘   │
+│                                                                            │
+│   ┌────────────────────────────────────────────────────────────────────┐   │
+│   │  ALERT: PAGE                                                       │   │
 │   │  Condition: Burn rate > 6x for 6 hours                             │   │
 │   │  Meaning: At this rate, budget exhausted in ~5 days                │   │
 │   │  Action: Investigate within the hour                               │   │
-│   └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                             │
-│   ┌─────────────────────────────────────────────────────────────────────┐   │
-│   │  ALERT: TICKET                                                      │   │
+│   └────────────────────────────────────────────────────────────────────┘   │
+│                                                                            │
+│   ┌────────────────────────────────────────────────────────────────────┐   │
+│   │  ALERT: TICKET                                                     │   │
 │   │  Condition: Burn rate > 3x for 24 hours                            │   │
 │   │  Meaning: At this rate, budget exhausted in ~10 days               │   │
 │   │  Action: Address during business hours                             │   │
-│   └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+│   └────────────────────────────────────────────────────────────────────┘   │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Why Burn Rates Beat Thresholds
@@ -269,31 +269,31 @@ Alert fatigue is what happens when your team gets so many alerts that they start
 ### The Fatigue Spiral
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                         THE ALERT FATIGUE SPIRAL                             │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│    Too many alerts                                                          │
-│         │                                                                   │
-│         ▼                                                                   │
-│    Team ignores "noisy" alerts ──────────────────────────────┐             │
-│         │                                                     │             │
-│         ▼                                                     │             │
-│    Real incidents get buried                                  │             │
-│         │                                                     │             │
-│         ▼                                                     │             │
-│    Slow response to real problems                             │             │
-│         │                                                     │             │
-│         ▼                                                     │             │
-│    Trust in alerting erodes                                   │             │
-│         │                                                     │             │
-│         ▼                                                     │
-│    Team adds MORE alerts to "catch" problems ─────────────────┘             │
-│         │                                                                   │
-│         ▼                                                                   │
-│    Repeat until burnout                                                     │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────────┐
+│                        THE ALERT FATIGUE SPIRAL                            │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│    Too many alerts                                                         │
+│         │                                                                  │
+│         ▼                                                                  │
+│    Team ignores "noisy" alerts ─────────────────────────────┐              │
+│         │                                                    │              │
+│         ▼                                                    │              │
+│    Real incidents get buried                                 │              │
+│         │                                                    │              │
+│         ▼                                                    │              │
+│    Slow response to real problems                            │              │
+│         │                                                    │              │
+│         ▼                                                    │              │
+│    Trust in alerting erodes                                  │              │
+│         │                                                    │              │
+│         ▼                                                    │              │
+│    Team adds MORE alerts to "catch" problems ────────────────┘              │
+│         │                                                                  │
+│         ▼                                                                  │
+│    Repeat until burnout                                                    │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Measuring Alert Health
@@ -652,46 +652,46 @@ Getting alerts to the right people at the right time is as important as the aler
 ### Routing Strategy
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                          ALERT ROUTING FLOW                                  │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│   Alert Fires                                                               │
-│       │                                                                     │
-│       ▼                                                                     │
-│   ┌─────────────────────────────────────────────────────────────────────┐   │
-│   │                    ROUTE BY SEVERITY                                │   │
-│   └─────────────────────────────────────────────────────────────────────┘   │
-│       │                                                                     │
+┌────────────────────────────────────────────────────────────────────────────┐
+│                          ALERT ROUTING FLOW                                │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│   Alert Fires                                                              │
+│       │                                                                    │
+│       ▼                                                                    │
+│   ┌────────────────────────────────────────────────────────────────────┐   │
+│   │                    ROUTE BY SEVERITY                               │   │
+│   └────────────────────────────────────────────────────────────────────┘   │
+│       │                                                                    │
 │       ├─── Critical ──► PagerDuty + Slack #incidents                       │
-│       │                                                                     │
+│       │                                                                    │
 │       ├─── Warning ───► Slack #alerts-warnings + Create ticket             │
-│       │                                                                     │
+│       │                                                                    │
 │       └─── Info ──────► Slack #alerts-info (no notification)               │
-│                                                                             │
-│   ┌─────────────────────────────────────────────────────────────────────┐   │
-│   │                    ROUTE BY TEAM/SERVICE                            │   │
-│   └─────────────────────────────────────────────────────────────────────┘   │
-│       │                                                                     │
+│                                                                            │
+│   ┌────────────────────────────────────────────────────────────────────┐   │
+│   │                    ROUTE BY TEAM/SERVICE                           │   │
+│   └────────────────────────────────────────────────────────────────────┘   │
+│       │                                                                    │
 │       ├─── service=payments ──► payments-oncall                            │
-│       │                                                                     │
+│       │                                                                    │
 │       ├─── service=auth ──────► platform-oncall                            │
-│       │                                                                     │
+│       │                                                                    │
 │       └─── default ───────────► infra-oncall                               │
-│                                                                             │
-│   ┌─────────────────────────────────────────────────────────────────────┐   │
-│   │                    ESCALATION PATH                                  │   │
-│   └─────────────────────────────────────────────────────────────────────┘   │
-│       │                                                                     │
+│                                                                            │
+│   ┌────────────────────────────────────────────────────────────────────┐   │
+│   │                    ESCALATION PATH                                 │   │
+│   └────────────────────────────────────────────────────────────────────┘   │
+│       │                                                                    │
 │       ├─── 0 min ────► Primary on-call                                     │
-│       │                                                                     │
+│       │                                                                    │
 │       ├─── 10 min ───► Secondary on-call                                   │
-│       │                                                                     │
+│       │                                                                    │
 │       ├─── 20 min ───► Engineering manager                                 │
-│       │                                                                     │
+│       │                                                                    │
 │       └─── 30 min ───► VP Engineering                                      │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### On-Call Best Practices
@@ -785,25 +785,25 @@ expr: codebase_age_days > 365
 Alerting is most powerful when integrated with the rest of your observability stack:
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                    ALERT → INVESTIGATE WORKFLOW                              │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
+┌────────────────────────────────────────────────────────────────────────────┐
+│                    ALERT → INVESTIGATE WORKFLOW                            │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
 │   METRICS ────────►  Alert fires based on metric threshold/trend           │
-│       │                                                                     │
-│       │              Alert includes link to dashboard                       │
-│       │                                                                     │
-│       ▼                                                                     │
+│       │                                                                    │
+│       │              Alert includes link to dashboard                      │
+│       │                                                                    │
+│       ▼                                                                    │
 │   LOGS ──────────►  Filter logs by time window and service                 │
-│       │              Find error messages and context                        │
-│       │                                                                     │
-│       │              Logs include trace_id for correlation                  │
-│       │                                                                     │
-│       ▼                                                                     │
-│   TRACES ────────►  Examine specific failing requests                       │
-│                      Identify exact operation and root cause                │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+│       │              Find error messages and context                       │
+│       │                                                                    │
+│       │              Logs include trace_id for correlation                 │
+│       │                                                                    │
+│       ▼                                                                    │
+│   TRACES ────────►  Examine specific failing requests                      │
+│                      Identify exact operation and root cause               │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 See also:

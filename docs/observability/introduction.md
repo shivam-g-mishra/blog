@@ -85,33 +85,33 @@ The real power comes from **correlation**—the ability to jump from a metric al
 New to observability? Here's the recommended reading order:
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                         RECOMMENDED LEARNING PATH                            │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  1. START HERE                     2. DEEP DIVES                            │
-│     ↓                                 ↓                                     │
-│  ┌─────────────────┐              ┌─────────────────┐                       │
-│  │ Three Pillars   │ ──────────►  │ Tracing         │ Follow requests       │
-│  │ Overview        │              │ Metrics         │ across services       │
-│  └─────────────────┘              │ Logging         │                       │
-│                                   └─────────────────┘                       │
-│                                          ↓                                  │
-│  3. TAKE ACTION                   4. THE STANDARD                           │
-│     ↓                                 ↓                                     │
-│  ┌─────────────────┐              ┌─────────────────┐                       │
-│  │ Alerting        │ ──────────►  │ OpenTelemetry   │ Vendor-neutral        │
-│  │ Best Practices  │              │                 │ instrumentation       │
-│  └─────────────────┘              └─────────────────┘                       │
-│                                          ↓                                  │
-│                                   5. IMPLEMENT                              │
-│                                      ↓                                      │
-│                                   ┌─────────────────┐                       │
-│                                   │ Integration     │ Go, Python, Java,     │
-│                                   │ Guides          │ .NET, Node.js         │
-│                                   └─────────────────┘                       │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────────┐
+│                        RECOMMENDED LEARNING PATH                           │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│  1. START HERE                     2. DEEP DIVES                           │
+│     ↓                                 ↓                                    │
+│  ┌─────────────────┐              ┌─────────────────┐                      │
+│  │ Three Pillars   │ ──────────►  │ Tracing         │ Follow requests      │
+│  │ Overview        │              │ Metrics         │ across services      │
+│  └─────────────────┘              │ Logging         │                      │
+│                                   └─────────────────┘                      │
+│                                          ↓                                 │
+│  3. TAKE ACTION                   4. THE STANDARD                          │
+│     ↓                                 ↓                                    │
+│  ┌─────────────────┐              ┌─────────────────┐                      │
+│  │ Alerting        │ ──────────►  │ OpenTelemetry   │ Vendor-neutral       │
+│  │ Best Practices  │              │                 │ instrumentation      │
+│  └─────────────────┘              └─────────────────┘                      │
+│                                          ↓                                 │
+│                                   5. IMPLEMENT                             │
+│                                      ↓                                     │
+│                                   ┌─────────────────┐                      │
+│                                   │ Integration     │ Go, Python, Java,    │
+│                                   │ Guides          │ .NET, Node.js        │
+│                                   └─────────────────┘                      │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Deep Dive Guides

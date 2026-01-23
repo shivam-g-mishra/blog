@@ -143,9 +143,9 @@ Applications → Gateways → Kafka → Processors → Storage → Grafana
     │          ▼                  ▼                  ▼                  │
     │       ┌──────┐          ┌──────┐          ┌──────┐                │
     │       │ P 1  │          │ P 2  │          │ P N  │                │
-    │       │ ┌──┐ │          │ ┌──┐ │          │ ┌──┐ │                │
-    │       │ │TML│ │          │ │TML│ │          │ │TML│ │                │
-    │       │ └──┘ │          │ └──┘ │          │ └──┘ │                │
+    │       │┌────┐│          │┌────┐│          │┌────┐│                │
+    │       ││ TS ││          ││ TS ││          ││ TS ││                │
+    │       │└────┘│          │└────┘│          │└────┘│                │
     │       └──────┘          └──────┘          └──────┘                │
     │                                                                   │
     │    OTel Collector (Processor mode) handles:                       │

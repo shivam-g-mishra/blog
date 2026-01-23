@@ -29,28 +29,28 @@ A metric is a numerical measurement of something in your system, collected at re
 Unlike logs (which are discrete events with rich context) or traces (which follow individual requests), metrics are **aggregated measurements**. They tell you about the behavior of your system in aggregate, not about individual requests.
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                         THE METRICS MENTAL MODEL                            │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│   Imagine a busy highway:                                                   │
-│                                                                             │
-│   LOGS are like dashcam footage from individual cars                        │
+┌────────────────────────────────────────────────────────────────────────────┐
+│                        THE METRICS MENTAL MODEL                            │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│   Imagine a busy highway:                                                  │
+│                                                                            │
+│   LOGS are like dashcam footage from individual cars                       │
 │   └── "Car ABC-123 changed lanes at mile marker 45 at 2:15:03 PM"          │
-│                                                                             │
+│                                                                            │
 │   TRACES are like GPS tracking for a single vehicle's journey              │
 │   └── "Car ABC-123's complete route from home to office, with timing"      │
-│                                                                             │
-│   METRICS are like the highway traffic sensors                              │
+│                                                                            │
+│   METRICS are like the highway traffic sensors                             │
 │   └── "450 vehicles passed this point in the last minute"                  │
 │   └── "Average speed: 65 mph, current congestion level: moderate"          │
-│                                                                             │
-│   You need all three:                                                       │
+│                                                                            │
+│   You need all three:                                                      │
 │   • Traffic sensors (metrics) to know there's a jam                        │
 │   • GPS tracking (traces) to see where the jam affects a specific route    │
 │   • Dashcam footage (logs) to see what caused the accident                 │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### The Time Series Foundation
@@ -253,10 +253,10 @@ Use summaries only if you need exact percentiles and don't need to aggregate acr
 Google's SRE book introduced the **Four Golden Signals**—the metrics that most directly indicate user-facing health. If you measure nothing else, measure these.
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                        THE FOUR GOLDEN SIGNALS                              │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
+┌────────────────────────────────────────────────────────────────────────────┐
+│                       THE FOUR GOLDEN SIGNALS                              │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
 │   ┌─────────────────┐    ┌─────────────────┐                               │
 │   │     LATENCY     │    │     TRAFFIC     │                               │
 │   │                 │    │                 │                               │
@@ -268,7 +268,7 @@ Google's SRE book introduced the **Four Golden Signals**—the metrics that most
 │   │  • Success vs   │    │  • By customer  │                               │
 │   │    failure      │    │    tier         │                               │
 │   └─────────────────┘    └─────────────────┘                               │
-│                                                                             │
+│                                                                            │
 │   ┌─────────────────┐    ┌─────────────────┐                               │
 │   │     ERRORS      │    │   SATURATION    │                               │
 │   │                 │    │                 │                               │
@@ -280,8 +280,8 @@ Google's SRE book introduced the **Four Golden Signals**—the metrics that most
 │   │  • By endpoint  │    │  • Queue depth  │                               │
 │   │                 │    │  • Connections  │                               │
 │   └─────────────────┘    └─────────────────┘                               │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### 1. Latency: The User Experience Signal
@@ -383,23 +383,23 @@ active_connections / max_connections
 For microservices, Tom Wilkie (Grafana) proposed the **RED Method**—a simplified version of the golden signals focused on what matters most for request-driven services.
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                            THE RED METHOD                                   │
-│                    (for every service, measure these)                       │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
+┌────────────────────────────────────────────────────────────────────────────┐
+│                            THE RED METHOD                                  │
+│                   (for every service, measure these)                       │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
 │   R ─ Rate        How many requests per second?                            │
-│                   sum(rate(http_requests_total[5m]))                        │
-│                                                                             │
+│                   sum(rate(http_requests_total[5m]))                       │
+│                                                                            │
 │   E ─ Errors      How many of those requests are failing?                  │
 │                   sum(rate(http_requests_total{status=~"5.."}[5m]))        │
 │                   ─────────────────────────────────────────────            │
-│                   sum(rate(http_requests_total[5m]))                        │
-│                                                                             │
+│                   sum(rate(http_requests_total[5m]))                       │
+│                                                                            │
 │   D ─ Duration    How long do those requests take?                         │
 │                   histogram_quantile(0.99, rate(request_duration[5m]))     │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 The beauty of RED is consistency. Every service gets the same three metrics. You can build a single dashboard template and apply it everywhere.
@@ -411,23 +411,23 @@ The beauty of RED is consistency. Every service gets the same three metrics. You
 While RED is for services, the **USE Method** (by Brendan Gregg) is for infrastructure resources:
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                           THE USE METHOD                                    │
-│                  (for every resource, measure these)                        │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
+┌────────────────────────────────────────────────────────────────────────────┐
+│                           THE USE METHOD                                   │
+│                 (for every resource, measure these)                        │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
 │   U ─ Utilization   What percentage of time is the resource busy?          │
 │                     CPU: avg(rate(node_cpu_seconds_total{mode!="idle"}))   │
-│                                                                             │
+│                                                                            │
 │   S ─ Saturation    How much extra work is waiting?                        │
 │                     CPU: node_load1 (1-minute load average)                │
 │                     Disk: node_disk_io_time_weighted_seconds_total         │
-│                                                                             │
+│                                                                            │
 │   E ─ Errors        How many error events occurred?                        │
 │                     Network: node_network_receive_errs_total               │
 │                     Disk: node_disk_write_errors_total                     │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 **When to use which:**
@@ -510,52 +510,52 @@ Most dashboards I see are useless. They show dozens of metrics but don't help an
 ### The Three-Tier Dashboard Strategy
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
+┌────────────────────────────────────────────────────────────────────────────┐
 │  TIER 1: THE OVERVIEW (What's the current state?)                          │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
 │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐           │
-│  │  Requests   │ │ Error Rate  │ │   p99       │ │ Saturation  │           │
-│  │   1,234/s   │ │   0.02%     │ │   145ms     │ │   CPU: 45%  │           │
+│  │  Requests   │ │ Error Rate  │ │    p99      │ │ Saturation  │           │
+│  │   1,234/s   │ │   0.02%     │ │   145ms     │ │  CPU: 45%   │           │
 │  │     ✓       │ │     ✓       │ │     ✓       │ │     ✓       │           │
 │  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘           │
-│                                                                             │
-│  "At a glance: everything is healthy"                                       │
-└─────────────────────────────────────────────────────────────────────────────┘
+│                                                                            │
+│  "At a glance: everything is healthy"                                      │
+└────────────────────────────────────────────────────────────────────────────┘
                                     │
                                     ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
+┌────────────────────────────────────────────────────────────────────────────┐
 │  TIER 2: SERVICE HEALTH (Which service has the problem?)                   │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
 │  Service          │ Rate    │ Errors │ p99    │ Status                     │
 │  ─────────────────┼─────────┼────────┼────────┼────────                    │
 │  api-gateway      │ 1,234/s │ 0.01%  │ 45ms   │   ✓                        │
 │  order-service    │   892/s │ 0.03%  │ 189ms  │   ✓                        │
-│  payment-service  │   445/s │ 2.1%   │ 890ms  │   ⚠ ← Problem here        │
+│  payment-service  │   445/s │ 2.1%   │ 890ms  │   ⚠ ← Problem here         │
 │  inventory-service│   334/s │ 0.02%  │ 67ms   │   ✓                        │
-│                                                                             │
+│                                                                            │
 │  "Payment service has elevated errors and latency"                         │
-└─────────────────────────────────────────────────────────────────────────────┘
+└────────────────────────────────────────────────────────────────────────────┘
                                     │
                                     ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
+┌────────────────────────────────────────────────────────────────────────────┐
 │  TIER 3: SERVICE DEEP DIVE (What's wrong with this service?)               │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  Payment Service Detail:                                                    │
-│                                                                             │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│  Payment Service Detail:                                                   │
+│                                                                            │
 │  [Latency by Endpoint]          [Error Rate by Type]                       │
 │  POST /charge    │ 890ms ⚠      │ Timeout errors: 2.0%                     │
 │  GET /status     │  23ms ✓      │ Validation errors: 0.1%                  │
 │  POST /refund    │  45ms ✓      │                                          │
-│                                                                             │
+│                                                                            │
 │  [Downstream Dependencies]      [Resource Utilization]                     │
 │  → Stripe API    │ 850ms ⚠      │ CPU: 34%  Memory: 67%                    │
 │  → Database      │  12ms ✓      │ Connections: 45/100                      │
-│                                                                             │
+│                                                                            │
 │  "Stripe API is slow, causing our timeouts"                                │
-└─────────────────────────────────────────────────────────────────────────────┘
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Dashboard Anti-Patterns
@@ -590,26 +590,26 @@ Metrics become powerful when they trigger alerts. But bad alerting leads to aler
 ### Alert on Symptoms, Not Causes
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                        ALERTING PHILOSOPHY                                  │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  ❌ BAD: Alert on causes                                                    │
-│     "CPU > 80%"                                                             │
-│     "Memory > 90%"                                                          │
-│     "5xx errors detected"                                                   │
-│                                                                             │
+┌────────────────────────────────────────────────────────────────────────────┐
+│                        ALERTING PHILOSOPHY                                 │
+├────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│  ❌ BAD: Alert on causes                                                   │
+│     "CPU > 80%"                                                            │
+│     "Memory > 90%"                                                         │
+│     "5xx errors detected"                                                  │
+│                                                                            │
 │  ✓ GOOD: Alert on symptoms (user impact)                                   │
 │     "Error rate > 1% for 5 minutes"                                        │
 │     "p99 latency > 500ms for 5 minutes"                                    │
 │     "Request rate dropped 50% from baseline"                               │
-│                                                                             │
-│  Why?                                                                       │
+│                                                                            │
+│  Why?                                                                      │
 │  • High CPU doesn't always mean user impact                                │
 │  • A few 5xx errors might be normal                                        │
 │  • Users feel error rates and latency, not CPU usage                       │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### SLO-Based Alerting
@@ -837,17 +837,17 @@ For deep dives on the other pillars, see [Distributed Tracing →](./tracing) an
 Modern metrics systems support **exemplars**—sample trace IDs attached to metric observations:
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  HISTOGRAM BUCKET: http_request_duration_seconds{le="1.0"}                  │
-│                                                                             │
-│  Count: 1,000,000                                                           │
-│                                                                             │
+┌────────────────────────────────────────────────────────────────────────────┐
+│  HISTOGRAM BUCKET: http_request_duration_seconds{le="1.0"}                 │
+│                                                                            │
+│  Count: 1,000,000                                                          │
+│                                                                            │
 │  Exemplars (sample trace IDs for this bucket):                             │
 │    • trace_id=abc123 (0.95s) ← "Show me a slow request"                    │
 │    • trace_id=def456 (0.87s)                                               │
 │    • trace_id=ghi789 (0.92s)                                               │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 When you see high p99 latency in metrics, exemplars let you jump directly to example traces.
@@ -855,23 +855,23 @@ When you see high p99 latency in metrics, exemplars let you jump directly to exa
 ### The Investigation Flow
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  1. METRICS: "p99 latency spiked to 2s"                                     │
-│     Dashboard shows: order-service, POST /api/orders                        │
-└────────────────────────────────────────┬────────────────────────────────────┘
-                                         │ Click exemplar
-                                         ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  2. TRACES: Example slow request (trace_id: abc123)                         │
+┌────────────────────────────────────────────────────────────────────────────┐
+│  1. METRICS: "p99 latency spiked to 2s"                                    │
+│     Dashboard shows: order-service, POST /api/orders                       │
+└───────────────────────────────────────┬────────────────────────────────────┘
+                                        │ Click exemplar
+                                        ▼
+┌────────────────────────────────────────────────────────────────────────────┐
+│  2. TRACES: Example slow request (trace_id: abc123)                        │
 │     Waterfall shows: 1.8s spent in payment-service → Stripe API            │
-└────────────────────────────────────────┬────────────────────────────────────┘
-                                         │ Click span for details
-                                         ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  3. LOGS: Filter by trace_id=abc123                                         │
+└───────────────────────────────────────┬────────────────────────────────────┘
+                                        │ Click span for details
+                                        ▼
+┌────────────────────────────────────────────────────────────────────────────┐
+│  3. LOGS: Filter by trace_id=abc123                                        │
 │     See: "Stripe API timeout, retry 3 of 3 failed"                         │
 │     See: "Stripe request_id: req_xyz for support ticket"                   │
-└─────────────────────────────────────────────────────────────────────────────┘
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---

@@ -208,41 +208,41 @@ Now you can:
 Each pillar is useful on its own, but the real power comes from combining them. Here's a typical debugging flow:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  1. ALERT FIRES (Metrics)                                   │
-│     "Error rate > 1% for order-service"                     │
-└──────────────────────────┬──────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────┐
-│  2. INVESTIGATE METRICS                                     │
-│     Error rate spiked at 10:15 AM                           │
-│     Latency also increased                                  │
-│     Database connection pool at 100%                        │
-└──────────────────────────┬──────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────┐
-│  3. SEARCH LOGS                                             │
-│     Filter: service=order-service, level=error, time=10:15  │
-│     Found: "Connection pool exhausted"                      │
-│     Found: "Timeout waiting for database connection"        │
-└──────────────────────────┬──────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────┐
-│  4. EXAMINE TRACES                                          │
-│     Click trace_id from error log                           │
-│     See: inventory-service making 50 DB queries per request │
-│     See: Each query holding connection for 2+ seconds       │
-└──────────────────────────┬──────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────┐
-│  5. ROOT CAUSE IDENTIFIED                                   │
-│     A recent deployment introduced an N+1 query bug         │
-│     Under high load, this exhausted the connection pool     │
-└─────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│  1. ALERT FIRES (Metrics)                                  │
+│     "Error rate > 1% for order-service"                    │
+└─────────────────────────┬──────────────────────────────────┘
+                          │
+                          ▼
+┌────────────────────────────────────────────────────────────┐
+│  2. INVESTIGATE METRICS                                    │
+│     Error rate spiked at 10:15 AM                          │
+│     Latency also increased                                 │
+│     Database connection pool at 100%                       │
+└─────────────────────────┬──────────────────────────────────┘
+                          │
+                          ▼
+┌────────────────────────────────────────────────────────────┐
+│  3. SEARCH LOGS                                            │
+│     Filter: service=order-service, level=error, time=10:15 │
+│     Found: "Connection pool exhausted"                     │
+│     Found: "Timeout waiting for database connection"       │
+└─────────────────────────┬──────────────────────────────────┘
+                          │
+                          ▼
+┌────────────────────────────────────────────────────────────┐
+│  4. EXAMINE TRACES                                         │
+│     Click trace_id from error log                          │
+│     See: inventory-service making 50 DB queries per request│
+│     See: Each query holding connection for 2+ seconds      │
+└─────────────────────────┬──────────────────────────────────┘
+                          │
+                          ▼
+┌────────────────────────────────────────────────────────────┐
+│  5. ROOT CAUSE IDENTIFIED                                  │
+│     A recent deployment introduced an N+1 query bug        │
+│     Under high load, this exhausted the connection pool    │
+└────────────────────────────────────────────────────────────┘
 ```
 
 This investigation took 10 minutes with proper observability. Without it? Could easily be hours of guessing, adding debug logging, redeploying, and hoping you get lucky.
