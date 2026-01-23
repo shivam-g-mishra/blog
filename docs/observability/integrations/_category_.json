@@ -1,0 +1,8 @@
+{
+  "label": "Language Integrations",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "Step-by-step guides for integrating OpenTelemetry with popular languages and frameworks. Complete with code examples, best practices, and troubleshooting tips."
+  }
+}

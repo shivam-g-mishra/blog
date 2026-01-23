@@ -48,23 +48,27 @@ Observability rests on three complementary data types. Each answers different qu
 
 A trace follows a single request as it travels through your distributed system. When a user clicks "Place Order," that request might touch a dozen services before returning a response.
 
+```mermaid
+gantt
+    title Distributed Trace: Place Order (850ms total)
+    dateFormat X
+    axisFormat %L ms
+    
+    section API Gateway
+    Request validation     :0, 15
+    
+    section Order Service
+    Validate cart         :15, 40
+    Check inventory       :crit, 40, 220
+    Database query        :crit, 45, 220
+    Process payment       :220, 420
+    External API call     :225, 420
+    Send confirmation     :420, 460
 ```
-User Request: Place Order (trace_id: abc123)
-│
-├── API Gateway (total: 850ms)
-│   ├── Request validation (15ms)
-│   └── Route to order service
-│       │
-│       └── Order Service (450ms)
-│           ├── Validate cart (25ms)
-│           ├── Check inventory (180ms) ← Why so slow?
-│           │   └── Database query (175ms) ← Found it!
-│           ├── Process payment (200ms)
-│           │   └── External API call (195ms)
-│           └── Send confirmation (40ms)
-│
-└── Total response time: 850ms
-```
+
+:::tip Root Cause Found
+The trace reveals two bottlenecks: **inventory database query (175ms)** and **external payment API (195ms)**. Without tracing, you'd be guessing.
+:::
 
 With this trace, you immediately see that the 850ms response time stems from a slow inventory database query (175ms) and the external payment API (195ms).
 
@@ -126,12 +130,35 @@ The second example lets you filter, correlate with traces via `trace_id`, and un
 
 Each pillar is valuable alone, but **the magic happens when you can correlate all three**:
 
-```
-1. ALERT (Metrics)        → "Error rate > 1%"
-2. INVESTIGATE (Metrics)  → "Spiked at 10:15, DB connections at 100%"
-3. SEARCH (Logs)          → "Connection pool exhausted"
-4. TRACE (Traces)         → "inventory-service making 50 queries/request"
-5. ROOT CAUSE             → N+1 query bug from yesterday's deployment
+```mermaid
+flowchart LR
+    subgraph "1. Alert"
+        A[📊 Metrics<br/>Error rate > 1%]
+    end
+    
+    subgraph "2. Investigate"
+        B[📈 Metrics<br/>Spike at 10:15<br/>DB pool at 100%]
+    end
+    
+    subgraph "3. Search"
+        C[📝 Logs<br/>Connection pool<br/>exhausted]
+    end
+    
+    subgraph "4. Trace"
+        D[🔍 Traces<br/>50 queries/request<br/>in inventory-service]
+    end
+    
+    subgraph "5. Root Cause"
+        E[🎯 N+1 Query Bug<br/>Yesterday's deployment]
+    end
+    
+    A --> B --> C --> D --> E
+    
+    style A fill:#ff6b6b,color:#fff
+    style B fill:#feca57,color:#333
+    style C fill:#48dbfb,color:#333
+    style D fill:#1dd1a1,color:#333
+    style E fill:#5f27cd,color:#fff
 ```
 
 This investigation takes 10 minutes with proper observability. Without it? Hours of guessing.
@@ -152,31 +179,31 @@ OpenTelemetry (OTel) is three things:
 
 The key insight is **separation of concerns**. Your application code instruments itself using the OpenTelemetry SDK, speaking a standard protocol (OTLP). Where that data goes—Jaeger, Datadog, or your own backends—is a deployment-time decision, not a code-time decision.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    YOUR APPLICATION CODE                     │
-│    ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐       │
-│    │  Go SDK │  │Java SDK │  │.NET SDK │  │ Python  │       │
-│    └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘       │
-│         └────────────┴─────┬─────┴────────────┘             │
-│                            │                                 │
-│                      OTLP Protocol                           │
-└────────────────────────────┬────────────────────────────────┘
-                             │
-                             ▼
-                   ┌─────────────────┐
-                   │  OTel Collector │
-                   │ Receive→Process→│
-                   │     Export      │
-                   └────────┬────────┘
-                            │
-          ┌─────────────────┼─────────────────┐
-          ▼                 ▼                 ▼
-     ┌─────────┐       ┌─────────┐       ┌─────────┐
-     │ Jaeger  │       │ Grafana │       │ Datadog │
-     │(traces) │       │  Stack  │       │(if you  │
-     └─────────┘       └─────────┘       │  want)  │
-                                         └─────────┘
+```mermaid
+flowchart TB
+    subgraph apps["Your Application Code"]
+        direction LR
+        go[Go SDK]
+        java[Java SDK]
+        dotnet[.NET SDK]
+        python[Python SDK]
+    end
+    
+    apps -->|OTLP Protocol| collector
+    
+    subgraph collector["OpenTelemetry Collector"]
+        receive[Receive] --> process[Process] --> export[Export]
+    end
+    
+    collector --> jaeger[("🔍 Jaeger<br/>Traces")]
+    collector --> grafana[("📊 Grafana Stack<br/>Metrics + Logs")]
+    collector --> datadog[("☁️ Datadog<br/>or any vendor")]
+    
+    style apps fill:#e8f4f8,stroke:#0891b2
+    style collector fill:#f0fdf4,stroke:#16a34a
+    style jaeger fill:#fef3c7,stroke:#d97706
+    style grafana fill:#fce7f3,stroke:#db2777
+    style datadog fill:#f3e8ff,stroke:#9333ea
 ```
 
 ### Why This Matters for Your Architecture

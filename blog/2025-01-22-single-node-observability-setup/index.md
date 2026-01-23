@@ -33,29 +33,43 @@ For teams of 5-20 developers running 10-50 microservices, this is often more tha
 
 ## Architecture Overview
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     Your Application                         │
-└─────────────────────────────┬───────────────────────────────┘
-                              │ OTLP (gRPC :4317 / HTTP :4318)
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    OTel Collector                            │
-│    [Persistent Queues] [Memory Limiter] [Retry Policies]    │
-└────────────┬─────────────────┬─────────────────┬────────────┘
-             │                 │                 │
-             ▼                 ▼                 ▼
-      ┌──────────┐      ┌──────────┐      ┌──────────┐
-      │  Jaeger  │      │Prometheus│      │   Loki   │
-      │ (traces) │      │(metrics) │      │  (logs)  │
-      └────┬─────┘      └─────┬────┘      └────┬─────┘
-           │                  │                │
-           └──────────────────┼────────────────┘
-                              ▼
-                       ┌──────────┐
-                       │ Grafana  │
-                       │(dashboards)│
-                       └──────────┘
+```mermaid
+flowchart TB
+    subgraph apps["🖥️ Your Applications"]
+        app1[Service A]
+        app2[Service B]
+        app3[Service C]
+    end
+    
+    apps -->|"OTLP gRPC :4317<br/>OTLP HTTP :4318"| collector
+    
+    subgraph collector["⚙️ OpenTelemetry Collector"]
+        direction LR
+        pq[Persistent<br/>Queues]
+        ml[Memory<br/>Limiter]
+        rp[Retry<br/>Policies]
+    end
+    
+    collector --> jaeger
+    collector --> prometheus
+    collector --> loki
+    
+    subgraph storage["📦 Storage Backends"]
+        jaeger[("🔍 Jaeger<br/>Traces")]
+        prometheus[("📈 Prometheus<br/>Metrics")]
+        loki[("📝 Loki<br/>Logs")]
+    end
+    
+    storage --> grafana
+    
+    subgraph viz["📊 Visualization"]
+        grafana[Grafana<br/>Dashboards & Alerts]
+    end
+    
+    style apps fill:#dbeafe,stroke:#2563eb
+    style collector fill:#dcfce7,stroke:#16a34a
+    style storage fill:#fef3c7,stroke:#d97706
+    style viz fill:#fce7f3,stroke:#db2777
 ```
 
 ## Quick Start (5 Minutes)
@@ -91,6 +105,34 @@ make status
 ## Understanding the Components
 
 Let me walk through what each component does and why it's configured the way it is.
+
+```mermaid
+flowchart LR
+    subgraph receive["📥 Receive"]
+        otlp[OTLP<br/>gRPC/HTTP]
+    end
+    
+    subgraph process["⚙️ Process"]
+        ml[Memory<br/>Limiter]
+        batch[Batch<br/>Processor]
+        attr[Attribute<br/>Processor]
+    end
+    
+    subgraph export["📤 Export"]
+        traces[Traces → Jaeger]
+        metrics[Metrics → Prometheus]
+        logs[Logs → Loki]
+    end
+    
+    otlp --> ml --> batch --> attr
+    attr --> traces
+    attr --> metrics
+    attr --> logs
+    
+    style receive fill:#dbeafe,stroke:#2563eb
+    style process fill:#dcfce7,stroke:#16a34a
+    style export fill:#fef3c7,stroke:#d97706
+```
 
 ### The OpenTelemetry Collector
 
@@ -182,6 +224,33 @@ Grafana queries all three backends (Jaeger, Prometheus, Loki) and provides:
 
 Once the stack is running, configure your applications to send telemetry to the Collector.
 
+```mermaid
+flowchart LR
+    subgraph apps["Your Applications"]
+        go[🐹 Go]
+        py[🐍 Python]
+        node[💚 Node.js]
+        net[🔷 .NET]
+        java[☕ Java]
+    end
+    
+    subgraph protocols["Connection Options"]
+        grpc["gRPC :4317<br/>(recommended)"]
+        http["HTTP :4318<br/>(fallback)"]
+    end
+    
+    subgraph collector["OTel Collector"]
+        recv[Receivers]
+    end
+    
+    go & py & node & net & java --> grpc & http
+    grpc & http --> recv
+    
+    style apps fill:#f8fafc,stroke:#64748b
+    style protocols fill:#dbeafe,stroke:#2563eb
+    style collector fill:#dcfce7,stroke:#16a34a
+```
+
 ### Go
 
 ```go
@@ -235,6 +304,15 @@ builder.Services.AddOpenTelemetry()
         .AddAspNetCoreInstrumentation()
         .AddOtlpExporter(o => o.Endpoint = new Uri("http://localhost:4317")));
 ```
+
+:::tip Full Integration Guides
+Need detailed setup with custom spans, metrics, and logging? See our comprehensive guides:
+- [Go Integration](/docs/observability/integrations/go) — HTTP/gRPC, custom metrics, structured logging
+- [.NET Integration](/docs/observability/integrations/dotnet) — ASP.NET Core, Entity Framework, background services
+- [Java Integration](/docs/observability/integrations/java) — Spring Boot, Java Agent, Micrometer bridge
+- [Node.js Integration](/docs/observability/integrations/nodejs) — Express, Fastify, NestJS
+- [Python Integration](/docs/observability/integrations/python) — Flask, FastAPI, Django, Celery
+:::
 
 ## Operational Commands
 
@@ -290,6 +368,32 @@ make metrics         # Show collector throughput
 
 This isn't a toy setup. The configuration includes production reliability features:
 
+```mermaid
+flowchart LR
+    subgraph normal["✅ Normal Operation"]
+        app1[App] -->|telemetry| coll1[Collector]
+        coll1 --> be1[Backend]
+    end
+    
+    subgraph failure["⚠️ Backend Failure"]
+        app2[App] -->|telemetry| coll2[Collector]
+        coll2 -->|queue fills| pq[Persistent<br/>Queue]
+        pq -.->|"backend down"| be2[Backend]
+    end
+    
+    subgraph recovery["🔄 Recovery"]
+        app3[App] -->|telemetry| coll3[Collector]
+        coll3 --> pq2[Queue<br/>Drains]
+        pq2 -->|replay| be3[Backend]
+    end
+    
+    normal ~~~ failure ~~~ recovery
+    
+    style normal fill:#dcfce7,stroke:#16a34a
+    style failure fill:#fef3c7,stroke:#d97706
+    style recovery fill:#dbeafe,stroke:#2563eb
+```
+
 ### Persistent Queues
 
 Data survives collector restarts:
@@ -344,6 +448,27 @@ View alerts: `make alerts` or http://localhost:9090/alerts
 
 ## When to Scale Beyond Single-Node
 
+```mermaid
+flowchart TD
+    start{{"📊 Current Load?"}}
+    
+    start -->|"< 50K events/sec"| single["✅ Single-Node<br/>is sufficient"]
+    start -->|"> 50K events/sec"| scale
+    
+    scale{{"🎯 Requirements?"}}
+    scale -->|"High Availability"| multi["🏢 Multi-Node<br/>with redundancy"]
+    scale -->|"Multi-Region"| geo["🌍 Geo-Distributed<br/>collectors"]
+    scale -->|"Just more throughput"| kafka["📬 Add Kafka<br/>buffer layer"]
+    
+    single -->|"Monitor these signals"| signals["⚠️ Queue > 5K<br/>Memory > 80%<br/>Latency increasing"]
+    signals -->|"consistently hitting"| scale
+    
+    style single fill:#dcfce7,stroke:#16a34a
+    style multi fill:#dbeafe,stroke:#2563eb
+    style geo fill:#fef3c7,stroke:#d97706
+    style kafka fill:#fce7f3,stroke:#db2777
+```
+
 This setup handles most workloads, but consider scaling when:
 
 - Sustained throughput exceeds 50,000 events/second
@@ -387,7 +512,7 @@ Start here. Scale when you hit real limitations, not imagined ones.
 ## Resources
 
 - **GitHub Repository**: [opensource-otel-setup](https://github.com/shivam-g-mishra/opensource-otel-setup)
-- **Full Integration Guides**: [.NET](https://github.com/shivam-g-mishra/opensource-otel-setup/blob/main/docs/dotnet-integration.md) | [Node.js](https://github.com/shivam-g-mishra/opensource-otel-setup/blob/main/docs/nodejs-integration.md) | [Python](https://github.com/shivam-g-mishra/opensource-otel-setup/blob/main/docs/python-integration.md) | [Go](https://github.com/shivam-g-mishra/opensource-otel-setup/blob/main/docs/go-integration.md)
+- **Full Integration Guides**: [Go](/docs/observability/integrations/go) | [.NET](/docs/observability/integrations/dotnet) | [Java](/docs/observability/integrations/java) | [Node.js](/docs/observability/integrations/nodejs) | [Python](/docs/observability/integrations/python)
 - **Next**: [Scalable Architecture →](/blog/scalable-observability-architecture)
 
 ---
