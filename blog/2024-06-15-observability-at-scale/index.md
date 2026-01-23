@@ -4,7 +4,6 @@ title: "Observability at Scale: Building Production-Ready Monitoring"
 authors: [shivam]
 tags: [prometheus, grafana, monitoring, kubernetes]
 description: Real-time metrics collection, custom dashboards, and alert management for Kubernetes clusters serving millions of requests.
-image: ./social-card.png
 ---
 
 Real-time metrics collection, custom dashboards, and alert management for Kubernetes clusters serving millions of requests.

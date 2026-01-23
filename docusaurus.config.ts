@@ -149,11 +149,7 @@ const config: Config = {
           items: [
             {
               label: 'Portfolio',
-              href: 'https://shivam.dev',
-            },
-            {
-              label: 'RSS Feed',
-              to: '/blog/rss.xml',
+              href: 'https://shivamm.info',
             },
           ],
         },
