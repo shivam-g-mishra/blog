@@ -810,6 +810,7 @@ See also:
 - [Metrics That Matter →](./metrics) — What to measure
 - [Logging Done Right →](./logging) — Correlating logs with alerts
 - [Distributed Tracing →](./tracing) — Investigating from alerts
+- [Single-Node Setup →](./single-node-setup) — 30+ pre-configured alerting rules included
 
 ---
 

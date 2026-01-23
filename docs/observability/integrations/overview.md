@@ -134,8 +134,8 @@ Once you've instrumented your code, you need infrastructure to receive and visua
 
 | Guide | What It Covers |
 |-------|---------------|
-| [Single-Node Setup](/blog/single-node-observability-setup) | Jaeger, Prometheus, Loki, and Grafana on one machine |
-| [Scalable Architecture](/blog/scalable-observability-architecture) | Production-grade distributed setup |
+| [Single-Node Setup](../single-node-setup) | Jaeger, Prometheus, Loki, and Grafana on one machine |
+| [Scalable Architecture](../scalable-architecture) | Production-grade distributed setup |
 
 ---
 

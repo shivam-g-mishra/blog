@@ -394,9 +394,9 @@ Best of both worlds:
 
 | Next Step | Link |
 |-----------|------|
-| **Set up infrastructure** | [Single-Node Setup](/blog/single-node-observability-setup) — Get Jaeger, Prometheus, Loki running |
+| **Set up infrastructure** | [Single-Node Setup](./single-node-setup) — Get Jaeger, Prometheus, Loki running |
 | **Instrument your code** | [Integration Guides →](./integrations/overview) — Language-specific implementation |
-| **Scale for production** | [Scalable Architecture](/blog/scalable-observability-architecture) — Distributed, HA setup |
+| **Scale for production** | [Scalable Architecture](./scalable-architecture) — Distributed, HA setup |
 
 ---
 

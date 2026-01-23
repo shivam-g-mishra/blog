@@ -74,8 +74,8 @@ const config: Config = {
     announcementBar: {
       id: 'welcome',
       content: 'Welcome to my blog! Sharing insights from building scalable systems at NVIDIA.',
-      backgroundColor: '#84cc16',
-      textColor: '#0d0d0d',
+      backgroundColor: '#22c55e',
+      textColor: '#052e16',
       isCloseable: true,
     },
 
@@ -159,7 +159,7 @@ const config: Config = {
 
     prism: {
       theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      darkTheme: prismThemes.oneDark,
       additionalLanguages: [
         'bash',
         'diff',

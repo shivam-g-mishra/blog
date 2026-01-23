@@ -110,6 +110,18 @@ New to observability? Here's the recommended reading order:
 │                                   │ Integration     │ Go, Python, Java,    │
 │                                   │ Guides          │ .NET, Node.js        │
 │                                   └─────────────────┘                      │
+│                                          ↓                                 │
+│                                   6. INFRASTRUCTURE                        │
+│                                      ↓                                     │
+│                                   ┌─────────────────┐                      │
+│                                   │ Single-Node     │ Docker Compose       │
+│                                   │ Setup           │ deployment           │
+│                                   └─────────────────┘                      │
+│                                          ↓                                 │
+│                                   ┌─────────────────┐                      │
+│                                   │ Scalable        │ Enterprise           │
+│                                   │ Architecture    │ patterns             │
+│                                   └─────────────────┘                      │
 │                                                                            │
 └────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -126,6 +138,8 @@ New to observability? Here's the recommended reading order:
 | **Standard** | [OpenTelemetry →](./opentelemetry) | The vendor-neutral instrumentation standard |
 | **Reference** | [Glossary →](./glossary) | Terms and concepts quick reference |
 | **Code** | [Integration Guides →](./integrations/overview) | Language-specific implementation guides |
+| **Infrastructure** | [Single-Node Setup →](./single-node-setup) | Deploy observability stack with Docker Compose |
+| **Scale** | [Scalable Architecture →](./scalable-architecture) | Enterprise patterns with Kafka and object storage |
 
 ---
 
