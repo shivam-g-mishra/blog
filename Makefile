@@ -208,7 +208,7 @@ release: login build push deploy validate ## Complete release: login, build, pus
 	@echo "$(GREEN)✓ Blog release completed successfully!$(NC)"
 	@echo "$(GREEN)========================================$(NC)"
 	@echo ""
-	@echo "$(BLUE)Blog is live at:$(NC) $(GREEN)https://shivamm.info/blog$(NC)"
+	@echo "$(BLUE)Blog is live at:$(NC) $(GREEN)https://blog.shivamm.info$(NC)"
 
 # Quick shortcuts
 .PHONY: b

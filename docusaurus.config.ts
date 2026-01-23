@@ -8,10 +8,10 @@ const config: Config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://shivamm.info',
+  url: 'https://blog.shivamm.info',
   // Set the /<baseUrl>/ pathname under which your site is served
-  // Served under /blog path on the main domain
-  baseUrl: '/blog/',
+  // Served at root of the blog subdomain
+  baseUrl: '/',
 
   // GitHub pages deployment config (if you decide to use it)
   organizationName: 'shivam-g-mishra',
