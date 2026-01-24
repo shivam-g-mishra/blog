@@ -4,6 +4,7 @@ title: "Instrumenting Your Code for Observability: A Practical Guide for Senior 
 authors: [shivam]
 tags: [observability, opentelemetry, distributed-systems, architecture, best-practices]
 description: A hands-on guide to adding metrics, traces, and structured logging to your applications using OpenTelemetry. Written for senior engineers who want to understand the why and how of instrumentation.
+image: /img/instrumenting-code.svg
 ---
 
 When your service starts throwing errors at 2 AM, the difference between a 15-minute fix and a 3-hour investigation often comes down to one thing: how well you instrumented your code. I've been on both sides of this—debugging blind through log files hoping for a clue, and watching a distributed trace light up the exact line of code causing the problem. The latter is significantly more pleasant.

@@ -1,5 +1,8 @@
 ---
 sidebar_position: 3
+title: Documentation Standards
+description: Writing technical documentation that developers actually read - API docs, README files, architecture documentation, and runbooks.
+keywords: [documentation, technical writing, API documentation, README, runbooks, developer documentation]
 ---
 
 # Documentation Standards

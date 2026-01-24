@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="630" fill="url(#bg3)"/>
+  
+  <!-- Code brackets visual -->
+  <text x="150" y="350" font-family="monospace" font-size="120" fill="#6366f1" opacity="0.3">{</text>
+  <text x="1000" y="350" font-family="monospace" font-size="120" fill="#6366f1" opacity="0.3">}</text>
+  
+  <!-- Language icons -->
+  <rect x="250" y="300" width="80" height="80" rx="8" fill="#00ADD8" opacity="0.9"/>
+  <text x="290" y="350" font-family="system-ui" font-size="14" fill="white" text-anchor="middle">Go</text>
+  
+  <rect x="360" y="300" width="80" height="80" rx="8" fill="#3776AB" opacity="0.9"/>
+  <text x="400" y="350" font-family="system-ui" font-size="14" fill="white" text-anchor="middle">Python</text>
+  
+  <rect x="470" y="300" width="80" height="80" rx="8" fill="#f89820" opacity="0.9"/>
+  <text x="510" y="350" font-family="system-ui" font-size="14" fill="white" text-anchor="middle">Java</text>
+  
+  <rect x="580" y="300" width="80" height="80" rx="8" fill="#512BD4" opacity="0.9"/>
+  <text x="620" y="350" font-family="system-ui" font-size="14" fill="white" text-anchor="middle">.NET</text>
+  
+  <rect x="690" y="300" width="80" height="80" rx="8" fill="#339933" opacity="0.9"/>
+  <text x="730" y="350" font-family="system-ui" font-size="14" fill="white" text-anchor="middle">Node.js</text>
+  
+  <!-- OpenTelemetry badge -->
+  <rect x="800" y="300" width="150" height="80" rx="8" fill="#425CC7" opacity="0.9"/>
+  <text x="875" y="340" font-family="system-ui" font-size="14" fill="white" text-anchor="middle">OpenTelemetry</text>
+  <text x="875" y="365" font-family="system-ui" font-size="16" fill="white" text-anchor="middle">[OTel]</text>
+  
+  <!-- Title -->
+  <text x="600" y="100" font-family="system-ui" font-size="44" font-weight="bold" fill="white" text-anchor="middle">Instrumenting Code for</text>
+  <text x="600" y="160" font-family="system-ui" font-size="44" font-weight="bold" fill="white" text-anchor="middle">Observability</text>
+  <text x="600" y="220" font-family="system-ui" font-size="22" fill="#94a3b8" text-anchor="middle">A Practical Guide for Senior Engineers</text>
+  
+  <!-- Author -->
+  <text x="600" y="560" font-family="system-ui" font-size="18" fill="#64748b" text-anchor="middle">Shivam Mishra | blog.shivamm.info</text>
+</svg>

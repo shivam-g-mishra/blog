@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="630" fill="url(#bg5)"/>
+  
+  <!-- Prometheus logo representation -->
+  <circle cx="350" cy="320" r="80" fill="#e6522c" opacity="0.9"/>
+  <text x="350" y="330" font-family="system-ui" font-size="16" fill="white" text-anchor="middle">Prometheus</text>
+  
+  <!-- Arrow -->
+  <path d="M 440 320 L 540 320" stroke="#64748b" stroke-width="3" fill="none"/>
+  
+  <!-- Grafana representation -->
+  <rect x="560" y="260" width="160" height="120" rx="8" fill="#f46800" opacity="0.9"/>
+  <text x="640" y="330" font-family="system-ui" font-size="16" fill="white" text-anchor="middle">Grafana</text>
+  
+  <!-- Arrow -->
+  <path d="M 730 320 L 830 320" stroke="#64748b" stroke-width="3" fill="none"/>
+  
+  <!-- Kubernetes cluster -->
+  <rect x="850" y="260" width="160" height="120" rx="8" fill="#326ce5" opacity="0.9"/>
+  <text x="930" y="310" font-family="system-ui" font-size="14" fill="white" text-anchor="middle">Kubernetes</text>
+  <text x="930" y="340" font-family="system-ui" font-size="14" fill="white" text-anchor="middle">Cluster</text>
+  
+  <!-- Metrics flowing -->
+  <text x="600" y="450" font-family="system-ui" font-size="18" fill="#94a3b8" text-anchor="middle">Real-time metrics | Custom dashboards | Alert management</text>
+  
+  <!-- Title -->
+  <text x="600" y="80" font-family="system-ui" font-size="48" font-weight="bold" fill="white" text-anchor="middle">Observability at Scale</text>
+  <text x="600" y="130" font-family="system-ui" font-size="22" fill="#94a3b8" text-anchor="middle">Production-Ready Monitoring with Prometheus and Grafana</text>
+  
+  <!-- Author -->
+  <text x="600" y="560" font-family="system-ui" font-size="18" fill="#64748b" text-anchor="middle">Shivam Mishra | blog.shivamm.info</text>
+</svg>

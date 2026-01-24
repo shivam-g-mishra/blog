@@ -4,7 +4,7 @@ title: "Observability Fundamentals: An Architect's Guide to Modern Distributed S
 authors: [shivam]
 tags: [observability, opentelemetry, architecture, distributed-systems, monitoring]
 description: A comprehensive guide to observability for architects and technical leaders - understanding the three pillars, OpenTelemetry, and building a foundation for production-grade systems.
-image: /img/observability-fundamentals.png
+image: /img/observability-fundamentals.svg
 ---
 
 A comprehensive guide to observability for architects and technical leaders—understanding the three pillars, OpenTelemetry, and why it matters for modern distributed systems.

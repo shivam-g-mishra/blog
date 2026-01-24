@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="630" fill="url(#bg4)"/>
+  
+  <!-- Five layers visualization -->
+  <rect x="100" y="200" width="200" height="60" rx="6" fill="#3b82f6" opacity="0.9"/>
+  <text x="200" y="235" font-family="system-ui" font-size="14" fill="white" text-anchor="middle">Collection Layer</text>
+  
+  <rect x="300" y="270" width="200" height="60" rx="6" fill="#8b5cf6" opacity="0.9"/>
+  <text x="400" y="305" font-family="system-ui" font-size="14" fill="white" text-anchor="middle">Buffering (Kafka)</text>
+  
+  <rect x="500" y="340" width="200" height="60" rx="6" fill="#ec4899" opacity="0.9"/>
+  <text x="600" y="375" font-family="system-ui" font-size="14" fill="white" text-anchor="middle">Processing Layer</text>
+  
+  <rect x="700" y="270" width="200" height="60" rx="6" fill="#f59e0b" opacity="0.9"/>
+  <text x="800" y="305" font-family="system-ui" font-size="14" fill="white" text-anchor="middle">Storage Backends</text>
+  
+  <rect x="900" y="200" width="200" height="60" rx="6" fill="#22c55e" opacity="0.9"/>
+  <text x="1000" y="235" font-family="system-ui" font-size="14" fill="white" text-anchor="middle">Visualization</text>
+  
+  <!-- Connecting lines -->
+  <path d="M 300 230 L 300 290" stroke="#64748b" stroke-width="2" fill="none"/>
+  <path d="M 500 300 L 500 360" stroke="#64748b" stroke-width="2" fill="none"/>
+  <path d="M 700 370 L 700 310" stroke="#64748b" stroke-width="2" fill="none"/>
+  <path d="M 900 300 L 900 240" stroke="#64748b" stroke-width="2" fill="none"/>
+  
+  <!-- Scale indicator -->
+  <text x="600" y="480" font-family="system-ui" font-size="18" fill="#94a3b8" text-anchor="middle">Millions of events/sec | 90% cost reduction</text>
+  
+  <!-- Title -->
+  <text x="600" y="80" font-family="system-ui" font-size="44" font-weight="bold" fill="white" text-anchor="middle">Scalable Observability Architecture</text>
+  <text x="600" y="130" font-family="system-ui" font-size="22" fill="#94a3b8" text-anchor="middle">Five-Layer Design for Enterprise Workloads</text>
+  
+  <!-- Author -->
+  <text x="600" y="560" font-family="system-ui" font-size="18" fill="#64748b" text-anchor="middle">Shivam Mishra | blog.shivamm.info</text>
+</svg>

@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'Shivam Mishra',
   tagline: 'Scalable Systems | DevOps | Full-Stack Engineering',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.svg',
 
   // Set the production url of your site here
   url: 'https://blog.shivamm.info',
@@ -19,12 +19,40 @@ const config: Config = {
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
+  
+  // SEO: Consistent URL format (no trailing slashes)
+  trailingSlash: false,
 
   // Internationalization
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
   },
+
+  // SEO: Additional head tags
+  headTags: [
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'author',
+        content: 'Shivam Mishra',
+      },
+    },
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'robots',
+        content: 'index, follow',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'author',
+        href: 'https://shivamm.info',
+      },
+    },
+  ],
 
   presets: [
     [
@@ -58,17 +86,31 @@ const config: Config = {
           customCss: './src/css/custom.css',
         },
         gtag: {
-          // Add your Google Analytics tracking ID here if you want
-          trackingID: 'G-XXXXXXXXXX',
+          trackingID: 'G-GQ4KXN5PG2',
           anonymizeIP: true,
+        },
+        sitemap: {
+          changefreq: 'weekly',
+          priority: 0.5,
+          filename: 'sitemap.xml',
         },
       } satisfies Preset.Options,
     ],
   ],
 
   themeConfig: {
-    // Social card image
-    image: 'img/social-card.jpg',
+    // Social card image (used for Open Graph and Twitter cards)
+    image: 'img/social-card.svg',
+
+    // SEO metadata
+    metadata: [
+      {name: 'keywords', content: 'observability, OpenTelemetry, DevOps, Kubernetes, distributed systems, monitoring, Prometheus, Grafana, distributed tracing, software engineering'},
+      {name: 'twitter:card', content: 'summary_large_image'},
+      {name: 'twitter:creator', content: '@shivam_g_mishra'},
+      {property: 'og:type', content: 'website'},
+      {property: 'og:locale', content: 'en_US'},
+      {property: 'og:site_name', content: 'Shivam Mishra - Technical Blog'},
+    ],
     
     // Announcement bar (optional)
     announcementBar: {
@@ -200,25 +242,28 @@ const config: Config = {
     // },
   } satisfies Preset.ThemeConfig,
 
-  // Add local search plugin (uncomment after npm install)
-  // themes: [
-  //   [
-  //     require.resolve("@easyops-cn/docusaurus-search-local"),
-  //     {
-  //       hashed: true,
-  //       indexBlog: true,
-  //       indexDocs: true,
-  //       blogRouteBasePath: "/blog",
-  //       highlightSearchTermsOnTargetPage: true,
-  //     },
-  //   ],
-  // ],
-
   // Mermaid diagrams support
   markdown: {
     mermaid: true,
   },
-  themes: ['@docusaurus/theme-mermaid'],
+  
+  // Themes: Mermaid for diagrams + Local search for SEO and UX
+  themes: [
+    '@docusaurus/theme-mermaid',
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      {
+        hashed: true,
+        indexBlog: true,
+        indexDocs: true,
+        blogRouteBasePath: "/blog",
+        docsRouteBasePath: "/docs",
+        highlightSearchTermsOnTargetPage: true,
+        searchBarShortcutHint: true,
+        language: ["en"],
+      },
+    ],
+  ],
 };
 
 export default config;

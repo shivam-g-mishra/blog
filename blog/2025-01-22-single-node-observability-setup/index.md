@@ -4,7 +4,7 @@ title: "Building a Production-Ready Observability Stack: Single-Node Deployment 
 authors: [shivam]
 tags: [observability, opentelemetry, docker, prometheus, grafana, jaeger, loki, devops]
 description: A practical guide to deploying a complete observability stack with OpenTelemetry, Prometheus, Jaeger, Loki, and Grafana using Docker Compose. Production-ready for small to medium workloads.
-image: /img/single-node-observability.png
+image: /img/single-node-observability.svg
 ---
 
 A practical guide to deploying a complete observability stack with OpenTelemetry, Prometheus, Jaeger, Loki, and Grafana. Production-ready for small to medium workloads—get traces, metrics, and logs in minutes.

@@ -4,7 +4,7 @@ title: "Designing Scalable Observability: A Five-Layer Architecture for Enterpri
 authors: [shivam]
 tags: [observability, opentelemetry, kafka, kubernetes, architecture, tempo, mimir, loki, enterprise]
 description: A deep dive into scalable observability architecture - five-layer design with Kafka buffering, intelligent sampling, object storage backends, and production deployment patterns for enterprise workloads.
-image: /img/scalable-observability.png
+image: /img/scalable-observability.svg
 ---
 
 A deep dive into scalable observability architecture—the five-layer design pattern that handles millions of events per second while reducing costs by 90% compared to commercial alternatives.

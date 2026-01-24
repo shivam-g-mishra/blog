@@ -106,8 +106,8 @@ export default function Home(): JSX.Element {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Blog & Docs`}
-      description="Technical blog by Shivam Mishra - Senior Software Engineer at NVIDIA. Insights on scalable systems, DevOps, Kubernetes, and full-stack development.">
+      title="Technical Blog - Observability, DevOps & Distributed Systems"
+      description="Technical blog by Shivam Mishra, Senior Software Engineer at NVIDIA. In-depth guides on OpenTelemetry, Kubernetes, distributed tracing, Prometheus, Grafana, and building scalable production systems.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

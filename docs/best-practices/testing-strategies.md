@@ -1,5 +1,8 @@
 ---
 sidebar_position: 2
+title: Testing Strategies
+description: Comprehensive testing approaches for reliable software - unit tests, integration tests, E2E tests, and the testing pyramid.
+keywords: [testing, unit tests, integration tests, E2E tests, testing pyramid, software quality, test automation]
 ---
 
 # Testing Strategies

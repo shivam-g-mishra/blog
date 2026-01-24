@@ -1,6 +1,9 @@
 ---
 sidebar_position: 1
 slug: /intro
+title: Welcome to My Docs
+description: Comprehensive documentation on observability, DevOps best practices, and software engineering. Guides on OpenTelemetry, distributed tracing, and building scalable systems.
+keywords: [documentation, observability, DevOps, software engineering, best practices, OpenTelemetry, distributed systems]
 ---
 
 # Welcome to My Docs

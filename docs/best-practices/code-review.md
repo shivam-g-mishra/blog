@@ -1,5 +1,8 @@
 ---
 sidebar_position: 1
+title: Code Review Best Practices
+description: Guidelines for effective code reviews in distributed teams - improving code quality, knowledge sharing, and team collaboration.
+keywords: [code review, pull request, best practices, software engineering, team collaboration, code quality]
 ---
 
 # Code Review Best Practices
