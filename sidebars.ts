@@ -61,9 +61,9 @@ const sidebars: SidebarsConfig = {
       },
       items: [
         'cicd/introduction',
+        'cicd/core-concepts',
+        'cicd/branching-strategies',
         // More documents will be added as they are created:
-        // 'cicd/core-concepts',
-        // 'cicd/branching-strategies',
         // 'cicd/versioning-releases',
         // 'cicd/testing-quality',
         // 'cicd/artifact-management',
