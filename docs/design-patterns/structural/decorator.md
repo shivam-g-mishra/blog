@@ -351,4 +351,7 @@ Test each decorator separately, then test a composed chain for ordering.
 
 ---
 
-**Next:** [Facade Pattern](/docs/design-patterns/structural/facade)
+## Navigation
+
+- **Previous:** [Composite Pattern](/docs/design-patterns/structural/composite)
+- **Next:** [Facade Pattern](/docs/design-patterns/structural/facade)

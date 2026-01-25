@@ -77,4 +77,7 @@ flowchart TD
 - [Prototype](/docs/design-patterns/creational/prototype)
 - [Singleton](/docs/design-patterns/creational/singleton)
 
-**Next:** [Factory Method Pattern](/docs/design-patterns/creational/factory-method)
+## Navigation
+
+- **Previous:** [Learning Paths](/docs/design-patterns/learning-paths)
+- **Next:** [Factory Method Pattern](/docs/design-patterns/creational/factory-method)

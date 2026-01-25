@@ -325,4 +325,7 @@ Test leaf behavior, composite behavior, and traversal order separately.
 
 ---
 
-**Next:** [Decorator Pattern](/docs/design-patterns/structural/decorator)
+## Navigation
+
+- **Previous:** [Bridge Pattern](/docs/design-patterns/structural/bridge)
+- **Next:** [Decorator Pattern](/docs/design-patterns/structural/decorator)

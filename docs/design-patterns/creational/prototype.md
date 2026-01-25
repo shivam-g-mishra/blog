@@ -287,4 +287,7 @@ Verify clones are independent and preserve the intended defaults.
 
 ---
 
-**Next:** [Singleton Pattern](/docs/design-patterns/creational/singleton)
+## Navigation
+
+- **Previous:** [Builder Pattern](/docs/design-patterns/creational/builder)
+- **Next:** [Singleton Pattern](/docs/design-patterns/creational/singleton)

@@ -393,4 +393,7 @@ Test with a fake factory that returns stub products and verify behavior.
 
 ---
 
-**Next:** [Builder Pattern](/docs/design-patterns/creational/builder)
+## Navigation
+
+- **Previous:** [Factory Method Pattern](/docs/design-patterns/creational/factory-method)
+- **Next:** [Builder Pattern](/docs/design-patterns/creational/builder)

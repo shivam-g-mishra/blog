@@ -298,4 +298,7 @@ Expose a way to reset or substitute the instance in tests, or wrap it behind an 
 
 ---
 
-**Next:** [Structural Patterns Overview](/docs/design-patterns/structural)
+## Navigation
+
+- **Previous:** [Prototype Pattern](/docs/design-patterns/creational/prototype)
+- **Next:** [Structural Patterns Overview](/docs/design-patterns/structural)

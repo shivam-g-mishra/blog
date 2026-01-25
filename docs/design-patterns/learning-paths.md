@@ -92,4 +92,7 @@ If you are starting fresh, the best initial sequence is:
 
 These patterns show up everywhere from APIs to UI frameworks.
 
-**Next:** [Creational Patterns Overview](/docs/design-patterns/creational)
+## Navigation
+
+- **Previous:** [How to Read Pattern Docs](/docs/design-patterns/reading-patterns)
+- **Next:** [Creational Patterns Overview](/docs/design-patterns/creational)

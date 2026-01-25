@@ -62,4 +62,7 @@ When I integrated a legacy authentication system into a modern API, we needed to
 - [Flyweight](/docs/design-patterns/structural/flyweight)
 - [Proxy](/docs/design-patterns/structural/proxy)
 
-**Next:** [Adapter Pattern](/docs/design-patterns/structural/adapter)
+## Navigation
+
+- **Previous:** [Singleton Pattern](/docs/design-patterns/creational/singleton)
+- **Next:** [Adapter Pattern](/docs/design-patterns/structural/adapter)

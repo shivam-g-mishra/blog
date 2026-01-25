@@ -105,8 +105,22 @@ You can read this series in multiple ways:
 
 Each pattern page uses the same structure: story, definition, structure, implementation, testing, and mistakes. Once you learn the layout, the series becomes a reference you can navigate quickly.
 
+## Suggested Reading Order
+
+If you want to go end-to-end, follow this sequence:
+
+1. Introduction (this page)
+2. [Pattern Catalog](/docs/design-patterns/catalog)
+3. [Selection Framework](/docs/design-patterns/choosing-patterns)
+4. [How to Read Pattern Docs](/docs/design-patterns/reading-patterns)
+5. [Learning Paths](/docs/design-patterns/learning-paths)
+6. [Creational Patterns Overview](/docs/design-patterns/creational)
+7. [Structural Patterns Overview](/docs/design-patterns/structural)
+
 ## Start Here
 
 If you want a map before the terrain, begin with the catalog and the selection framework. If you are ready to dive in, pick a family and explore patterns one by one.
 
-**Next:** [Pattern Catalog](/docs/design-patterns/catalog)
+## Navigation
+
+- **Next:** [Pattern Catalog](/docs/design-patterns/catalog)

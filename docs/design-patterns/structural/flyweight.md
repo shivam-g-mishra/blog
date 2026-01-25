@@ -320,4 +320,7 @@ Verify shared instances for identical keys and unique instances for different on
 
 ---
 
-**Next:** [Proxy Pattern](/docs/design-patterns/structural/proxy)
+## Navigation
+
+- **Previous:** [Facade Pattern](/docs/design-patterns/structural/facade)
+- **Next:** [Proxy Pattern](/docs/design-patterns/structural/proxy)

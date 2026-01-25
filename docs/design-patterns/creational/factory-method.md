@@ -384,4 +384,7 @@ Inject a fake factory or a stubbed product to verify behavior without real depen
 
 ---
 
-**Next:** [Abstract Factory Pattern](/docs/design-patterns/creational/abstract-factory)
+## Navigation
+
+- **Previous:** [Creational Patterns Overview](/docs/design-patterns/creational)
+- **Next:** [Abstract Factory Pattern](/docs/design-patterns/creational/abstract-factory)

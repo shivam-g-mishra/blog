@@ -101,4 +101,7 @@ If the answer is not a strong yes, reconsider.
 
 If you want to learn how we structure every pattern page, read the documentation guide. If you want a curated route, use the learning paths.
 
-**Next:** [How to Read Pattern Docs](/docs/design-patterns/reading-patterns)
+## Navigation
+
+- **Previous:** [Pattern Catalog](/docs/design-patterns/catalog)
+- **Next:** [How to Read Pattern Docs](/docs/design-patterns/reading-patterns)

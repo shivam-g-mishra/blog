@@ -312,4 +312,7 @@ Mock the implementation interface and validate the abstraction in isolation.
 
 ---
 
-**Next:** [Composite Pattern](/docs/design-patterns/structural/composite)
+## Navigation
+
+- **Previous:** [Adapter Pattern](/docs/design-patterns/structural/adapter)
+- **Next:** [Composite Pattern](/docs/design-patterns/structural/composite)

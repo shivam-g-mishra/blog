@@ -99,4 +99,7 @@ Patterns are most valuable when the problem repeats. Use this to sanity-check wh
 
 If you want a guided path, follow the learning paths. If you are troubleshooting, jump to the selection framework. If you already know the pattern name, use the sidebar.
 
-**Next:** [Pattern Selection Framework](/docs/design-patterns/choosing-patterns)
+## Navigation
+
+- **Previous:** [Design Patterns Introduction](/docs/design-patterns/introduction)
+- **Next:** [Pattern Selection Framework](/docs/design-patterns/choosing-patterns)

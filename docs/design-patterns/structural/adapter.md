@@ -315,4 +315,7 @@ Verify the adapter translates inputs and outputs correctly with small unit tests
 
 ---
 
-**Next:** [Bridge Pattern](/docs/design-patterns/structural/bridge)
+## Navigation
+
+- **Previous:** [Structural Patterns Overview](/docs/design-patterns/structural)
+- **Next:** [Bridge Pattern](/docs/design-patterns/structural/bridge)

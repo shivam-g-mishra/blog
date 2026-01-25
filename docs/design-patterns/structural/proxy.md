@@ -330,4 +330,7 @@ Verify that proxy and real object return identical results with added constraint
 
 ---
 
-**Next:** [Structural Patterns Overview](/docs/design-patterns/structural)
+## Navigation
+
+- **Previous:** [Flyweight Pattern](/docs/design-patterns/structural/flyweight)
+- **Next:** Behavioral Patterns Overview (coming soon)

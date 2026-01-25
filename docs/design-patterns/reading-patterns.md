@@ -103,4 +103,7 @@ Use these docs in three modes:
 - **Problem solving:** Jump to the pattern that matches your pain.
 - **Review:** Use the "When NOT to use" sections to sanity-check.
 
-**Next:** [Learning Paths](/docs/design-patterns/learning-paths)
+## Navigation
+
+- **Previous:** [Pattern Selection Framework](/docs/design-patterns/choosing-patterns)
+- **Next:** [Learning Paths](/docs/design-patterns/learning-paths)

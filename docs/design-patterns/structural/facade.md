@@ -315,4 +315,7 @@ Mock the subsystems and verify sequencing and error propagation.
 
 ---
 
-**Next:** [Flyweight Pattern](/docs/design-patterns/structural/flyweight)
+## Navigation
+
+- **Previous:** [Decorator Pattern](/docs/design-patterns/structural/decorator)
+- **Next:** [Flyweight Pattern](/docs/design-patterns/structural/flyweight)

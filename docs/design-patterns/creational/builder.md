@@ -389,4 +389,7 @@ Test the built object for correctness and validate defaults and ordering.
 
 ---
 
-**Next:** [Prototype Pattern](/docs/design-patterns/creational/prototype)
+## Navigation
+
+- **Previous:** [Abstract Factory Pattern](/docs/design-patterns/creational/abstract-factory)
+- **Next:** [Prototype Pattern](/docs/design-patterns/creational/prototype)
