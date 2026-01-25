@@ -40,6 +40,15 @@ Complete guides to building production-grade observability systems. Start with t
 - [Understanding OpenTelemetry](/docs/observability/opentelemetry) — The vendor-neutral standard
 - [Language Integrations](/docs/observability/integrations/overview) — Step-by-step instrumentation guides
 
+### Design Patterns
+
+Practical, mentor-style design patterns coverage that focuses on decision-making, trade-offs, and real-world usage. Includes classic GoF patterns, modern distributed patterns, testing guidance, and comparisons.
+
+- [Design Patterns Introduction](/docs/design-patterns/introduction) — What patterns are and how to use them
+- [Pattern Catalog](/docs/design-patterns/catalog) — The full map of patterns and families
+- [Selection Framework](/docs/design-patterns/choosing-patterns) — A practical approach to choosing the right pattern
+- [Learning Paths](/docs/design-patterns/learning-paths) — Curated paths by experience level
+
 ### Best Practices
 
 Guidelines for code quality, testing, and documentation.
@@ -53,6 +62,8 @@ Guidelines for code quality, testing, and documentation.
 **New to CI/CD?** Start with the [Introduction to CI/CD](/docs/cicd/introduction) — it explains the philosophy behind continuous integration and delivery, and sets up the foundation for everything else in the guide.
 
 **Building observability systems?** The [Introduction to Observability](/docs/observability/introduction) covers why observability matters and how to approach it. The [instrumentation blog post](/blog/instrumenting-code-for-observability) gives a practical overview before diving into the detailed guides.
+
+**Learning design patterns?** Start with the [Design Patterns Introduction](/docs/design-patterns/introduction), then use the [catalog](/docs/design-patterns/catalog) to navigate by problem family.
 
 Browse the sidebar to explore topics, or check out the [blog](/blog) for shorter-form content and insights.
 
