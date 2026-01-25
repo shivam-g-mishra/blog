@@ -1,11 +1,10 @@
 ---
 # Required
 sidebar_position: 17
-title: "CI/CD Case Studies — Real-World Deployment Scenarios"
+title: "CI/CD Case Studies for DevOps Teams"
 description: >-
-  Real-world CI/CD deployment examples: VPS, Kubernetes, Docker Swarm, serverless, 
-  mobile apps, static sites, and data center fleets. Complete pipelines for different 
-  deployment targets.
+  Real-world CI/CD deployment examples for DevOps teams: VPS, Kubernetes, serverless,
+  mobile apps, static sites, and data center fleets.
 
 # SEO
 keywords:
@@ -18,29 +17,38 @@ keywords:
   - docker deployment
   - real-world ci/cd
   - deployment patterns
+  - devops case studies
+  - learn ci/cd
 
 # Social sharing
-og_title: "CI/CD Case Studies: Real-World Deployment Scenarios"
-og_description: "Complete deployment examples from VPS to Kubernetes to mobile apps. See how CI/CD works in practice."
+og_title: "CI/CD Case Studies: DevOps Deployments in Practice"
+og_description: "Real-world CI/CD deployments from VPS to Kubernetes to mobile apps. See what works in practice."
 og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24
-date_modified: 2025-01-24
+date_modified: 2026-01-25
 author: shivam
 reading_time: 25
 content_type: reference
 ---
 
-# Case Studies: Real-World Deployments
+# CI/CD Case Studies: Real-World Deployments
 
 Theory is useful. Practice is better. This document provides real-world CI/CD deployment examples across different scenarios, from simple VPS deployments to complex multi-region Kubernetes clusters.
+
+If you're looking for real-world CI/CD examples or deployment pipeline templates, these case studies show how principles change when the deployment target changes.
 
 Each case study includes:
 - When to use this approach
 - Complete pipeline configuration
 - Key considerations
 - Common pitfalls
+
+**What you'll learn in this guide:**
+- How CI/CD changes across deployment environments
+- Which trade-offs matter at different scales
+- Patterns you can copy and adapt quickly
 
 ---
 
@@ -619,6 +627,28 @@ The final document in this series is the **Glossary**: a quick reference for CI/
 - **Serverless:** IaC tools (SAM, Terraform)
 - **Static:** CDN upload + cache invalidation
 - **Mobile:** Code signing + store upload
+
+---
+
+## FAQ: CI/CD Case Studies
+
+### Which CI/CD case study should I start with?
+
+Start with the scenario closest to your deployment target. The patterns transfer, but the tooling and risks differ across environments.
+
+### Are these pipelines production-ready?
+
+Yes, but treat them as templates. You'll still need to adapt secrets, environments, and monitoring for your own stack.
+
+### How do I choose between Docker, serverless, and Kubernetes deployments?
+
+Choose based on scale, operational overhead, and team expertise. The case studies illustrate the trade-offs for each.
+
+## Related Reading
+
+- [Deployment Strategies: Rollouts that match your target →](./deployment-strategies)
+- [Platform Examples: CI/CD configs by tool →](./platform-examples)
+- [Troubleshooting: Debug real-world failures →](./troubleshooting)
 
 ---
 

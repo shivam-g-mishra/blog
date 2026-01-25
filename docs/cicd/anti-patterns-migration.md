@@ -1,11 +1,10 @@
 ---
 # Required
 sidebar_position: 16
-title: "CI/CD Anti-patterns and Platform Migration"
+title: "CI/CD Anti-patterns and Migration for DevOps"
 description: >-
-  Learn common CI/CD anti-patterns to avoid and strategies for migrating between CI/CD 
-  platforms. Covers snowflake pipelines, manual steps, migration playbooks, and 
-  parallel running strategies.
+  Learn CI/CD anti-patterns to avoid and DevOps migration strategies between CI/CD
+  platforms. Covers snowflake pipelines, manual steps, and parallel run playbooks.
 
 # SEO
 keywords:
@@ -18,15 +17,17 @@ keywords:
   - ci/cd debt
   - migration strategy
   - ci/cd modernization
+  - devops migration
+  - learn ci/cd
 
 # Social sharing
-og_title: "CI/CD Anti-patterns and Migration: What Not to Do and How to Move"
-og_description: "Avoid common CI/CD mistakes and learn strategies for migrating between platforms safely."
+og_title: "CI/CD Anti-patterns & Migration: What to Avoid"
+og_description: "Avoid common CI/CD mistakes and use safe migration strategies between platforms."
 og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24
-date_modified: 2025-01-24
+date_modified: 2026-01-25
 author: shivam
 reading_time: 18
 content_type: explanation
@@ -36,7 +37,15 @@ content_type: explanation
 
 Every team I've worked with has inherited at least one anti-pattern. Pipelines that "evolved" over years without design. Manual steps that "we'll automate later." Configuration drift that nobody can explain. These patterns don't appear overnight—they accumulate slowly until someone realizes the CI/CD system is more hindrance than help.
 
+If you're dealing with CI/CD anti-patterns or planning a CI/CD migration, these shortcuts are the ones that slowly turn automation into a liability.
+
 This document covers two related topics: the anti-patterns you should avoid (or fix if you've inherited them), and strategies for migrating between CI/CD platforms when you need a fresh start.
+
+**What you'll learn in this guide:**
+- The most damaging CI/CD anti-patterns and how to fix them
+- How to recognize when a platform migration is justified
+- A safe, parallel-run migration playbook
+- Warning signs that your pipeline is accruing debt
 
 ---
 
@@ -450,6 +459,28 @@ The next document in this series provides **Case Studies**: real-world deploymen
 3. **Start with low-risk** — Prove it works
 4. **Keep old platform** — Until confident
 5. **Document everything** — Future you will thank you
+
+---
+
+## FAQ: CI/CD Anti-patterns and Migration
+
+### When should a DevOps team migrate CI/CD platforms?
+
+When the current platform blocks security, scalability, or developer experience and the cost of fixing exceeds the cost of migration.
+
+### What's the safest way to migrate?
+
+Run pipelines in parallel, start with low-risk services, and only cut over once results match. Avoid big-bang migrations.
+
+### How do we avoid reintroducing anti-patterns after migration?
+
+Standardize templates, automate manual steps, and document golden paths so teams don't rebuild one-off pipelines.
+
+## Related Reading
+
+- [Enterprise CI/CD: Governance that prevents drift →](./enterprise-cicd)
+- [Platform Examples: Reference best-practice configs →](./platform-examples)
+- [Troubleshooting: Debug migration failures →](./troubleshooting)
 
 ---
 

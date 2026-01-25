@@ -1,14 +1,14 @@
 ---
 # Required
 sidebar_position: 10
-title: "Platform Examples — Complete CI/CD Pipeline Configurations"
+title: "CI/CD Platform Examples for DevOps Teams"
 description: >-
-  Production-ready CI/CD pipeline examples for GitHub Actions, GitLab CI, Google Cloud 
-  Build, and Jenkins. Complete configurations you can adapt for your own projects with 
-  build, test, scan, and deploy stages.
+  Production-ready CI/CD pipeline examples for GitHub Actions, GitLab CI, Cloud Build,
+  and Jenkins. Adapt these DevOps-ready configs for build, test, scan, and deploy.
 
 # SEO
 keywords:
+  - ci/cd platform examples
   - github actions
   - gitlab ci
   - google cloud build
@@ -22,23 +22,27 @@ keywords:
   - cloudbuild.yaml
   - ci/cd templates
   - pipeline templates
+  - devops pipelines
+  - learn ci/cd
 
 # Social sharing
-og_title: "CI/CD Platform Examples: GitHub Actions, GitLab CI, Cloud Build, Jenkins"
-og_description: "Production-ready CI/CD pipelines you can copy and adapt. Complete examples with best practices built in."
+og_title: "CI/CD Platform Examples: GitHub Actions, GitLab CI, Jenkins"
+og_description: "Copy production-ready CI/CD pipelines with DevOps best practices for build, test, scan, and deploy."
 og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24
-date_modified: 2025-01-24
+date_modified: 2026-01-25
 author: shivam
 reading_time: 25
 content_type: reference
 ---
 
-# Platform Examples (End-to-End)
+# CI/CD Platform Examples (End-to-End)
 
 I've configured CI/CD pipelines across dozens of platforms over the years—from Jenkins at Aurigo when I was building automation frameworks, to GitHub Actions and GitLab CI for various internal services. Each platform has its quirks, strengths, and gotchas.
+
+If you're learning CI/CD for DevOps, concrete platform examples are the fastest way to connect concepts to implementation.
 
 This document provides complete, production-ready pipeline configurations for the most popular platforms. These aren't toy examples—they're the patterns I've used in real systems serving real users. Each example includes:
 
@@ -50,6 +54,11 @@ This document provides complete, production-ready pipeline configurations for th
 - Caching for performance
 
 Copy what you need, adapt it to your stack, and ship with confidence.
+
+**What you'll learn in this guide:**
+- How to structure end-to-end pipelines on popular platforms
+- Common CI/CD patterns that translate across tooling
+- The trade-offs between hosted and self-managed systems
 
 ---
 
@@ -1198,6 +1207,28 @@ standardPipeline(
 | **Container** | Native | Native | Native | Plugin |
 | **Kubernetes** | Via actions | Native | Native | Plugin |
 | **Cost** | Free tier | Free tier | Pay per use | Free (infra cost) |
+
+---
+
+## FAQ: CI/CD Platform Examples
+
+### Which CI/CD platform is best for DevOps teams?
+
+It depends on your ecosystem. GitHub Actions is great if you're already on GitHub, GitLab CI if you want an integrated DevOps platform, Cloud Build for GCP-native workflows, and Jenkins for maximum control.
+
+### Can I copy these pipelines directly?
+
+Use them as a starting point. You'll still need to adapt secrets, environments, and deployment steps to your stack.
+
+### How do I choose between hosted and self-hosted runners?
+
+Hosted runners are faster to start with. Self-hosted runners make sense when you need specialized hardware, private networks, or strict compliance controls.
+
+## Related Reading
+
+- [Core Concepts: Understand pipeline anatomy first →](./core-concepts)
+- [Pipeline Optimization: Make these examples fast →](./pipeline-optimization)
+- [Metrics & Maturity: Measure if your platform works →](./metrics-maturity)
 
 ---
 

@@ -1,15 +1,15 @@
 ---
 # Required
 sidebar_position: 9
-title: "Kubernetes and GitOps Delivery"
+title: "Kubernetes GitOps for CI/CD in DevOps"
 description: >-
-  Master Kubernetes CI/CD with GitOps. Learn container image building, Helm vs Kustomize, 
-  ArgoCD and Flux implementation, and Kubernetes secrets management patterns for 
-  production-grade deployments.
+  Learn Kubernetes CI/CD with GitOps: container image builds, Helm vs Kustomize,
+  ArgoCD and Flux workflows, and Kubernetes secrets patterns for DevOps delivery.
 
 # SEO
 keywords:
   - kubernetes ci/cd
+  - kubernetes gitops
   - gitops
   - argocd
   - flux
@@ -23,23 +23,27 @@ keywords:
   - sealed secrets
   - kubernetes manifests
   - container registry
+  - devops kubernetes
+  - learn ci/cd
 
 # Social sharing
-og_title: "Kubernetes and GitOps: Modern Cloud-Native CI/CD"
+og_title: "Kubernetes GitOps: Modern CI/CD for DevOps"
 og_description: "Master GitOps with ArgoCD and Flux. Learn Helm, Kustomize, and Kubernetes secrets management for production."
 og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24
-date_modified: 2025-01-24
+date_modified: 2026-01-25
 author: shivam
 reading_time: 26
 content_type: explanation
 ---
 
-# Kubernetes and GitOps Delivery
+# Kubernetes GitOps Delivery
 
 When I first started deploying to Kubernetes at NVIDIA, our process was straightforward but terrifying: build an image, push it, and run `kubectl apply` from a CI pipeline. It worked—until it didn't.
+
+If you're searching for Kubernetes CI/CD or GitOps workflows for DevOps, Kubernetes forces you to pick between fragile push-based automation and safer GitOps workflows.
 
 The problem wasn't Kubernetes itself. The problem was that nobody knew the actual state of our clusters. Developers would make "temporary" kubectl changes that became permanent. Configuration would drift between what was in Git and what was running. When something broke, we'd ask "what's actually deployed?" and get different answers from different people.
 
@@ -50,6 +54,12 @@ GitOps changed everything. The principle is simple: Git is the single source of 
 This shift from "push-based" deployments (CI pushes to cluster) to "pull-based" deployments (cluster pulls from Git) seems like a small architectural difference. In practice, it transforms how teams operate. Deployments become auditable (every change is a commit), reversible (revert the commit), and discoverable (look at the repo, not the cluster).
 
 This document covers everything you need to know to deploy to Kubernetes with confidence: building container images, choosing between Helm and Kustomize, implementing GitOps with ArgoCD and Flux, and managing secrets in a Kubernetes-native way.
+
+**What you'll learn in this guide:**
+- How GitOps changes CI/CD for Kubernetes
+- When to choose Helm vs. Kustomize
+- Tooling trade-offs between ArgoCD and Flux
+- Kubernetes-native secrets patterns that scale
 
 ---
 
@@ -1128,6 +1138,28 @@ The next document in this series provides **Platform Examples**: complete, worki
 - No drift detection
 - Manual deployment steps
 - Different tools for different environments
+
+---
+
+## FAQ: Kubernetes GitOps for CI/CD
+
+### What is GitOps in CI/CD?
+
+GitOps means Git is the source of truth for deployment state. The cluster pulls changes from Git and reconciles them, which makes deployments auditable and reversible.
+
+### Do I need ArgoCD or Flux to do GitOps?
+
+You can start with scripts and `kubectl`, but ArgoCD or Flux provides continuous reconciliation, drift detection, and safer automation at scale.
+
+### Is Helm or Kustomize better for DevOps teams?
+
+Helm is better for packaging shared apps; Kustomize is simpler for internal services with overlays. Choose the tool your team can standardize and maintain.
+
+## Related Reading
+
+- [Deployment Strategies: Roll out Kubernetes safely →](./deployment-strategies)
+- [Security & Compliance: Protect secrets and supply chain →](./security-compliance-secrets)
+- [Platform Examples: GitHub Actions/GitLab CI for K8s →](./platform-examples)
 
 ---
 

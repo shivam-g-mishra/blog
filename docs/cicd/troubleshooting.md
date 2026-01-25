@@ -1,10 +1,10 @@
 ---
 # Required
 sidebar_position: 13
-title: "CI/CD Troubleshooting Guide"
+title: "CI/CD Troubleshooting for DevOps Teams"
 description: >-
-  Diagnose and fix common CI/CD problems: build failures, test issues, deployment errors, 
-  secrets problems, and platform-specific issues. Practical solutions for when things go wrong.
+  Diagnose and fix CI/CD problems: build failures, test issues, deployment errors,
+  secrets problems, and platform-specific issues for DevOps teams.
 
 # SEO
 keywords:
@@ -19,15 +19,17 @@ keywords:
   - gitlab ci problems
   - jenkins troubleshooting
   - docker build errors
+  - devops troubleshooting
+  - learn ci/cd
 
 # Social sharing
-og_title: "CI/CD Troubleshooting: Fix Common Pipeline Problems"
-og_description: "Practical solutions for build failures, test issues, deployment errors, and secrets problems in CI/CD."
+og_title: "CI/CD Troubleshooting: Fix Pipeline Failures Fast"
+og_description: "Practical fixes for build failures, test issues, deployment errors, and secrets problems in CI/CD."
 og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24
-date_modified: 2025-01-24
+date_modified: 2026-01-25
 author: shivam
 reading_time: 20
 content_type: reference
@@ -37,7 +39,15 @@ content_type: reference
 
 Things will go wrong. Builds will fail. Deployments will break. Tests will flake. The difference between a frustrating day and a quick fix is knowing where to look.
 
+If you're learning CI/CD for DevOps, troubleshooting is the skill that keeps your pipeline from stalling when you need it most.
+
 This document is a practical troubleshooting guide covering the most common CI/CD problems and their solutions. Bookmark it. You'll need it at 2 AM when production is down.
+
+**What you'll learn in this guide:**
+- How to debug build and dependency failures fast
+- Patterns behind flaky tests and environment drift
+- Fixes for deployment, secrets, and permission issues
+- A systematic approach you can reuse under pressure
 
 ---
 
@@ -599,6 +609,28 @@ git bisect good abc123  # This commit was working
 # Git will checkout commits for you to test
 # Mark each as good or bad until it finds the culprit
 ```
+
+---
+
+## FAQ: CI/CD Troubleshooting
+
+### Why does CI pass locally but fail in the pipeline?
+
+Environment drift. CI runners have different OS, dependencies, or secrets. Use containers or local runners to match the CI environment.
+
+### Should I re-run flaky pipelines?
+
+Once to confirm flakiness, then fix the root cause. Re-running without investigation teaches teams to ignore failures.
+
+### What's the fastest way to debug a failing pipeline?
+
+Start with the exact error message, then reproduce locally or in a minimal job. Avoid random changes—hypothesize, test, repeat.
+
+## Related Reading
+
+- [Pipeline Optimization: Remove slow failure feedback →](./pipeline-optimization)
+- [Security & Compliance: Fix secrets and permissions →](./security-compliance-secrets)
+- [Platform Examples: Compare working configs →](./platform-examples)
 
 ---
 

@@ -1,15 +1,17 @@
 ---
 # Required
 sidebar_position: 7
-title: "Security, Compliance, and Secrets in CI/CD"
+title: "CI/CD Security and Compliance for DevOps"
 description: >-
-  Master CI/CD security: secrets management with Vault and cloud providers, security 
-  scanning (SAST, DAST, SCA), supply chain security with SLSA and Sigstore, compliance 
-  automation, and pipeline hardening.
+  Master CI/CD security for DevOps: secrets management, security scanning (SAST, DAST,
+  SCA), supply chain hardening, and compliance automation.
 
 # SEO
 keywords:
   - ci/cd security
+  - devops security
+  - ci/cd compliance
+  - devsecops
   - secrets management
   - vault ci/cd
   - sast
@@ -24,23 +26,28 @@ keywords:
   - oidc authentication
   - secret rotation
   - container scanning
+  - learn ci/cd
 
 # Social sharing
-og_title: "CI/CD Security: Secrets, Scanning, and Compliance Done Right"
-og_description: "Secure your CI/CD pipeline with proven secrets management, security scanning, and compliance automation patterns."
+og_title: "CI/CD Security: Secrets, Scans, and Compliance"
+og_description: "Secure DevOps pipelines with secrets management, scanning, and compliance automation that actually works."
 og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24
-date_modified: 2025-01-24
+date_modified: 2026-01-25
 author: shivam
 reading_time: 25
 content_type: explanation
 ---
 
-# Security, Compliance, and Secrets
+# CI/CD Security, Compliance, and Secrets
 
 Let me tell you about the secret that wasn't a secret.
+
+If you're looking for CI/CD security best practices or DevSecOps pipeline guidance, security is the part you can't bolt on later. The pipeline is a target the moment you automate it.
+
+This is the DevSecOps side of CI/CD: secure defaults, continuous verification, and fewer surprises in production.
 
 A few years ago, I was reviewing a CI/CD pipeline for an internal service at NVIDIA. The pipeline looked fine—build, test, deploy, all the right stages. Then I noticed something in the deployment step: an API key hardcoded in the workflow file. Not in the secrets store, not encrypted—just sitting there in plain text, committed to version control.
 
@@ -53,6 +60,12 @@ The key had access to a service that processed customer metadata. One compromise
 This incident taught me something important: **security in CI/CD isn't about the obvious attacks—it's about the accumulation of small exposures that create big vulnerabilities.** A hardcoded credential here, an overly-permissive token there, a missing scan step, an unpatched runner. Individually, they're minor. Combined, they're a breach waiting to happen.
 
 This document is about building CI/CD pipelines that are secure by default. Not security as an afterthought or a checklist item, but security woven into how you build, test, and deploy software.
+
+**What you'll learn in this guide:**
+- How to manage secrets without leaking them
+- The scanning layers that catch real supply chain risk
+- How to harden runners and pipeline permissions
+- Compliance automation that doesn't slow DevOps delivery
 
 ---
 
@@ -1068,6 +1081,28 @@ jobs:
     workload_identity_provider: projects/123/locations/global/workloadIdentityPools/github/providers/github
     service_account: github-actions@project.iam.gserviceaccount.com
 ```
+
+---
+
+## FAQ: CI/CD Security and Compliance
+
+### What is CI/CD security in DevOps?
+
+It's the practice of securing the pipeline itself—secrets, runners, dependencies, and artifacts—so attackers can't use automation to ship malicious changes.
+
+### Should security scans block the pipeline?
+
+Yes, for high-severity findings. If scans never block, teams learn to ignore them and vulnerabilities ship anyway.
+
+### How do I manage secrets without hardcoding them?
+
+Use platform secrets plus OIDC or Vault-backed short-lived credentials. Rotate regularly and keep permissions least-privileged.
+
+## Related Reading
+
+- [Artifact Management: Secure build outputs and provenance →](./artifact-management)
+- [Deployment Strategies: Ship safely with gated rollouts →](./deployment-strategies)
+- [Enterprise CI/CD: Governance at scale →](./enterprise-cicd)
 
 ---
 

@@ -1,29 +1,34 @@
 ---
 # Required
 sidebar_position: 18
-title: "CI/CD Glossary"
+title: "CI/CD Glossary for DevOps"
 description: >-
-  Complete glossary of CI/CD terminology. Definitions for continuous integration, 
-  continuous delivery, deployment strategies, DevOps practices, and related concepts.
+  Complete glossary of CI/CD and DevOps terminology. Definitions for continuous
+  integration, delivery, deployment strategies, and related concepts.
 
 # SEO
 keywords:
   - ci/cd glossary
   - ci/cd terms
   - devops terminology
+  - ci/cd definitions
   - continuous integration definition
   - continuous delivery definition
   - deployment terms
   - pipeline terminology
+  - learn ci/cd
+  - devops glossary
+  - ci cd meaning
+  - cicd meaning
 
 # Social sharing
-og_title: "CI/CD Glossary: Complete Terminology Reference"
-og_description: "Definitions for all CI/CD and DevOps terminology. From artifacts to zero-downtime deployment."
+og_title: "CI/CD Glossary: DevOps Terminology Reference"
+og_description: "Definitions for CI/CD and DevOps terminology, from artifacts to zero-downtime deployment."
 og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24
-date_modified: 2025-01-24
+date_modified: 2026-01-25
 author: shivam
 reading_time: 10
 content_type: reference
@@ -32,6 +37,13 @@ content_type: reference
 # CI/CD Glossary
 
 Quick reference for CI/CD and DevOps terminology used throughout this documentation.
+
+If you're looking for CI/CD terminology or a DevOps glossary, bookmark this page. It's the dictionary that removes ambiguity when reading pipelines and documentation.
+
+**What you'll learn in this guide:**
+- Plain-language definitions of common CI/CD terms
+- The acronyms that appear in DevOps tooling
+- How key concepts connect across the series
 
 ---
 
@@ -370,6 +382,26 @@ A deployment strategy that ensures continuous availability during deployment. Ac
 | SemVer | Semantic Versioning |
 | SSDLC | Secure Software Development Lifecycle |
 | VCS | Version Control System |
+
+---
+
+## FAQ: CI/CD Glossary
+
+### What does CI/CD mean?
+
+CI/CD refers to continuous integration (frequent merging + automated tests) and continuous delivery or deployment (code is always ready to ship or ships automatically).
+
+### What's the difference between CI and CD?
+
+CI is continuous integration—merging and testing changes frequently. CD can mean continuous delivery (deployable at any time) or continuous deployment (auto-deployed to production).
+
+### Why do DevOps teams use so many acronyms?
+
+Because CI/CD touches many systems: build, test, security, deployment, and operations. Acronyms are shorthand for common concepts across those areas.
+
+### Where should I start if I'm new to CI/CD?
+
+Start with the introduction and core concepts, then return here when a term feels unclear.
 
 ---
 
