@@ -26,7 +26,7 @@ keywords:
 # Social sharing
 og_title: "Deployment Strategies: Rolling, Blue-Green, Canary, and Beyond"
 og_description: "Learn when to use each deployment strategy and how to implement them for zero-downtime, confident releases."
-og_image: "/img/ci-cd-social-card.png"
+og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24

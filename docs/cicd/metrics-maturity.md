@@ -25,7 +25,7 @@ keywords:
 # Social sharing
 og_title: "CI/CD Metrics and Maturity: DORA Metrics and Beyond"
 og_description: "Learn to measure CI/CD effectiveness with DORA metrics and assess your organization's maturity level."
-og_image: "/img/ci-cd-social-card.png"
+og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24

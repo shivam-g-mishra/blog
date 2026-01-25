@@ -26,7 +26,7 @@ keywords:
 # Social sharing
 og_title: "Versioning and Releases: Ship Software That Communicates Clearly"
 og_description: "Learn semantic versioning, changelog automation, and release workflows that scale from solo projects to enterprise."
-og_image: "/img/ci-cd-social-card.png"
+og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24

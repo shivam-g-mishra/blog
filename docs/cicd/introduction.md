@@ -24,7 +24,7 @@ keywords:
 # Social sharing
 og_title: "CI/CD Guide: Transform How Your Team Ships Software"
 og_description: "Master CI/CD with real-world examples. Learn from production pipeline failures and successes."
-og_image: "/img/ci-cd-social-card.png"
+og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-22

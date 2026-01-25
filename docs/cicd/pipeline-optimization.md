@@ -24,7 +24,7 @@ keywords:
 # Social sharing
 og_title: "Pipeline Optimization: Make Your CI/CD Fast"
 og_description: "Practical techniques for optimizing CI/CD pipelines. Caching, parallelization, and bottleneck elimination."
-og_image: "/img/ci-cd-social-card.png"
+og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24

@@ -28,7 +28,7 @@ keywords:
 # Social sharing
 og_title: "CI/CD Security: Secrets, Scanning, and Compliance Done Right"
 og_description: "Secure your CI/CD pipeline with proven secrets management, security scanning, and compliance automation patterns."
-og_image: "/img/ci-cd-social-card.png"
+og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24

@@ -52,6 +52,111 @@ const config: Config = {
         href: 'https://shivamm.info',
       },
     },
+    // JSON-LD Structured Data: Person (Author)
+    {
+      tagName: 'script',
+      attributes: {
+        type: 'application/ld+json',
+      },
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        '@id': 'https://blog.shivamm.info/#author',
+        name: 'Shivam Mishra',
+        url: 'https://shivamm.info',
+        jobTitle: 'Senior Software Engineer',
+        worksFor: {
+          '@type': 'Organization',
+          name: 'NVIDIA',
+          url: 'https://nvidia.com',
+        },
+        sameAs: [
+          'https://www.linkedin.com/in/shivam-g-mishra',
+          'https://github.com/shivam-g-mishra',
+        ],
+        knowsAbout: [
+          'CI/CD',
+          'DevOps',
+          'Kubernetes',
+          'Observability',
+          'Distributed Systems',
+          'Software Engineering',
+        ],
+      }),
+    },
+    // JSON-LD Structured Data: WebSite with SearchAction
+    {
+      tagName: 'script',
+      attributes: {
+        type: 'application/ld+json',
+      },
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        '@id': 'https://blog.shivamm.info/#website',
+        url: 'https://blog.shivamm.info',
+        name: 'Shivam Mishra - Technical Blog',
+        description: 'Technical blog covering CI/CD, DevOps, Observability, and Distributed Systems',
+        publisher: {
+          '@id': 'https://blog.shivamm.info/#author',
+        },
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: {
+            '@type': 'EntryPoint',
+            urlTemplate: 'https://blog.shivamm.info/search?q={search_term_string}',
+          },
+          'query-input': 'required name=search_term_string',
+        },
+        inLanguage: 'en-US',
+      }),
+    },
+    // JSON-LD Structured Data: TechArticle Collection (Documentation)
+    {
+      tagName: 'script',
+      attributes: {
+        type: 'application/ld+json',
+      },
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        '@id': 'https://blog.shivamm.info/docs/cicd/#collection',
+        url: 'https://blog.shivamm.info/docs/cicd',
+        name: 'CI/CD Complete Guide',
+        description: 'Comprehensive CI/CD documentation covering pipeline design, deployment strategies, security, GitOps, Kubernetes, and enterprise patterns.',
+        isPartOf: {
+          '@id': 'https://blog.shivamm.info/#website',
+        },
+        about: [
+          {
+            '@type': 'Thing',
+            name: 'Continuous Integration',
+          },
+          {
+            '@type': 'Thing',
+            name: 'Continuous Delivery',
+          },
+          {
+            '@type': 'Thing',
+            name: 'DevOps',
+          },
+          {
+            '@type': 'Thing',
+            name: 'GitOps',
+          },
+          {
+            '@type': 'Thing',
+            name: 'Kubernetes',
+          },
+        ],
+        author: {
+          '@id': 'https://blog.shivamm.info/#author',
+        },
+        datePublished: '2025-01-22',
+        dateModified: '2025-01-24',
+        numberOfItems: 18,
+      }),
+    },
   ],
 
   presets: [
@@ -104,7 +209,7 @@ const config: Config = {
 
     // SEO metadata
     metadata: [
-      {name: 'keywords', content: 'observability, OpenTelemetry, DevOps, Kubernetes, distributed systems, monitoring, Prometheus, Grafana, distributed tracing, software engineering'},
+      {name: 'keywords', content: 'CI/CD, continuous integration, continuous delivery, DevOps, Kubernetes, GitOps, deployment strategies, pipeline optimization, observability, OpenTelemetry, distributed systems, monitoring, Prometheus, Grafana, distributed tracing, software engineering'},
       {name: 'twitter:card', content: 'summary_large_image'},
       {name: 'twitter:creator', content: '@shivam_g_mishra'},
       {property: 'og:type', content: 'website'},

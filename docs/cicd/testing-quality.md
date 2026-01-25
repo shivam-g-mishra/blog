@@ -27,7 +27,7 @@ keywords:
 # Social sharing
 og_title: "Testing and Quality Gates: Build Confidence That Enables Continuous Deployment"
 og_description: "Master testing strategies that give you real confidence to deploy. From unit tests to quality gates, learn what actually works."
-og_image: "/img/ci-cd-social-card.png"
+og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24

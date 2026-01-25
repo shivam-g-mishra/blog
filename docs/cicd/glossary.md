@@ -19,7 +19,7 @@ keywords:
 # Social sharing
 og_title: "CI/CD Glossary: Complete Terminology Reference"
 og_description: "Definitions for all CI/CD and DevOps terminology. From artifacts to zero-downtime deployment."
-og_image: "/img/ci-cd-social-card.png"
+og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24

@@ -27,7 +27,7 @@ keywords:
 # Social sharing
 og_title: "Artifact Management: Store, Version, and Promote Your Build Outputs"
 og_description: "Master artifact management for CI/CD. Learn storage solutions, versioning strategies, and promotion workflows."
-og_image: "/img/ci-cd-social-card.png"
+og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24

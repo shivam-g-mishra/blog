@@ -24,7 +24,7 @@ keywords:
 # Social sharing
 og_title: "Branching Strategies: Finding the Right Git Workflow for Your Team"
 og_description: "Trunk-based, GitFlow, or something else? Learn to choose the branching strategy that fits your team's needs."
-og_image: "/img/ci-cd-social-card.png"
+og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24

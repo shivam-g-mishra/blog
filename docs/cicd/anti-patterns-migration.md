@@ -22,7 +22,7 @@ keywords:
 # Social sharing
 og_title: "CI/CD Anti-patterns and Migration: What Not to Do and How to Move"
 og_description: "Avoid common CI/CD mistakes and learn strategies for migrating between platforms safely."
-og_image: "/img/ci-cd-social-card.png"
+og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24

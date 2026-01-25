@@ -23,7 +23,7 @@ keywords:
 # Social sharing
 og_title: "Enterprise CI/CD: Platform Engineering at Scale"
 og_description: "Build internal developer platforms, manage governance, and scale CI/CD across your organization."
-og_image: "/img/ci-cd-social-card.png"
+og_image: "/img/ci-cd-social-card.svg"
 
 # Content management
 date_published: 2025-01-24
