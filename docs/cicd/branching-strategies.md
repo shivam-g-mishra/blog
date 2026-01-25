@@ -93,20 +93,28 @@ Let's examine each major strategy in detail: how it works, when it shines, and w
 Trunk-based development is the oldest approach to version control, predating even Git itself. The core principle is simple: everyone commits to a single shared branch (the "trunk," typically called `main` or `master`), and that branch is always in a releasable state.
 
 ```mermaid
-%%{init: {'theme': 'neutral', 'gitGraph': {'mainBranchName': 'main'}}}%%
-gitGraph
-    commit id: "Feature A - Part 1"
-    commit id: "Feature B - Part 1"
-    commit id: "Feature A - Part 2"
-    commit id: "Bug fix"
-    commit id: "Feature B - Part 2"
-    commit id: "Feature A - Complete"
-    commit id: "Feature C"
-    branch release-1.0
-    commit id: "Release prep"
-    checkout main
-    commit id: "Feature B - Complete"
-    commit id: "New feature starts"
+flowchart LR
+    subgraph main["main branch"]
+        direction LR
+        A1[Feature A<br/>Part 1] --> B1[Feature B<br/>Part 1]
+        B1 --> A2[Feature A<br/>Part 2]
+        A2 --> BF[Bug fix]
+        BF --> B2[Feature B<br/>Part 2]
+        B2 --> AC[Feature A<br/>Complete]
+        AC --> FC[Feature C]
+        FC --> BC[Feature B<br/>Complete]
+        BC --> NF[New feature<br/>starts]
+    end
+    
+    subgraph release["release-1.0"]
+        direction LR
+        RP[Release prep]
+    end
+    
+    FC -.->|branch| RP
+    
+    style main fill:#e8f5e9
+    style release fill:#fff3e0
 ```
 
 #### How It Works
@@ -124,20 +132,30 @@ The key disciplines are:
 Pure trunk-based development—committing directly to main—terrifies many teams. A common compromise uses short-lived feature branches that exist for hours, not days:
 
 ```mermaid
-%%{init: {'theme': 'neutral', 'gitGraph': {'mainBranchName': 'main'}}}%%
-gitGraph
-    commit id: "Previous work"
-    branch feature-login
-    commit id: "Add login form"
-    commit id: "Add validation"
-    checkout main
-    merge feature-login id: "PR #42" tag: "merged same day"
-    branch feature-metrics
-    commit id: "Add tracking"
-    checkout main
-    commit id: "Direct commit: fix typo"
-    merge feature-metrics id: "PR #43" tag: "merged next morning"
-    commit id: "Continue..."
+flowchart TB
+    subgraph day1["Day 1"]
+        M1[main: Previous work]
+        M1 --> F1[feature-login:<br/>Add login form]
+        F1 --> F2[Add validation]
+        F2 --> M2[main: PR #42 merged]
+    end
+    
+    subgraph day2["Day 2"]
+        M2 --> FM1[feature-metrics:<br/>Add tracking]
+        M2 --> M3[main: fix typo]
+        FM1 --> M4[main: PR #43 merged]
+        M3 --> M4
+        M4 --> M5[Continue...]
+    end
+    
+    style M1 fill:#90EE90
+    style M2 fill:#90EE90
+    style M3 fill:#90EE90
+    style M4 fill:#90EE90
+    style M5 fill:#90EE90
+    style F1 fill:#87CEEB
+    style F2 fill:#87CEEB
+    style FM1 fill:#DDA0DD
 ```
 
 The branch provides a place for code review without breaking main, but the expectation is clear: branches live for one day, maybe two. Anything longer requires justification.
@@ -171,32 +189,48 @@ If your team blames individuals for build breaks rather than treating them as sy
 GitFlow emerged in 2010 as a reaction to the chaos many teams experienced with unstructured branching. It prescribes specific branches for specific purposes, creating a predictable flow from development to production.
 
 ```mermaid
-%%{init: {'theme': 'neutral', 'gitGraph': {'mainBranchName': 'main'}}}%%
-gitGraph
-    commit id: "v1.0.0" tag: "v1.0.0"
-    branch develop
-    commit id: "Post-release cleanup"
-    branch feature/user-auth
-    commit id: "Add auth model"
-    commit id: "Add auth service"
-    checkout develop
-    branch feature/dashboard
-    commit id: "Dashboard layout"
-    checkout feature/user-auth
-    commit id: "Auth complete"
-    checkout develop
-    merge feature/user-auth id: "Merge auth"
-    checkout feature/dashboard
-    commit id: "Dashboard widgets"
-    checkout develop
-    merge feature/dashboard id: "Merge dashboard"
-    branch release/1.1.0
-    commit id: "Version bump"
-    commit id: "Final fixes"
-    checkout main
-    merge release/1.1.0 id: "v1.1.0" tag: "v1.1.0"
-    checkout develop
-    merge release/1.1.0 id: "Back-merge"
+flowchart TB
+    subgraph main_branch["main"]
+        M1["v1.0.0"]
+        M2["v1.1.0"]
+    end
+    
+    subgraph develop_branch["develop"]
+        D1[Post-release<br/>cleanup]
+        D2[Merge auth]
+        D3[Merge dashboard]
+        D4[Back-merge]
+    end
+    
+    subgraph features["feature branches"]
+        FA1[feature/user-auth:<br/>Add auth model]
+        FA2[Add auth service]
+        FA3[Auth complete]
+        FD1[feature/dashboard:<br/>Dashboard layout]
+        FD2[Dashboard widgets]
+    end
+    
+    subgraph release_branch["release/1.1.0"]
+        R1[Version bump]
+        R2[Final fixes]
+    end
+    
+    M1 --> D1
+    D1 --> FA1
+    FA1 --> FA2 --> FA3
+    D1 --> FD1
+    FD1 --> FD2
+    FA3 --> D2
+    FD2 --> D3
+    D3 --> R1
+    R1 --> R2
+    R2 --> M2
+    R2 --> D4
+    
+    style main_branch fill:#ffcdd2
+    style develop_branch fill:#c8e6c9
+    style features fill:#bbdefb
+    style release_branch fill:#fff9c4
 ```
 
 #### The Branch Types
@@ -254,25 +288,31 @@ I've seen teams adopt GitFlow because it looked structured and professional, onl
 GitHub Flow emerged as a simpler alternative to GitFlow, optimized for continuous deployment and web applications. It has only one rule: the `main` branch is always deployable.
 
 ```mermaid
-%%{init: {'theme': 'neutral', 'gitGraph': {'mainBranchName': 'main'}}}%%
-gitGraph
-    commit id: "Deployed"
-    branch feature/new-button
-    commit id: "Add button"
-    commit id: "Style button"
-    checkout main
-    branch fix/typo
-    commit id: "Fix typo"
-    checkout main
-    merge fix/typo id: "Deploy typo fix"
-    checkout feature/new-button
-    commit id: "Add tests"
-    checkout main
-    merge feature/new-button id: "Deploy button"
-    branch feature/footer
-    commit id: "New footer"
-    checkout main
-    merge feature/footer id: "Deploy footer"
+flowchart LR
+    subgraph main_flow["main (always deployable)"]
+        M1[Deployed] --> M2[Deploy<br/>typo fix]
+        M2 --> M3[Deploy<br/>button]
+        M3 --> M4[Deploy<br/>footer]
+    end
+    
+    subgraph branches["Short-lived branches"]
+        B1[feature/new-button]
+        B2[fix/typo]
+        B3[feature/footer]
+    end
+    
+    M1 -.-> B1
+    M1 -.-> B2
+    B2 --> M2
+    B1 --> M3
+    M3 -.-> B3
+    B3 --> M4
+    
+    style main_flow fill:#c8e6c9
+    style M1 fill:#81c784
+    style M2 fill:#81c784
+    style M3 fill:#81c784
+    style M4 fill:#81c784
 ```
 
 #### How It Works
@@ -319,24 +359,29 @@ Teams that adopt GitHub Flow without this discipline end up with a `main` branch
 GitLab Flow sits between GitFlow's complexity and GitHub Flow's simplicity. It adds environment branches to GitHub Flow, creating a natural path from development through staging to production.
 
 ```mermaid
-%%{init: {'theme': 'neutral', 'gitGraph': {'mainBranchName': 'main'}}}%%
-gitGraph
-    commit id: "Feature complete"
-    branch staging
-    commit id: "Deployed to staging"
-    checkout main
-    commit id: "New feature"
-    checkout staging
-    merge main id: "Promote to staging"
-    branch production
-    commit id: "v1.0 - Deployed to prod"
-    checkout main
-    commit id: "Another feature"
-    checkout staging
-    merge main id: "Test new feature"
-    commit id: "QA validated"
-    checkout production
-    merge staging id: "v1.1 - Promote to prod"
+flowchart LR
+    subgraph main_env["main (development)"]
+        M1[Feature<br/>complete] --> M2[New<br/>feature]
+        M2 --> M3[Another<br/>feature]
+    end
+    
+    subgraph staging_env["staging"]
+        S1[Deploy to<br/>staging] --> S2[Promote<br/>from main]
+        S2 --> S3[QA<br/>validated]
+    end
+    
+    subgraph prod_env["production"]
+        P1[v1.0<br/>Deployed] --> P2[v1.1<br/>Promoted]
+    end
+    
+    M1 --> S1
+    M2 --> S2
+    S1 --> P1
+    S3 --> P2
+    
+    style main_env fill:#e3f2fd
+    style staging_env fill:#fff3e0
+    style prod_env fill:#c8e6c9
 ```
 
 #### The Environment Branch Model
@@ -363,22 +408,29 @@ Code flows downstream: `main` → `staging` → `production`. Merges always go i
 For versioned software, GitLab Flow offers release branches instead of environment branches:
 
 ```mermaid
-%%{init: {'theme': 'neutral', 'gitGraph': {'mainBranchName': 'main'}}}%%
-gitGraph
-    commit id: "v1.0 released"
-    branch 1-0-stable
-    commit id: "v1.0.0"
-    checkout main
-    commit id: "New feature"
-    commit id: "v1.1 feature"
-    branch 1-1-stable
-    commit id: "v1.1.0"
-    checkout 1-0-stable
-    commit id: "Hotfix" tag: "v1.0.1"
-    checkout main
-    merge 1-0-stable id: "Cherry-pick hotfix"
-    checkout 1-1-stable
-    merge main id: "Include hotfix" tag: "v1.1.1"
+flowchart TB
+    subgraph main_branch["main"]
+        M1[v1.0 released] --> M2[New feature]
+        M2 --> M3[v1.1 feature]
+        M3 --> M4[Cherry-pick<br/>hotfix]
+    end
+    
+    subgraph stable_1_0["1-0-stable"]
+        S10_1[v1.0.0] --> S10_2["Hotfix (v1.0.1)"]
+    end
+    
+    subgraph stable_1_1["1-1-stable"]
+        S11_1[v1.1.0] --> S11_2["Include hotfix<br/>(v1.1.1)"]
+    end
+    
+    M1 --> S10_1
+    M3 --> S11_1
+    S10_2 -.-> M4
+    M4 -.-> S11_2
+    
+    style main_branch fill:#e3f2fd
+    style stable_1_0 fill:#fff3e0
+    style stable_1_1 fill:#c8e6c9
 ```
 
 This supports multiple active releases while keeping `main` as the source of truth.
