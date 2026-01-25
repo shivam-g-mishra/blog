@@ -1,8 +1,33 @@
 ---
+# Required
 sidebar_position: 5
-title: Logging Done Right
-description: A practical guide to structured logging - what to log, how to log it, and patterns that actually help you debug production issues.
-keywords: [logging, structured logging, log levels, canonical log lines, observability, debugging]
+title: "Logging Done Right — Structured Logging Guide"
+description: >-
+  Master structured logging with this practical guide. Learn what to log, 
+  how to log it, and patterns that help you debug production issues at 3 AM.
+
+# SEO
+keywords:
+  - logging
+  - structured logging
+  - log levels
+  - canonical log lines
+  - observability
+  - debugging
+  - JSON logging
+  - log correlation
+
+# Social sharing
+og_title: "Logging Done Right: A Practical Guide"
+og_description: "The difference between a 10-minute investigation and a 3-hour nightmare is logging quality."
+og_image: "/img/observability-fundamentals.svg"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 18
+content_type: explanation
 ---
 
 # Logging Done Right: A Practical Guide

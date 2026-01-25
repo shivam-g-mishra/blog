@@ -1,8 +1,35 @@
 ---
+# Required
 sidebar_position: 9
-title: Scalable Architecture
-description: A five-layer architecture for enterprise observability - Kafka buffering, intelligent sampling, object storage backends, and production deployment patterns.
-keywords: [observability, opentelemetry, kafka, kubernetes, architecture, tempo, mimir, loki, enterprise, scalable]
+title: "Scalable Observability Architecture — Enterprise Guide"
+description: >-
+  Build enterprise observability with Kafka buffering, intelligent sampling, 
+  and object storage. Achieve 90% cost savings over commercial alternatives.
+
+# SEO
+keywords:
+  - observability
+  - opentelemetry
+  - kafka
+  - kubernetes
+  - architecture
+  - tempo
+  - mimir
+  - loki
+  - enterprise
+  - scalable
+
+# Social sharing
+og_title: "Scalable Observability: The Five-Layer Architecture"
+og_description: "Handle millions of events/sec while reducing costs by 90% vs commercial solutions."
+og_image: "/img/scalable-observability.svg"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 20
+content_type: explanation
 ---
 
 # Scalable Observability Architecture

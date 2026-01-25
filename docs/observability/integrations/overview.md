@@ -1,8 +1,31 @@
 ---
+# Required
 sidebar_position: 1
-title: Integration Overview
-description: Overview of OpenTelemetry integration patterns across different languages and frameworks.
-keywords: [opentelemetry, integration, instrumentation, sdk, auto-instrumentation]
+title: "OpenTelemetry Integration Overview — All Languages"
+description: >-
+  Overview of OpenTelemetry integration patterns for Go, Python, Java, Node.js, 
+  and .NET. Choose the right approach for your applications.
+
+# SEO
+keywords:
+  - opentelemetry
+  - integration
+  - instrumentation
+  - sdk
+  - auto-instrumentation
+  - go python java nodejs dotnet
+
+# Social sharing
+og_title: "OpenTelemetry Integration: All Languages Guide"
+og_description: "Comprehensive guides for instrumenting Go, Python, Java, Node.js, and .NET applications."
+og_image: "/img/instrumenting-code.svg"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 5
+content_type: reference
 ---
 
 # OpenTelemetry Integration Overview

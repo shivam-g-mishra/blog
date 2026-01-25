@@ -1,8 +1,33 @@
 ---
+# Required
 sidebar_position: 6
-title: Java Integration
-description: Complete guide to instrumenting Java applications with OpenTelemetry - Spring Boot, Micronaut, Quarkus, and the Java Agent.
-keywords: [java, spring boot, opentelemetry, otel, instrumentation, tracing, micrometer]
+title: "Java OpenTelemetry Integration — Spring Boot Guide"
+description: >-
+  Instrument Java applications with OpenTelemetry. Covers the Java Agent for 
+  zero-code instrumentation and SDK integration for Spring Boot.
+
+# SEO
+keywords:
+  - java
+  - spring boot
+  - opentelemetry
+  - otel
+  - instrumentation
+  - tracing
+  - micrometer
+  - java agent
+
+# Social sharing
+og_title: "Java OpenTelemetry Integration: Agent and SDK Guide"
+og_description: "Zero-code Java Agent or SDK integration for Spring Boot applications."
+og_image: "/img/instrumenting-code.svg"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 25
+content_type: tutorial
 ---
 
 # Java OpenTelemetry Integration

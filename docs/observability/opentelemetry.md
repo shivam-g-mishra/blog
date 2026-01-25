@@ -1,8 +1,33 @@
 ---
+# Required
 sidebar_position: 7
-title: Understanding OpenTelemetry
-description: A comprehensive guide to OpenTelemetry - the vendor-neutral standard for instrumenting applications and collecting telemetry data.
-keywords: [opentelemetry, otel, instrumentation, OTLP, collector, distributed tracing]
+title: "Understanding OpenTelemetry — The Instrumentation Standard"
+description: >-
+  Learn OpenTelemetry, the vendor-neutral standard for instrumentation. 
+  Understand SDKs, the Collector, OTLP protocol, and deployment patterns.
+
+# SEO
+keywords:
+  - opentelemetry
+  - otel
+  - instrumentation
+  - OTLP
+  - collector
+  - distributed tracing
+  - vendor neutral
+  - telemetry
+
+# Social sharing
+og_title: "Understanding OpenTelemetry: The Instrumentation Standard"
+og_description: "One SDK to learn, no vendor lock-in. Learn why OpenTelemetry is becoming the standard."
+og_image: "/img/observability-fundamentals.svg"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 12
+content_type: explanation
 ---
 
 # Understanding OpenTelemetry

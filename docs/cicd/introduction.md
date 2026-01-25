@@ -1,8 +1,37 @@
 ---
+# Required
 sidebar_position: 1
-title: Introduction to CI/CD
-description: Learn what CI/CD is, why it matters, and how continuous integration and continuous delivery transform software development. Complete guide for developers, DevOps engineers, and tech leads.
-keywords: [ci/cd, continuous integration, continuous delivery, continuous deployment, devops, software delivery, automation, pipelines, ci/cd pipeline, build automation, deployment automation, devops best practices, ci/cd tutorial, ci/cd guide]
+title: "Introduction to CI/CD — Complete Guide for Developers"
+description: >-
+  Learn what CI/CD is and why it transforms software delivery. Covers continuous 
+  integration, delivery, and deployment with real-world examples from production pipelines.
+
+# SEO
+keywords:
+  - ci/cd
+  - continuous integration
+  - continuous delivery
+  - continuous deployment
+  - devops
+  - ci/cd pipeline
+  - ci/cd tutorial
+  - ci/cd guide
+  - build automation
+  - deployment automation
+  - devops best practices
+  - software delivery
+
+# Social sharing
+og_title: "CI/CD Guide: Transform How Your Team Ships Software"
+og_description: "Master CI/CD with real-world examples. Learn from production pipeline failures and successes."
+og_image: "/img/ci-cd-social-card.png"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 15
+content_type: explanation
 ---
 
 # Introduction to CI/CD

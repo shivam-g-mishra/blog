@@ -1,8 +1,33 @@
 ---
+# Required
 sidebar_position: 5
-title: Python Integration
-description: Complete guide to instrumenting Python applications with OpenTelemetry - Flask, FastAPI, Django, and more.
-keywords: [python, flask, fastapi, django, opentelemetry, otel, instrumentation]
+title: "Python OpenTelemetry Integration — Flask, FastAPI, Django"
+description: >-
+  Instrument Python applications with OpenTelemetry. Covers Flask, FastAPI, 
+  Django with zero-code auto-instrumentation and SDK integration.
+
+# SEO
+keywords:
+  - python
+  - flask
+  - fastapi
+  - django
+  - opentelemetry
+  - otel
+  - instrumentation
+  - auto-instrumentation
+
+# Social sharing
+og_title: "Python OpenTelemetry Integration: Complete Guide"
+og_description: "Zero-code instrumentation or full SDK control for Flask, FastAPI, and Django."
+og_image: "/img/instrumenting-code.svg"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 22
+content_type: tutorial
 ---
 
 # Python OpenTelemetry Integration

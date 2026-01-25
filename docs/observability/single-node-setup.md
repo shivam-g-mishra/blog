@@ -1,8 +1,34 @@
 ---
+# Required
 sidebar_position: 8
-title: Single-Node Setup
-description: Deploy a production-ready observability stack with OpenTelemetry, Prometheus, Jaeger, Loki, and Grafana using Docker Compose on a single node.
-keywords: [observability, opentelemetry, docker, prometheus, grafana, jaeger, loki, deployment]
+title: "Single-Node Observability Setup — Docker Compose Guide"
+description: >-
+  Deploy a production-ready observability stack with OpenTelemetry, Prometheus, 
+  Jaeger, Loki, and Grafana. Get traces, metrics, and logs in 5 minutes.
+
+# SEO
+keywords:
+  - observability
+  - opentelemetry
+  - docker
+  - prometheus
+  - grafana
+  - jaeger
+  - loki
+  - deployment
+  - docker compose
+
+# Social sharing
+og_title: "Single-Node Observability: Production-Ready in 5 Minutes"
+og_description: "Deploy a complete observability stack with Docker Compose. Handles 50K events/second."
+og_image: "/img/single-node-observability.svg"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 15
+content_type: tutorial
 ---
 
 # Single-Node Observability Setup

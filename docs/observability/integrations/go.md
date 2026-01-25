@@ -1,8 +1,34 @@
 ---
+# Required
 sidebar_position: 2
-title: Go Integration
-description: Complete guide to instrumenting Go applications with OpenTelemetry - traces, metrics, logs, and distributed tracing.
-keywords: [go, golang, opentelemetry, otel, instrumentation, tracing, metrics]
+title: "Go OpenTelemetry Integration — Complete Guide"
+description: >-
+  Instrument Go applications with OpenTelemetry. Covers traces, metrics, logs, 
+  HTTP/gRPC instrumentation, and production-ready patterns.
+
+# SEO
+keywords:
+  - go
+  - golang
+  - opentelemetry
+  - otel
+  - instrumentation
+  - tracing
+  - metrics
+  - otelhttp
+  - otelgrpc
+
+# Social sharing
+og_title: "Go OpenTelemetry Integration: Production-Ready Guide"
+og_description: "Complete guide to instrumenting Go applications with traces, metrics, and logs."
+og_image: "/img/instrumenting-code.svg"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 25
+content_type: tutorial
 ---
 
 # Go OpenTelemetry Integration

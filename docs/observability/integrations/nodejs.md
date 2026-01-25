@@ -1,8 +1,34 @@
 ---
+# Required
 sidebar_position: 4
-title: Node.js Integration
-description: Complete guide to instrumenting Node.js and TypeScript applications with OpenTelemetry - Express, Fastify, NestJS, and more.
-keywords: [nodejs, javascript, typescript, express, opentelemetry, otel, instrumentation]
+title: "Node.js OpenTelemetry Integration — Express, Fastify, NestJS"
+description: >-
+  Instrument Node.js and TypeScript applications with OpenTelemetry. Covers 
+  Express, Fastify, NestJS with auto-instrumentation and custom spans.
+
+# SEO
+keywords:
+  - nodejs
+  - javascript
+  - typescript
+  - express
+  - opentelemetry
+  - otel
+  - instrumentation
+  - fastify
+  - nestjs
+
+# Social sharing
+og_title: "Node.js OpenTelemetry Integration: Complete Guide"
+og_description: "Auto-instrumentation for Express, Fastify, and NestJS with custom span examples."
+og_image: "/img/instrumenting-code.svg"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 22
+content_type: tutorial
 ---
 
 # Node.js OpenTelemetry Integration

@@ -1,8 +1,35 @@
 ---
+# Required
 sidebar_position: 4
-title: Metrics That Matter
-description: A comprehensive guide to observability metrics - understanding metric types, the golden signals, and building dashboards that actually help you operate systems.
-keywords: [metrics, prometheus, golden signals, RED method, USE method, monitoring, alerting, SLOs]
+title: "Metrics That Matter — Golden Signals and Beyond"
+description: >-
+  Master observability metrics with this guide. Learn metric types, golden signals, 
+  RED and USE methods, and how to build dashboards that help during incidents.
+
+# SEO
+keywords:
+  - metrics
+  - prometheus
+  - golden signals
+  - RED method
+  - USE method
+  - monitoring
+  - alerting
+  - SLOs
+  - dashboards
+  - counters histograms gauges
+
+# Social sharing
+og_title: "Metrics That Matter: Beyond the Dashboard"
+og_description: "Learn what to measure, how to measure it, and how to build dashboards that help."
+og_image: "/img/observability-fundamentals.svg"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 25
+content_type: explanation
 ---
 
 # Metrics That Matter: Beyond the Dashboard

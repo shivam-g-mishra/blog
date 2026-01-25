@@ -1,8 +1,33 @@
 ---
+# Required
 sidebar_position: 2
-title: The Three Pillars Deep Dive
-description: A practical guide to traces, metrics, and logs - understanding each pillar through the questions they answer.
-keywords: [traces, metrics, logs, distributed tracing, prometheus, observability pillars]
+title: "The Three Pillars of Observability — Traces, Metrics, Logs"
+description: >-
+  A practical guide to traces, metrics, and logs. Understand each observability 
+  pillar through the questions they answer and problems they solve.
+
+# SEO
+keywords:
+  - traces
+  - metrics
+  - logs
+  - distributed tracing
+  - prometheus
+  - observability pillars
+  - three pillars
+  - telemetry
+
+# Social sharing
+og_title: "Three Pillars of Observability: Traces, Metrics, and Logs"
+og_description: "Understand each pillar through the questions they answer and how they work together."
+og_image: "/img/observability-fundamentals.svg"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 12
+content_type: explanation
 ---
 
 # The Three Pillars: A Practical Explanation

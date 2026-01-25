@@ -1,8 +1,34 @@
 ---
+# Required
 sidebar_position: 3
-title: Distributed Tracing Explained
-description: A comprehensive guide to distributed tracing - understanding trace and span relationships, context propagation, and debugging microservices effectively.
-keywords: [distributed tracing, traces, spans, trace context, microservices, debugging, OpenTelemetry]
+title: "Distributed Tracing Explained — Debug Microservices Fast"
+description: >-
+  Master distributed tracing with this comprehensive guide. Learn trace and span 
+  relationships, context propagation, and how to debug microservices effectively.
+
+# SEO
+keywords:
+  - distributed tracing
+  - traces
+  - spans
+  - trace context
+  - microservices
+  - debugging
+  - OpenTelemetry
+  - context propagation
+  - trace id
+
+# Social sharing
+og_title: "Distributed Tracing: Debug Microservices in Minutes"
+og_description: "Learn how to follow requests across services and find root causes fast."
+og_image: "/img/observability-fundamentals.svg"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 20
+content_type: explanation
 ---
 
 # Distributed Tracing: Following the Thread

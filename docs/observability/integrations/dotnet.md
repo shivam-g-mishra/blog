@@ -1,8 +1,33 @@
 ---
+# Required
 sidebar_position: 3
-title: .NET Integration
-description: Complete guide to instrumenting .NET applications with OpenTelemetry - ASP.NET Core, Entity Framework, and more.
-keywords: [dotnet, csharp, aspnetcore, opentelemetry, otel, instrumentation, tracing]
+title: ".NET OpenTelemetry Integration — ASP.NET Core Guide"
+description: >-
+  Instrument .NET applications with OpenTelemetry. Covers ASP.NET Core, 
+  Entity Framework, HttpClient, and custom ActivitySource instrumentation.
+
+# SEO
+keywords:
+  - dotnet
+  - csharp
+  - aspnetcore
+  - opentelemetry
+  - otel
+  - instrumentation
+  - tracing
+  - entity framework
+
+# Social sharing
+og_title: ".NET OpenTelemetry Integration: ASP.NET Core Guide"
+og_description: "First-class OpenTelemetry support for ASP.NET Core with System.Diagnostics."
+og_image: "/img/instrumenting-code.svg"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 25
+content_type: tutorial
 ---
 
 # .NET OpenTelemetry Integration

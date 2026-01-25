@@ -1,8 +1,34 @@
 ---
+# Required
 sidebar_position: 10
-title: Observability Glossary
-description: Common terms and concepts in observability, distributed tracing, and the OpenTelemetry ecosystem.
-keywords: [observability glossary, MTTD, MTTR, SLO, SLI, cardinality, span, trace]
+title: "Observability Glossary — Terms and Concepts"
+description: >-
+  Quick reference for observability terms and concepts. Covers distributed tracing, 
+  metrics, logging, alerting, and the OpenTelemetry ecosystem.
+
+# SEO
+keywords:
+  - observability glossary
+  - MTTD
+  - MTTR
+  - SLO
+  - SLI
+  - cardinality
+  - span
+  - trace
+  - observability terms
+
+# Social sharing
+og_title: "Observability Glossary: Essential Terms and Concepts"
+og_description: "Quick reference for traces, metrics, logs, SLOs, and OpenTelemetry terminology."
+og_image: "/img/observability-fundamentals.svg"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 8
+content_type: reference
 ---
 
 # Observability Glossary

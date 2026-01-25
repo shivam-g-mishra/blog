@@ -1,8 +1,34 @@
 ---
+# Required
 sidebar_position: 6
-title: Alerting Best Practices
-description: A practical guide to alerting - designing alerts that wake you up for the right reasons, reducing alert fatigue, and building effective on-call practices.
-keywords: [alerting, monitoring, on-call, pagerduty, alert fatigue, SLO, runbooks, incident response]
+title: "Alerting Best Practices — Reduce Alert Fatigue"
+description: >-
+  Design alerts that wake you up for the right reasons. Learn SLO-based alerting, 
+  reduce alert fatigue, and build effective on-call practices with runbooks.
+
+# SEO
+keywords:
+  - alerting
+  - monitoring
+  - on-call
+  - pagerduty
+  - alert fatigue
+  - SLO
+  - runbooks
+  - incident response
+  - burn rate alerting
+
+# Social sharing
+og_title: "Alerting Best Practices: Get Woken Up for the Right Reasons"
+og_description: "Bad alerting trains your team to ignore alerts. Learn how to fix that."
+og_image: "/img/observability-fundamentals.svg"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 22
+content_type: explanation
 ---
 
 # Alerting Best Practices: The Art of Getting Woken Up for the Right Reasons

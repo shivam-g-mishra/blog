@@ -1,8 +1,33 @@
 ---
+# Required
 sidebar_position: 1
-title: What is Observability?
-description: Understanding observability in distributed systems - beyond traditional monitoring to truly understanding system behavior.
-keywords: [observability, monitoring, distributed systems, debugging, production]
+title: "What is Observability? — Complete Guide"
+description: >-
+  Learn what observability is and how it differs from monitoring. Understand 
+  system behavior through traces, metrics, and logs in distributed systems.
+
+# SEO
+keywords:
+  - observability
+  - monitoring
+  - distributed systems
+  - debugging
+  - production
+  - traces metrics logs
+  - observability vs monitoring
+  - system behavior
+
+# Social sharing
+og_title: "What is Observability? Beyond Traditional Monitoring"
+og_description: "Learn how observability enables you to ask arbitrary questions about system behavior."
+og_image: "/img/observability-fundamentals.svg"
+
+# Content management
+date_published: 2025-01-22
+date_modified: 2025-01-24
+author: shivam
+reading_time: 8
+content_type: explanation
 ---
 
 # What is Observability?
