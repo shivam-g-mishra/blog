@@ -1,0 +1,8 @@
+{
+  "label": "CI/CD",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Complete CI/CD guide from foundations to enterprise patterns: pipeline design, deployment strategies, security, GitOps, and platform-specific implementations."
+  }
+}

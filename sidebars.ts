@@ -52,6 +52,37 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'CI/CD',
+      link: {
+        type: 'generated-index',
+        title: 'CI/CD',
+        description: 'Complete CI/CD guide from foundations to enterprise patterns: pipeline design, deployment strategies, security, GitOps, and platform-specific implementations.',
+        slug: '/cicd',
+      },
+      items: [
+        'cicd/introduction',
+        // More documents will be added as they are created:
+        // 'cicd/core-concepts',
+        // 'cicd/branching-strategies',
+        // 'cicd/versioning-releases',
+        // 'cicd/testing-quality',
+        // 'cicd/artifact-management',
+        // 'cicd/security-compliance-secrets',
+        // 'cicd/deployment-strategies',
+        // 'cicd/kubernetes-gitops',
+        // 'cicd/platform-examples',
+        // 'cicd/metrics-maturity',
+        // 'cicd/pipeline-optimization',
+        // 'cicd/troubleshooting',
+        // 'cicd/ai-in-cicd',
+        // 'cicd/enterprise-cicd',
+        // 'cicd/anti-patterns-migration',
+        // 'cicd/case-studies',
+        // 'cicd/glossary',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Best Practices',
       link: {
         type: 'generated-index',
