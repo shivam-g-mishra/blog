@@ -83,6 +83,16 @@
   border-top: 1px solid var(--color-border);
 }
 
+.featureLink {
+  text-decoration: none;
+  display: block;
+  height: 100%;
+}
+
+.featureLink:hover {
+  text-decoration: none;
+}
+
 .featureCard {
   padding: 2rem;
   border-radius: 0.75rem;
@@ -90,12 +100,17 @@
   border: 1px solid var(--color-border);
   transition: all 0.3s ease;
   height: 100%;
+  cursor: pointer;
 }
 
 .featureCard:hover {
   border-color: var(--ifm-color-primary);
   box-shadow: 0 10px 40px rgba(74, 222, 128, 0.08);
   transform: translateY(-4px);
+}
+
+.featureLink:hover .featureTitle {
+  color: var(--ifm-color-primary);
 }
 
 .featureEmoji {

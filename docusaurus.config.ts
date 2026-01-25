@@ -235,10 +235,31 @@ const config: Config = {
       items: [
         {to: '/blog', label: 'Blog', position: 'left'},
         {
-          type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
-          position: 'left',
+          type: 'dropdown',
           label: 'Docs',
+          position: 'left',
+          items: [
+            {
+              type: 'doc',
+              docId: 'intro',
+              label: 'Overview',
+            },
+            {
+              type: 'doc',
+              docId: 'cicd/introduction',
+              label: 'CI/CD Guide',
+            },
+            {
+              type: 'doc',
+              docId: 'observability/introduction',
+              label: 'Observability',
+            },
+            {
+              type: 'doc',
+              docId: 'best-practices/code-review',
+              label: 'Best Practices',
+            },
+          ],
         },
         {
           href: 'https://shivamm.info',
@@ -269,8 +290,25 @@ const config: Config = {
               to: '/blog',
             },
             {
-              label: 'Docs',
+              label: 'Docs Overview',
               to: '/docs/intro',
+            },
+          ],
+        },
+        {
+          title: 'Documentation',
+          items: [
+            {
+              label: 'CI/CD Guide',
+              to: '/docs/cicd/introduction',
+            },
+            {
+              label: 'Observability',
+              to: '/docs/observability/introduction',
+            },
+            {
+              label: 'Best Practices',
+              to: '/docs/best-practices/code-review',
             },
           ],
         },
@@ -285,15 +323,6 @@ const config: Config = {
               label: 'GitHub',
               href: 'https://github.com/shivam-g-mishra',
             },
-            {
-              label: 'Email',
-              href: 'mailto:shivam.g.mishra@gmail.com',
-            },
-          ],
-        },
-        {
-          title: 'More',
-          items: [
             {
               label: 'Landing Site',
               href: 'https://shivamm.info',

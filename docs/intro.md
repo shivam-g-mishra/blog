@@ -2,8 +2,8 @@
 sidebar_position: 1
 slug: /intro
 title: Welcome to My Docs
-description: Comprehensive documentation on observability, DevOps best practices, and software engineering. Guides on OpenTelemetry, distributed tracing, and building scalable systems.
-keywords: [documentation, observability, DevOps, software engineering, best practices, OpenTelemetry, distributed systems]
+description: Comprehensive documentation on CI/CD, observability, DevOps best practices, and software engineering. Guides on pipeline design, OpenTelemetry, distributed tracing, and building scalable systems.
+keywords: [documentation, CI/CD, continuous integration, continuous delivery, observability, DevOps, software engineering, best practices, OpenTelemetry, distributed systems]
 ---
 
 # Welcome to My Docs
@@ -11,6 +11,21 @@ keywords: [documentation, observability, DevOps, software engineering, best prac
 This documentation section contains in-depth guides, tutorials, and reference materials on topics I work with daily. The content is organized into focused areas, each with comprehensive guides you can follow step-by-step.
 
 ## What You'll Find Here
+
+### CI/CD
+
+A complete guide to Continuous Integration and Continuous Delivery — from fundamentals to enterprise patterns. Learn pipeline design, deployment strategies, security best practices, and platform-specific implementations.
+
+- [Introduction to CI/CD](/docs/cicd/introduction) — Why CI/CD transforms software delivery
+- [Core Concepts](/docs/cicd/core-concepts) — Pipeline anatomy, triggers, stages, and jobs
+- [Branching Strategies](/docs/cicd/branching-strategies) — Trunk-based development, GitFlow, and more
+- [Versioning & Releases](/docs/cicd/versioning-releases) — Semantic versioning and release management
+- [Testing & Quality Gates](/docs/cicd/testing-quality) — Building test suites that create confidence
+- [Security & Compliance](/docs/cicd/security-compliance-secrets) — Secrets management and security scanning
+- [Deployment Strategies](/docs/cicd/deployment-strategies) — Rolling, blue-green, and canary deployments
+- [Kubernetes & GitOps](/docs/cicd/kubernetes-gitops) — Patterns for K8s deployments
+- [Platform Examples](/docs/cicd/platform-examples) — GitHub Actions, GitLab CI, Jenkins configurations
+- [Enterprise CI/CD](/docs/cicd/enterprise-cicd) — Platform engineering and governance at scale
 
 ### Observability
 
@@ -35,7 +50,9 @@ Guidelines for code quality, testing, and documentation.
 
 ## Getting Started
 
-If you're new here, I'd recommend starting with **Observability** — it's the most comprehensive section and provides practical, hands-on guidance you can apply immediately. The [instrumentation blog post](/blog/instrumenting-code-for-observability) gives a high-level overview before diving into the detailed guides.
+**New to CI/CD?** Start with the [Introduction to CI/CD](/docs/cicd/introduction) — it explains the philosophy behind continuous integration and delivery, and sets up the foundation for everything else in the guide.
+
+**Building observability systems?** The [Introduction to Observability](/docs/observability/introduction) covers why observability matters and how to approach it. The [instrumentation blog post](/blog/instrumenting-code-for-observability) gives a practical overview before diving into the detailed guides.
 
 Browse the sidebar to explore topics, or check out the [blog](/blog) for shorter-form content and insights.
 

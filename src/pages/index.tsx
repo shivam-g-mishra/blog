@@ -41,49 +41,55 @@ type FeatureItem = {
   title: string;
   emoji: string;
   description: JSX.Element;
+  link: string;
 };
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Infrastructure & DevOps',
+    title: 'CI/CD & DevOps',
     emoji: '🏗️',
     description: (
       <>
-        Deep dives into Kubernetes, CI/CD pipelines, GitOps, Docker optimization,
-        and building scalable infrastructure that handles millions of requests.
+        Complete guides on CI/CD pipelines, GitOps, deployment strategies, 
+        Kubernetes, and building scalable infrastructure for production systems.
       </>
     ),
+    link: '/docs/cicd/introduction',
   },
   {
-    title: 'Full-Stack Development',
+    title: 'Best Practices',
     emoji: '💻',
     description: (
       <>
-        React patterns, TypeScript best practices, Node.js scalability,
-        API design, and building real-time analytics dashboards.
+        Code review guidelines, testing strategies, documentation standards,
+        and software engineering best practices from production experience.
       </>
     ),
+    link: '/docs/best-practices',
   },
   {
     title: 'Observability & Monitoring',
     emoji: '📊',
     description: (
       <>
-        Production-ready monitoring with Prometheus, Grafana, ELK stack,
+        Production-ready monitoring with Prometheus, Grafana, OpenTelemetry,
         distributed tracing, and alerting strategies that scale.
       </>
     ),
+    link: '/docs/observability/introduction',
   },
 ];
 
-function Feature({title, emoji, description}: FeatureItem) {
+function Feature({title, emoji, description, link}: FeatureItem) {
   return (
     <div className={clsx('col col--4')}>
-      <div className={styles.featureCard}>
-        <span className={styles.featureEmoji}>{emoji}</span>
-        <Heading as="h3" className={styles.featureTitle}>{title}</Heading>
-        <p className={styles.featureDescription}>{description}</p>
-      </div>
+      <Link to={link} className={styles.featureLink}>
+        <div className={styles.featureCard}>
+          <span className={styles.featureEmoji}>{emoji}</span>
+          <Heading as="h3" className={styles.featureTitle}>{title}</Heading>
+          <p className={styles.featureDescription}>{description}</p>
+        </div>
+      </Link>
     </div>
   );
 }
