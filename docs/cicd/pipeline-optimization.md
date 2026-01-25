@@ -52,7 +52,7 @@ Pipeline speed isn't a vanity metric—it directly affects developer behavior an
 
 | Pipeline Duration | Developer Behavior |
 |------------------|-------------------|
-| <5 minutes | Waits for result, iterates immediately |
+| Under 5 minutes | Waits for result, iterates immediately |
 | 5-15 minutes | Starts next task, checks back |
 | 15-30 minutes | Context switches completely |
 | 30+ minutes | Pushes and hopes, checks tomorrow |
@@ -715,13 +715,13 @@ The next document in this series covers **Troubleshooting**: what to do when thi
 
 | Stage | Target |
 |-------|--------|
-| Lint/Format | <2 min |
-| Type Check | <2 min |
-| Unit Tests | <5 min |
-| Build | <5 min |
-| Integration Tests | <10 min |
-| Full Pipeline | <15 min |
-| Deploy | <5 min |
+| Lint/Format | Under 2 min |
+| Type Check | Under 2 min |
+| Unit Tests | Under 5 min |
+| Build | Under 5 min |
+| Integration Tests | Under 10 min |
+| Full Pipeline | Under 15 min |
+| Deploy | Under 5 min |
 
 ### Caching Priorities
 

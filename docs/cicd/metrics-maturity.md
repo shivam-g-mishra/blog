@@ -251,10 +251,10 @@ GROUP BY 1;
 ```
 
 **Healthy targets:**
-- Lint/type check: <2 minutes
-- Unit tests: <5 minutes
-- Full pipeline: <15 minutes
-- Deploy: <5 minutes
+- Lint/type check: under 2 minutes
+- Unit tests: under 5 minutes
+- Full pipeline: under 15 minutes
+- Deploy: under 5 minutes
 
 ### Queue Time
 
@@ -268,7 +268,7 @@ FROM pipeline_runs
 WHERE queued_at > NOW() - INTERVAL '7 days';
 ```
 
-**Healthy target:** <30 seconds average, <2 minutes p95
+**Healthy target:** Under 30 seconds average, under 2 minutes p95
 
 **When it's high:**
 - Not enough runners
@@ -290,7 +290,7 @@ AND COUNT(CASE WHEN status = 'failed' THEN 1 END)::FLOAT / COUNT(*) BETWEEN 0.01
 ORDER BY failure_rate DESC;
 ```
 
-**Healthy target:** <2% flaky test rate
+**Healthy target:** Under 2% flaky test rate
 
 Tests that fail between 1% and 50% of the time are likely flaky (not deterministic failures).
 
@@ -458,7 +458,7 @@ Where is your organization on the CI/CD journey? This maturity model helps asses
 - Fully automated deployment to production
 - DORA metrics tracked and reported
 - Pipeline optimization based on data
-- Fast feedback loops (<15 min pipeline)
+- Fast feedback loops (under 15 min pipeline)
 - Comprehensive testing and security
 - Feature flags for progressive rollout
 
@@ -487,7 +487,7 @@ Where is your organization on the CI/CD journey? This maturity model helps asses
 **Metrics:**
 - Deployment frequency: On-demand
 - Lead time: Less than one hour
-- Change failure rate: <5%
+- Change failure rate: under 5%
 - MTTR: Minutes
 
 **Focus:**
@@ -506,8 +506,8 @@ Answer these questions:
 | Is deployment automated? | L2 | L3+ |
 | Can you deploy on-demand? | L3 | L4+ |
 | Do you track DORA metrics? | L3 | L4+ |
-| Is pipeline time <15 minutes? | L3 | L4+ |
-| Is change failure rate <15%? | L3 | L4+ |
+| Is pipeline time under 15 minutes? | L3 | L4+ |
+| Is change failure rate under 15%? | L3 | L4+ |
 | Do teams self-service CI/CD? | L4 | L5 |
 
 ---
@@ -557,9 +557,9 @@ DORA publishes annual "State of DevOps" reports with industry benchmarks. Use th
 | Metric | Elite | High | Medium | Low |
 |--------|-------|------|--------|-----|
 | Deployment frequency | On-demand | Daily-weekly | Weekly-monthly | Monthly+ |
-| Lead time | <1 hour | <1 week | <1 month | 1-6 months |
-| Change failure rate | <5% | 10-15% | 15-30% | 45%+ |
-| MTTR | <1 hour | <1 day | <1 week | 1+ week |
+| Lead time | Under 1 hour | Under 1 week | Under 1 month | 1-6 months |
+| Change failure rate | Under 5% | 10-15% | 15-30% | 45%+ |
+| MTTR | Under 1 hour | Under 1 day | Under 1 week | 1+ week |
 
 ### What High Performers Do Differently
 
@@ -598,9 +598,9 @@ Use the SMART framework for CI/CD improvement goals:
 
 **6-month goals:**
 - Deployment frequency: Daily
-- Lead time: <1 day
-- Change failure rate: <15%
-- MTTR: <1 hour
+- Lead time: under 1 day
+- Change failure rate: under 15%
+- MTTR: under 1 hour
 
 **Initiatives:**
 1. Reduce pipeline time from 45 min to 15 min (enables more frequent deployment)
@@ -627,20 +627,20 @@ The next document in this series covers **Pipeline Optimization**: how to make y
 
 | Metric | Elite | High | Medium | Low |
 |--------|-------|------|--------|-----|
-| Deploy frequency | Multiple/day | Weekly-daily | Monthly-weekly | <Monthly |
-| Lead time | <1 hour | <1 week | <1 month | >1 month |
-| Change failure rate | <5% | 10-15% | 15-30% | >45% |
-| MTTR | <1 hour | <1 day | <1 week | >1 week |
+| Deploy frequency | Multiple/day | Weekly-daily | Monthly-weekly | Under monthly |
+| Lead time | Under 1 hour | Under 1 week | Under 1 month | Over 1 month |
+| Change failure rate | Under 5% | 10-15% | 15-30% | Over 45% |
+| MTTR | Under 1 hour | Under 1 day | Under 1 week | Over 1 week |
 
 ### Pipeline Health Indicators
 
 | Metric | Healthy | Investigate |
 |--------|---------|-------------|
-| Success rate | >95% | <90% |
-| Duration | <15 min | >30 min |
-| Queue time | <30 sec | >2 min |
-| Flaky test rate | <2% | >5% |
-| Cache hit rate | >80% | <50% |
+| Success rate | Over 95% | Under 90% |
+| Duration | Under 15 min | Over 30 min |
+| Queue time | Under 30 sec | Over 2 min |
+| Flaky test rate | Under 2% | Over 5% |
+| Cache hit rate | Over 80% | Under 50% |
 
 ### Maturity Quick Assessment
 
