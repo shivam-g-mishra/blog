@@ -152,10 +152,10 @@ FROM (
 
 | Performance Level | Change Failure Rate |
 |------------------|-------------------|
-| Elite | 0-15% |
-| High | 16-30% |
-| Medium | 16-30% |
-| Low | 46-60% |
+| Elite | 0-5% |
+| High | 5-15% |
+| Medium | 15-30% |
+| Low | 30-60% |
 
 **How to measure:**
 
