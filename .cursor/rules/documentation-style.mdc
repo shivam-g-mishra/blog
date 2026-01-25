@@ -1,0 +1,1058 @@
+# Documentation Writing Style Guide
+
+This rule defines the writing tone, structure, and language for all documentation and blog posts in this project. It combines our distinctive narrative voice with industry best practices from Google, Microsoft, Stripe, Diátaxis, and research from Nielsen Norman Group.
+
+---
+
+## TL;DR — The 80% Rules
+
+For most content, follow these core principles:
+
+1. **Open with a story or problem** — Not a definition
+2. **Write as a mentor** — First person, conversational, opinionated
+3. **Bold one key insight per section** — Make it quotable
+4. **Use specific numbers** — "6 weeks" not "a while"
+5. **Explain why before how** — Reasoning, then commands
+6. **Keep paragraphs to 2-4 sentences** — One idea each
+7. **Use active voice** — "The pipeline runs" not "is run by"
+8. **Avoid "simply", "just", "obviously"** — They dismiss reader difficulty
+9. **End with momentum** — Clear next steps, never flat endings
+10. **Be scannable** — Headings, lists, bold, white space
+
+**If you remember nothing else:** Write like you're explaining something to a smart colleague over coffee. Be honest about what's hard. Share what you wish someone had told you.
+
+---
+
+## Philosophy
+
+**We write documentation that people actually want to read.**
+
+Most technical documentation fails because it treats readers as vessels to fill with information. We treat readers as intelligent colleagues who deserve the same explanation we'd give over coffee—personal, honest, and grounded in real experience.
+
+Our documentation should:
+- Make complex topics feel approachable, not intimidating
+- Respect the reader's time by being scannable but substantive
+- Leave readers with something actionable, not just informed
+- Be memorable enough that concepts stick
+
+---
+
+## Voice & Tone
+
+### The Mentor Mindset
+Write as a senior engineer mentoring a colleague. Not a textbook lecturing a student. Not a marketer selling a product. A trusted peer sharing hard-won knowledge.
+
+**Characteristics:**
+- **Personal**: Write in first person ("I") and address readers directly ("you")
+- **Honest**: Share failures alongside successes—"that deployment taught me..."
+- **Opinionated**: Have a point of view and defend it—"this is backwards"
+- **Warm but not fluffy**: Conversational without being frivolous (Google's guideline)
+
+### Specific Voice Techniques
+
+**Share real experiences, including failures:**
+> "I still remember the deployment that changed how I think about software delivery. It was a Thursday evening... By midnight, we were still debugging."
+
+**Admit when something took time to learn:**
+> "Here's the part that took me years to understand..."
+> "When I first heard about this, I thought it was reckless."
+
+**Call out bad practices directly:**
+> "This is backwards."
+> "This is how you train a team to ignore test failures."
+> "This myth needs to die."
+
+**Be empathetic before being corrective:**
+> "I hear this constantly, and I understand the logic..."
+> "This fear comes from QA engineers, and it's worth addressing with empathy because it reflects a genuine anxiety about job security."
+
+### Tone Calibration by Content Type
+
+| Content Type | Tone | Example Phrases |
+|--------------|------|-----------------|
+| Introductions | Inviting, curious | "Let me explain it the way I wish someone had explained it to me" |
+| Concepts | Clear, illuminating | "Here's the key insight..." |
+| How-tos | Direct, supportive | "Run this command. You should see..." |
+| Warnings | Serious, helpful | "But—and this is important—this isn't for everyone" |
+| Anti-patterns | Frank, constructive | "I've watched this happen enough times to recognize it instantly" |
+
+---
+
+## Content Types: Blog vs Documentation
+
+While both use our voice, blogs and documentation serve different purposes.
+
+### Documentation (Guides, References, Tutorials)
+
+**Purpose:** Teach concepts and enable tasks that remain relevant over time.
+
+- Evergreen content—minimize time-sensitive references
+- Comprehensive coverage of a topic
+- Structured for reference and re-reading
+- Neutral on vendor choices unless specifically comparing
+- Updated when technology changes
+
+### Blog Posts
+
+**Purpose:** Share insights, experiences, and timely perspectives.
+
+- Can be more personal and opinionated
+- Time-stamped and context-specific ("In 2024, we saw...")
+- Can reference current events, trends, announcements
+- Shorter, more focused scope
+- Doesn't need to cover everything—can be a single insight
+- Can be more experimental in format
+
+**Blog-specific techniques:**
+- Stronger hooks—compete for attention
+- More personality in the opening
+- Can end with questions or calls for discussion
+- Can reference "last week" or "recently"
+- Can take stronger stances
+
+---
+
+## The Diátaxis Framework
+
+Structure documentation by **user intent**, not author convenience. Every piece of content serves one of four purposes (from Diátaxis):
+
+### 1. Tutorials (Learning-Oriented)
+**User need:** "I want to learn"
+
+- Guide beginners step-by-step through a complete experience
+- Focus on *doing*, not explaining everything
+- Ensure success—every step should work
+- Build confidence through accomplishment
+
+### 2. How-To Guides (Task-Oriented)
+**User need:** "I need to accomplish X"
+
+- Solve a specific, real-world problem
+- Assume some existing knowledge
+- Be direct—get readers to their goal fast
+- Include troubleshooting for common issues
+
+### 3. Explanations (Understanding-Oriented)
+**User need:** "I want to understand why"
+
+- Illuminate concepts and decisions
+- Provide context, history, and reasoning
+- Connect to broader principles
+- This is where our narrative style shines
+
+### 4. Reference (Information-Oriented)
+**User need:** "I need the exact details"
+
+- Be accurate, complete, and consistent
+- Structure for quick lookup
+- Describe what something *is*, not how to use it
+- Keep prose minimal; use tables and lists
+
+**Our sweet spot is Explanations + Tutorials.** Most of our content blends narrative understanding with practical guidance.
+
+---
+
+## Structure & Scannable Content
+
+### The Inverted Pyramid
+
+Put the most important information first. Research shows 79% of web readers scan rather than read word-by-word (NNGroup). Respect this behavior.
+
+**Structure each section:**
+1. **Lead with the insight** — The key point in the first sentence
+2. **Support with evidence** — Examples, data, stories
+3. **Add depth progressively** — Details for those who want them
+
+**Bad:** Long buildup before the point
+> "In software development, there are many approaches to deployment. Teams have evolved various strategies over the years. Some teams deploy weekly, others monthly. Recently, a new approach has emerged..."
+
+**Good:** Point-first, then context
+> "Deploy fifty times a day and your production environment becomes *more stable*, not less. Here's why that counterintuitive truth holds..."
+
+### Document Architecture
+
+For major documents, follow this flow:
+
+```
+1. HOOK — Compelling story that illustrates the core problem
+   └─ End with a bold key insight
+
+2. CORE CONCEPT — What this thing actually is
+   └─ "So What Actually Is X?"
+   └─ Explain it memorably, not formally
+
+3. WHY IT MATTERS — Real-world impact
+   └─ What changes when you do this right?
+   └─ Connect to outcomes readers care about
+
+4. COMMON MYTHS — Address objections head-on
+   └─ Quote the objection
+   └─ Empathize, then correct
+
+5. ANTI-PATTERNS — What NOT to do
+   └─ Named patterns ("The 90-Minute Build")
+   └─ Why they happen, why they hurt
+
+6. NAVIGATION — Help readers find their path
+   └─ "If you're new to X, start here..."
+   └─ Clear next steps
+```
+
+### Heading Hierarchy
+
+Use headings to create a scannable outline:
+
+```
+# H1: Document Title (one per document)
+## H2: Major Sections (the main chapters)
+### H3: Subsections (topics within chapters)
+#### H4: Use sparingly (specific points within subsections)
+```
+
+**Rules:**
+- Never skip levels (don't go H2 → H4)
+- H2s should tell a complete story when read alone
+- Limit nesting to 3 levels (H2/H3/H4) in most cases
+- If you need H5, restructure instead
+
+**Write headings as:**
+- Questions: "So What Actually Is CI/CD?"
+- Actions: "Setting Up Your First Pipeline"
+- Statements: "The Hidden Cost of Slow Builds"
+- Never generic: Avoid "Introduction", "Overview", "Miscellaneous"
+
+### Scannability Techniques
+
+**Use visual hierarchy aggressively:**
+- **Bold** for key insights and takeaways
+- `Code formatting` for technical terms, commands, file names
+- *Italics* sparingly for emphasis within sentences
+- Horizontal rules `---` between major sections
+
+**Keep paragraphs short:**
+- One idea per paragraph
+- 2-4 sentences maximum for most paragraphs
+- White space is your friend
+
+**Write meaningful headings:**
+- Headings should tell a story when read alone
+- Use questions as headings: "So What Actually Is CI/CD?"
+- Front-load keywords for scanning
+
+---
+
+## Lists and Tables
+
+### When to Use Lists
+
+**Use numbered lists for:**
+- Sequential steps (order matters)
+- Ranked items
+- Processes with a specific flow
+
+**Use bulleted lists for:**
+- Features or characteristics
+- Options or alternatives
+- Non-sequential items
+- 3+ related items that would be awkward as prose
+
+**List best practices:**
+- 5-7 items maximum; split longer lists
+- Parallel structure (all items start the same way grammatically)
+- Don't end list items with periods unless they're complete sentences
+- If one item needs explanation, use a description list instead
+
+### When to Use Tables
+
+**Use tables for:**
+- Comparing multiple items across the same attributes
+- Lookup reference data
+- Before/after contrasts
+- Feature matrices
+
+**Table best practices:**
+- Always include a header row
+- Keep tables simple—if you need merged cells, reconsider
+- Left-align text, right-align numbers
+- Don't use tables for layout—only for actual tabular data
+- Add a brief intro sentence before the table
+
+---
+
+## Cognitive Load Management
+
+Technical content is inherently demanding. Reduce extraneous cognitive load so readers can focus on learning.
+
+### Chunking
+
+Break content into digestible pieces:
+- **Paragraphs:** 50-75 words ideal, rarely exceed 100
+- **Sentences:** Average 14-20 words (research shows 90%+ comprehension at 14 words)
+- **Sections:** One major concept per section
+- **Lists:** 5-7 items maximum; split longer lists
+
+### Progressive Disclosure
+
+Reveal complexity in layers:
+- Start with the essential concept
+- Add nuance in subsequent paragraphs
+- Use expandable sections for advanced details
+- "But—and this is important—" signals deeper nuance
+
+### Reduce Friction
+
+- Define jargon on first use, or avoid it entirely
+- Put conditions before instructions: "If you're using Docker, run..." not "Run X if you're using Docker"
+- Keep procedures to 7-10 steps; break longer ones into phases
+- Use familiar patterns: "Let's look at an example" before showing code
+
+---
+
+## Language & Style
+
+### Sentence Construction
+
+**Use active voice:**
+- Active: "The pipeline runs tests automatically"
+- Passive: "Tests are run automatically by the pipeline"
+
+**Use contractions** (per Microsoft and Google guidelines):
+- "You'll find..." not "You will find..."
+- "Don't do this" not "Do not do this"
+- It's warmer and more conversational
+
+**Front-load important words:**
+- "Kubernetes deployments require..." not "For Kubernetes deployments, you need to..."
+- Helps scanning and comprehension
+
+### Specificity Over Vagueness
+
+**Use concrete numbers:**
+
+| Vague | Specific |
+|-------|----------|
+| "It took a long time" | "By midnight... At 2 AM, we rolled back" |
+| "We worked on it for a while" | "Six weeks of code piling up in a feature branch" |
+| "Many files were affected" | "The merge conflicts spanned forty files" |
+| "This improves performance" | "This reduced build time from 90 minutes to 12" |
+
+### Words and Phrases to Avoid
+
+| Avoid | Why | Use Instead |
+|-------|-----|-------------|
+| "Simply", "just", "easily" | Dismisses reader difficulty | Remove or be specific about effort |
+| "Obviously", "clearly" | Makes readers feel stupid if they don't get it | Remove entirely |
+| "Best practice" (alone) | Vague and overused | Explain *why* it's recommended |
+| "Leverage", "utilize" | Corporate jargon | "Use" |
+| "In order to" | Wordy | "To" |
+| "Click here" | Non-descriptive link | Describe the destination |
+| Emojis | Unprofessional for technical docs | Words |
+
+### The Power of Bold
+
+Use **bold** for insights readers should remember:
+
+> "**The pain of integration grows exponentially with the time between integrations.**"
+
+> "**CD makes deployment a business decision, not a technical one.**"
+
+> "**Deployments should be unremarkable.**"
+
+Rules for bold:
+- One bold statement per major section maximum
+- Bold complete thoughts, not individual words
+- These should be quotable/tweetable
+
+---
+
+## Technical Content
+
+### Code Examples
+
+**Show real code, not toys:**
+- Production-ready patterns, not "hello world"
+- Include error handling when relevant
+- Show complete, runnable examples when possible
+- If simplified, acknowledge it: "This is simplified for clarity..."
+
+**Integrate code into narrative:**
+- Don't just show code—introduce it with context
+- Explain what to look for after the code
+- "But notice line 12—that single line is doing a lot of heavy lifting..."
+
+**Use syntax highlighting** and include language identifiers in code fences.
+
+### Diagrams and Visuals
+
+**Integrate diagrams into the story:**
+- Introduce with context: "Here's how the pieces fit together:"
+- Explain what to look for: "Notice the feedback loop on the left"
+- Don't let diagrams stand alone without narrative
+
+**Use Mermaid for diagrams:**
+- Flowcharts for processes
+- Sequence diagrams for interactions
+- Keep diagrams focused—one concept per diagram
+
+### Screenshots and Images
+
+**When to use screenshots:**
+- UI that's hard to describe in words
+- Showing exactly where to click
+- Before/after comparisons
+- Error states that need visual recognition
+
+**Screenshot best practices:**
+- Crop tightly—show only what's relevant
+- Use annotations (arrows, boxes) sparingly and consistently
+- Avoid personal data, use example values
+- Note the software version when the screenshot was taken
+- Store source files for easy updates
+
+**Alt text for images:**
+- Describe what the image *conveys*, not just what it shows
+- For UI screenshots: "Settings panel showing the API key field highlighted"
+- For diagrams: "Flowchart showing three deployment stages: build, test, deploy"
+
+### Explaining Technical Decisions
+
+Always explain **why** before **how**:
+
+**Bad:**
+> "Run `docker compose up -d` to start the services."
+
+**Good:**
+> "We run services in detached mode so they persist after you close the terminal:"
+> `docker compose up -d`
+
+---
+
+## Error Messages and Troubleshooting
+
+### Troubleshooting Sections
+
+For common issues, use this structure:
+
+```markdown
+### Troubleshooting
+
+#### Problem: Build fails with "out of memory"
+
+**Symptoms:**
+- Build process killed unexpectedly
+- Error message mentions OOMKilled or signal 9
+
+**Cause:** The container doesn't have enough memory allocated.
+
+**Solution:**
+1. Increase Docker memory limit to at least 4GB
+2. In Docker Desktop: Settings → Resources → Memory
+3. Restart Docker and retry the build
+
+**Still not working?** Check if other containers are consuming memory: `docker stats`
+```
+
+**Troubleshooting best practices:**
+- Lead with symptoms (what the user sees)
+- Explain cause briefly (why it happens)
+- Provide concrete solution (exactly what to do)
+- Offer escalation path (what if this doesn't work?)
+
+---
+
+## Linking Strategy
+
+### Internal Links
+
+**Link generously within your documentation:**
+- First mention of a concept that's explained elsewhere
+- Prerequisites the reader might need
+- Related topics for deeper exploration
+
+**Link text should describe the destination:**
+- Good: "See the [deployment strategies guide](./deployment-strategies)"
+- Bad: "Click [here](./deployment-strategies) for more"
+
+**Don't over-link:**
+- Link once per section, not every mention
+- Don't link common terms (Git, Docker) unless to your own explanation
+- Don't link within headings
+
+### External Links
+
+**When to link externally:**
+- Official documentation for tools/libraries
+- Original sources for research or quotes
+- Specifications and standards
+
+**External link best practices:**
+- Prefer official/stable URLs over blog posts
+- For critical information, summarize the key point—don't rely solely on the link
+- Consider whether the link will survive (avoid URL shorteners)
+
+---
+
+## SEO & Discoverability
+
+Good SEO isn't about tricks—it's about helping people find content that genuinely answers their questions. These practices ensure your excellent content actually reaches the people who need it.
+
+### Search Intent Alignment
+
+Before writing, understand what searchers actually want:
+
+| Intent Type | User Goal | Content Format |
+|-------------|-----------|----------------|
+| Informational | "What is CI/CD?" | Explanation with examples |
+| Navigational | "GitHub Actions documentation" | Clear, authoritative guide |
+| Transactional | "CI/CD tutorial" | Step-by-step tutorial |
+| Commercial | "Best CI/CD tools 2025" | Comparison with recommendations |
+
+**Match your content to intent:**
+- "What is X" queries want definitions and explanations
+- "How to X" queries want actionable steps
+- "X vs Y" queries want comparisons
+- "X best practices" queries want opinionated guidance
+
+### Title Tag Optimization
+
+The title tag is the most important on-page SEO element.
+
+**Best practices:**
+- **50-60 characters maximum** — Longer titles get truncated in search results
+- **Front-load keywords** — Put the most important words first
+- **Be specific** — "CI/CD Pipeline Optimization Guide" not "Optimization Guide"
+- **Include intent signals** — "Tutorial", "Guide", "How to", "Best Practices"
+- **Unique per page** — Never duplicate titles across your site
+
+**Examples:**
+
+| Bad | Good |
+|-----|------|
+| "Introduction" | "Introduction to CI/CD — Complete Guide for Developers" |
+| "Deployment Guide" | "Kubernetes Deployment Strategies — Rolling, Blue-Green, Canary" |
+| "Best Practices" | "CI/CD Best Practices — 10 Lessons from Production Pipelines" |
+
+### Meta Description Optimization
+
+The meta description is your "ad copy" in search results. It doesn't directly affect rankings but dramatically affects click-through rate.
+
+**Best practices:**
+- **150-160 characters** — Longer gets truncated
+- **Include primary keyword naturally** — Gets bolded in search results
+- **Promise specific value** — What will readers learn or be able to do?
+- **Include a call to action** — "Learn how", "Discover", "Get started"
+- **Match the page content** — Don't bait-and-switch
+
+**Template:**
+```
+Learn [what they'll learn] with this [content type]. 
+Covers [key topics]. [Specific benefit or outcome].
+```
+
+### Keyword Strategy
+
+**Primary keyword:**
+- Include in: Title, H1, first paragraph, URL, meta description
+- Use naturally—don't force awkward phrasing
+
+**Secondary keywords:**
+- Include in: H2 headings, throughout content
+- Related terms that people also search for
+
+**Long-tail keywords:**
+- Specific phrases with lower competition
+- Often questions: "how to set up CI/CD pipeline for Python"
+- Target in subheadings and FAQ sections
+
+**Keyword research sources:**
+- Google's "People also ask" boxes
+- Google Search Console (queries you already rank for)
+- Related searches at bottom of Google results
+- Tools: Ahrefs, SEMrush, Ubersuggest (free)
+
+### URL Structure
+
+URLs are a ranking factor and affect click-through rates.
+
+**Best practices:**
+- **Keep it short** — Under 60 characters ideal
+- **Use hyphens** — Not underscores or spaces
+- **Include primary keyword** — /ci-cd-introduction not /doc-001
+- **Avoid dates in evergreen content** — /ci-cd-guide not /2024/01/ci-cd-guide
+- **Use lowercase** — Consistent and avoids duplicate content issues
+
+**Examples:**
+
+| Bad | Good |
+|-----|------|
+| `/docs/article123` | `/docs/ci-cd/introduction` |
+| `/2024/01/15/cicd_guide` | `/guides/ci-cd-pipeline-setup` |
+
+### Heading Structure for SEO
+
+**H1 (Title):**
+- One per page
+- Include primary keyword
+- Should match or closely align with title tag
+
+**H2 (Major sections):**
+- Include secondary keywords naturally
+- Each H2 is a potential featured snippet opportunity
+
+**H3+ (Subsections):**
+- Good for long-tail keywords
+- Help readers scan
+
+### Featured Snippet Optimization
+
+Featured snippets ("position zero") appear above regular results. Structure content to win them.
+
+**For definition snippets:**
+- Start with "X is..." format immediately after the heading
+- 40-60 words for the definition
+
+**For list snippets:**
+- Use numbered or bulleted lists
+- 5-8 items typically
+- Concise item text
+
+**For table snippets:**
+- Use markdown tables for comparisons
+- Clear header row
+- Structured data
+
+### Internal Linking for SEO
+
+Internal links distribute "link equity" and help search engines understand your site structure.
+
+**Topic clusters:**
+Organize content into clusters around pillar pages:
+
+```
+Pillar: /docs/ci-cd/introduction (comprehensive overview)
+  ├── /docs/ci-cd/core-concepts
+  ├── /docs/ci-cd/branching-strategies  
+  ├── /docs/ci-cd/testing
+  └── /docs/ci-cd/deployment-strategies
+```
+
+Each cluster page links to the pillar and vice versa.
+
+**Anchor text best practices:**
+- Use descriptive text: "deployment strategies guide" not "click here"
+- Vary anchor text—don't always use the exact same phrase
+- Link contextually within sentences
+
+### Image SEO
+
+**File names:**
+- Descriptive: `ci-cd-pipeline-diagram.svg` not `diagram1.svg`
+- Use hyphens: `kubernetes-deployment.png` not `kubernetes_deployment.png`
+
+**Alt text:**
+- Describe the image content and purpose
+- Include keywords naturally if relevant
+- Write for accessibility first
+
+**Technical optimization:**
+- Compress images (TinyPNG, ImageOptim)
+- Use modern formats: WebP, AVIF where supported
+- Lazy load images below the fold
+- Specify width/height to prevent layout shift
+
+### Structured Data (Schema Markup)
+
+Schema helps search engines understand your content and can enable rich results.
+
+**Article schema (for blog posts):**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Introduction to CI/CD",
+  "datePublished": "2025-01-15",
+  "dateModified": "2025-01-20"
+}
+```
+
+**FAQ schema (for FAQ sections):**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What does CI/CD stand for?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "CI/CD stands for Continuous Integration and Continuous Delivery..."
+    }
+  }]
+}
+```
+
+**HowTo schema (for tutorials):**
+- Use for step-by-step guides
+- Can show in search results with steps
+
+### Technical SEO Checklist
+
+- [ ] **Mobile-friendly** — Responsive design, readable without zooming
+- [ ] **Fast loading** — Core Web Vitals passing (LCP, FID, CLS)
+- [ ] **HTTPS** — Secure connection (ranking factor)
+- [ ] **Canonical URLs** — Prevent duplicate content issues
+- [ ] **XML sitemap** — Submitted to Google Search Console
+- [ ] **robots.txt** — Not blocking important content
+- [ ] **No broken links** — Regular audits
+
+---
+
+## Content Freshness & Maintenance
+
+Search engines favor fresh, updated content. More importantly, readers trust content that's clearly maintained.
+
+### Freshness Signals
+
+**Display "Last updated" dates:**
+```yaml
+---
+date_published: 2024-06-15
+date_modified: 2025-01-20
+---
+```
+
+Show this prominently—readers and search engines both value it.
+
+**Update triggers:**
+- Underlying technology releases new version
+- Commands or UI have changed
+- Statistics or benchmarks are outdated
+- Better examples or explanations exist
+- User feedback indicates confusion
+
+### Content Audit Process
+
+**Quarterly audit checklist:**
+1. **Accuracy check** — Are all commands, screenshots, and steps still correct?
+2. **Link check** — Are all internal and external links working?
+3. **Performance check** — Which pages have declining traffic? Why?
+4. **Freshness check** — What hasn't been updated in 12+ months?
+5. **Gap analysis** — What questions are users asking that we don't answer?
+
+**Audit by content type:**
+
+| Content Type | Review Frequency | Focus Areas |
+|--------------|------------------|-------------|
+| Tutorials | Every major version release | Commands, screenshots, outcomes |
+| How-to guides | Quarterly | Accuracy, completeness |
+| Explanations | Annually | Relevance, examples |
+| Reference | With each release | Accuracy, completeness |
+| Blog posts | Annually | Still relevant? Update or archive |
+
+### Updating Existing Content
+
+**When to update vs. rewrite:**
+- **Update** — Core information is good, needs refreshing
+- **Rewrite** — Fundamentally outdated or poorly structured
+- **Consolidate** — Multiple weak articles → one strong one
+- **Archive** — No longer relevant, but don't want to 404
+
+**Update best practices:**
+- Note what changed in a changelog or "What's new" section
+- Update the `date_modified` in frontmatter
+- Don't change URLs unless absolutely necessary (breaks links, loses SEO value)
+- If you must change URLs, set up 301 redirects
+
+### Content Decay Prevention
+
+**Signs of content decay:**
+- Declining organic traffic
+- Increasing bounce rate
+- Outdated screenshots or commands
+- Comments asking "does this still work?"
+- Competitor content now ranks higher
+
+**Prevention strategies:**
+- Schedule reviews before decay happens
+- Monitor Search Console for ranking drops
+- Set calendar reminders for time-sensitive content
+- Build update triggers into release processes
+
+### Handling Outdated Content
+
+**Options for old content:**
+
+1. **Update** — Keep URL, refresh content, update date
+2. **Consolidate** — Merge into a better article, redirect old URL
+3. **Archive** — Add prominent notice, keep available but de-emphasize
+4. **Remove** — 410 (Gone) or redirect to relevant alternative
+
+**Archive notice template:**
+```markdown
+:::note Archive Notice
+This article was written for [Product v1.x] in [Year]. 
+The concepts still apply, but specific commands may have changed.
+For current guidance, see [Updated Guide](./current-guide).
+:::
+```
+
+**Never just delete without redirecting** — You lose any SEO value and create bad user experience.
+
+---
+
+## Metadata & Frontmatter
+
+### Complete Frontmatter Template
+
+```yaml
+---
+# Required
+sidebar_position: 1
+title: "Introduction to CI/CD"
+description: >-
+  Learn what CI/CD is and why it transforms software delivery. 
+  This comprehensive guide covers continuous integration, continuous 
+  delivery, and deployment with real-world examples from production 
+  pipelines. Perfect for developers and DevOps engineers.
+
+# SEO
+keywords:
+  - ci/cd
+  - continuous integration
+  - continuous delivery
+  - devops
+  - ci/cd pipeline
+  - ci/cd tutorial
+
+# Social sharing
+og_title: "CI/CD Guide: Transform How Your Team Ships Software"
+og_description: "Master CI/CD with real-world examples."
+og_image: "/img/ci-cd-social-card.png"
+
+# Content management
+date_published: 2025-01-15
+date_modified: 2025-01-22
+author: shivam
+reading_time: 15
+content_type: explanation  # tutorial | how-to | explanation | reference
+---
+```
+
+### Field Guidelines
+
+**title:**
+- 50-60 characters
+- Include primary keyword
+- Matches or closely aligns with H1
+
+**description:**
+- 150-160 characters
+- Include primary keyword naturally
+- Specific value proposition
+- Call to action
+
+**keywords:**
+- 5-10 relevant terms
+- Include variations (CI/CD, CI CD, CICD)
+- Include long-tail phrases
+
+**og_title / og_description:**
+- Can be more engaging than standard title/description
+- Optimize for social sharing
+- Include benefit or curiosity hook
+
+**og_image:**
+- 1200x630 pixels ideal for most platforms
+- Include text overlay with title
+- Brand consistently
+
+---
+
+## Addressing Objections
+
+### The Myth-Busting Pattern
+
+When countering common misconceptions:
+
+```
+### "We can't do X because Y"
+
+I hear this constantly, and I understand the logic: 
+[restate their reasoning fairly].
+
+Here's why this is backwards: [explanation with evidence].
+
+[Real-world example or data that proves the point].
+
+Start with [specific first action]. You'll be amazed 
+how quickly [outcome].
+```
+
+### Anti-Pattern Documentation
+
+When describing what NOT to do:
+
+1. **Give it a memorable name:** "The Snowflake Pipeline", "The 90-Minute Build"
+2. **Describe a specific scenario:** "I once worked with a team whose CI pipeline took 94 minutes."
+3. **Explain why it happens:** Usually well-intentioned origins
+4. **Show cascading effects:** How the problem compounds
+5. **Provide the fix:** Clear, actionable guidance
+
+---
+
+## Reader Navigation
+
+### Know Your Reader Segments
+
+Different readers need different paths:
+
+> **If you're new to CI/CD**: Start here, then move to Core Concepts. Work through sequentially.
+>
+> **If you know the concepts but need to implement**: Skim Core Concepts, then jump to Platform Examples.
+>
+> **If you're optimizing existing pipelines**: Start with Metrics & Maturity to establish baselines.
+
+### Set Clear Expectations
+
+Be explicit about prerequisites:
+
+> "I'm assuming you're comfortable with a command line. You don't need to be a bash wizard, but you should be able to navigate directories."
+>
+> "I'm *not* assuming you have CI/CD experience. That's what this guide is for."
+
+### Create Momentum
+
+End sections with forward motion:
+
+- Link to what's next
+- Use phrases like "Ready to understand how X actually works?"
+- Never let sections end flat
+
+---
+
+## Accessibility & Global Audience
+
+### Write Inclusively
+
+- Use gender-neutral language ("they" not "he/she")
+- Avoid idioms and culture-specific references that don't translate
+- Avoid directional language ("above", "below") that fails in non-visual contexts
+- Use descriptive link text: "Read the deployment guide" not "Click here"
+
+### Accessible Formatting
+
+- Provide alt text for images
+- Use semantic heading hierarchy (don't skip levels)
+- Ensure sufficient color contrast in diagrams
+- Don't rely on color alone to convey meaning
+
+### International Readers
+
+- Spell out abbreviations on first use
+- Use unambiguous date formats (January 15, 2025, not 1/15/25)
+- Avoid humor that requires cultural context
+- Keep sentence structure simple for non-native speakers
+
+---
+
+## Editing Checklist
+
+Before publishing, verify:
+
+### Content
+- [ ] Opens with a story or hook (not a definition)
+- [ ] Key insight is bold and memorable
+- [ ] "Why" explained before "how"
+- [ ] Real examples, not just abstract concepts
+- [ ] Clear next steps provided
+
+### Scannability
+- [ ] Headings tell a story when read alone
+- [ ] Paragraphs are 2-4 sentences
+- [ ] Lists used for 3+ related items
+- [ ] Bold used for key insights (max 1 per section)
+
+### Language
+- [ ] Active voice dominant
+- [ ] Contractions used naturally
+- [ ] No "simply", "just", "obviously"
+- [ ] Jargon defined or avoided
+- [ ] Specific numbers over vague qualifiers
+
+### SEO
+- [ ] Title under 60 characters with primary keyword
+- [ ] Meta description 150-160 characters with value proposition
+- [ ] URL is clean and includes keyword
+- [ ] H1 matches/aligns with title tag
+- [ ] Primary keyword in first paragraph
+- [ ] Internal links to related content
+- [ ] Images have descriptive file names and alt text
+
+### Freshness
+- [ ] date_modified updated if editing existing content
+- [ ] Version numbers accurate
+- [ ] No stale statistics or outdated claims
+- [ ] Screenshots match current UI
+
+---
+
+## Quick Reference Card
+
+| Principle | Implementation |
+|-----------|----------------|
+| Start with story | Open every major doc with a real-world narrative |
+| Problem before solution | Let readers feel the pain first |
+| Bold key insights | One quotable takeaway per major section |
+| Specific over vague | Numbers, names, scenarios—not abstractions |
+| Empathy before correction | "I understand the logic... Here's why it's backwards" |
+| Progressive disclosure | Core concept first, nuance later |
+| Scannable structure | Short paragraphs, meaningful headings, lists |
+| Why before how | Explain reasoning, then show commands |
+| Active voice | "The pipeline runs" not "is run by" |
+| SEO-friendly structure | Keywords in titles, headings, first paragraph |
+| Keep content fresh | Regular audits, update dates, version notes |
+
+---
+
+## Checklist for Different Content Types
+
+### Quick Start / README
+- [ ] Can someone get started in under 5 minutes?
+- [ ] Prerequisites listed clearly
+- [ ] Copy-pasteable commands
+- [ ] Expected output shown
+- [ ] One clear next step
+
+### Tutorial
+- [ ] Achievable end goal stated upfront
+- [ ] Every step produces visible progress
+- [ ] Screenshots for complex UI steps
+- [ ] "You should see..." after each command
+- [ ] Celebration at the end ("You've just...")
+
+### How-To Guide
+- [ ] Problem stated in the title
+- [ ] Assumes reader knows the basics
+- [ ] Gets to the solution fast
+- [ ] Troubleshooting section included
+- [ ] Related guides linked
+
+### Explanation / Concept
+- [ ] Opens with story or problem
+- [ ] Answers "why should I care?"
+- [ ] Uses analogies for complex ideas
+- [ ] Acknowledges trade-offs
+- [ ] Links to practical how-tos
+
+### Reference
+- [ ] Comprehensive and accurate
+- [ ] Consistent structure throughout
+- [ ] Searchable/scannable format
+- [ ] Minimal prose, maximum data
+- [ ] Clear about what's required vs optional
+
+---
+
+**Remember: You're a senior engineer sharing hard-won knowledge with a colleague. Be the mentor you wish you'd had.**
+
+Documentation isn't about transferring information. It's about transforming understanding.
