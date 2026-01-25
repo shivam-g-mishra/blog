@@ -6,92 +6,135 @@
 
 ## Visual Overview
 
-### Series Architecture
+### Series Architecture (Complete)
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#4f46e5', 'primaryTextColor': '#fff', 'primaryBorderColor': '#4338ca', 'lineColor': '#6366f1', 'secondaryColor': '#f0fdf4', 'tertiaryColor': '#fef3c7'}}}%%
 flowchart TB
-    subgraph Foundation["🎯 Foundation"]
+    subgraph Foundation["🎯 Foundation (5 docs)"]
         INTRO[Introduction]
         CATALOG[Pattern Catalog]
         CHOOSING[Selection Framework]
         READING[Reading Patterns]
+        PATHS[Learning Paths]
     end
 
-    subgraph Classic["📚 Classic GoF Patterns"]
-        subgraph Creational["Creational"]
-            FACTORY[Factory Method]
-            ABSTRACT[Abstract Factory]
-            BUILDER[Builder]
-            PROTOTYPE[Prototype]
-            SINGLETON[Singleton]
+    subgraph Classic["📚 Classic GoF (26 docs)"]
+        subgraph Creational["Creational (5)"]
+            C1[Factory Method]
+            C2[Builder]
+            C3[Singleton]
+            C4[...]
         end
         
-        subgraph Structural["Structural"]
-            ADAPTER[Adapter]
-            BRIDGE[Bridge]
-            COMPOSITE[Composite]
-            DECORATOR[Decorator]
-            FACADE[Facade]
-            FLYWEIGHT[Flyweight]
-            PROXY[Proxy]
+        subgraph Structural["Structural (7)"]
+            S1[Adapter]
+            S2[Decorator]
+            S3[Facade]
+            S4[...]
         end
         
-        subgraph Behavioral["Behavioral"]
-            CHAIN[Chain of Resp.]
-            COMMAND[Command]
-            ITERATOR[Iterator]
-            MEDIATOR[Mediator]
-            MEMENTO[Memento]
-            OBSERVER[Observer]
-            STATE[State]
-            STRATEGY[Strategy]
-            TEMPLATE[Template Method]
-            VISITOR[Visitor]
+        subgraph Behavioral["Behavioral (11)"]
+            B1[Observer]
+            B2[Strategy]
+            B3[Command]
+            B4[...]
         end
     end
 
-    subgraph Modern["🚀 Modern Patterns"]
-        REPO[Repository]
-        UOW[Unit of Work]
-        DI[Dependency Injection]
-        CIRCUIT[Circuit Breaker]
-        SAGA[Saga]
-        EVENTSRC[Event Sourcing]
-        CQRS[CQRS]
+    subgraph Extended["🔌 Extended Patterns"]
+        subgraph Modern["Modern (8)"]
+            M1[Repository]
+            M2[DI]
+            M3[Circuit Breaker]
+        end
+        
+        subgraph EIP["Enterprise Integration (5)"]
+            E1[Message Routing]
+            E2[Transformation]
+        end
+        
+        subgraph DDD["DDD Patterns (5)"]
+            D1[Aggregate Root]
+            D2[Bounded Context]
+        end
+        
+        subgraph Cloud["Cloud Resiliency (5)"]
+            CL1[Bulkhead]
+            CL2[Retry]
+            CL3[Strangler Fig]
+        end
     end
 
-    subgraph Frontend["⚛️ Frontend Patterns"]
-        MODULE[Module]
-        CONTAINER[Container/Presentational]
-        HOOKS[Hooks]
-        HOC[HOC & Render Props]
+    subgraph Specialized["⚡ Specialized"]
+        subgraph Concurrency["Concurrency (6)"]
+            CO1[Thread Pool]
+            CO2[Producer-Consumer]
+        end
+        
+        subgraph Reactive["Reactive (4)"]
+            R1[Observable]
+            R2[Backpressure]
+        end
+        
+        subgraph Data["Data Access (5)"]
+            DA1[DTO]
+            DA2[Active Record]
+        end
     end
 
     subgraph Meta["🔧 Meta Content"]
+        SOLID[SOLID Principles]
+        ARCH[Architectural]
+        TEST[Testing Patterns]
+        FRAME[Framework Patterns]
         ANTI[Anti-Patterns]
         COMPARE[Comparisons]
         INTERVIEW[Interview Guide]
-        REALWORLD[Real World Examples]
     end
 
-    INTRO --> CATALOG
-    CATALOG --> Creational & Structural & Behavioral
-    CATALOG --> Modern
-    CATALOG --> Frontend
-    
-    Classic --> COMPARE
-    Modern --> COMPARE
-    Classic --> ANTI
-    Classic --> INTERVIEW
-    Modern --> INTERVIEW
+    Foundation --> Classic
+    Foundation --> Extended
+    Foundation --> Specialized
+    Classic --> Meta
+    Extended --> Meta
+    Specialized --> Meta
     
     style Foundation fill:#e0e7ff,stroke:#4f46e5
     style Classic fill:#f0fdf4,stroke:#22c55e
-    style Modern fill:#fef3c7,stroke:#f59e0b
-    style Frontend fill:#fce7f3,stroke:#ec4899
+    style Extended fill:#fef3c7,stroke:#f59e0b
+    style Specialized fill:#fce7f3,stroke:#ec4899
     style Meta fill:#f1f5f9,stroke:#64748b
 ```
+
+### Complete Section Overview
+
+| Section | Documents | Key Patterns |
+|---------|-----------|--------------|
+| **Foundation** | 5 | Introduction, Catalog, Selection, Learning Paths |
+| **GoF Creational** | 6 | Factory, Builder, Singleton, Prototype, Abstract Factory |
+| **GoF Structural** | 8 | Adapter, Decorator, Facade, Proxy, Composite, Bridge, Flyweight |
+| **GoF Behavioral** | 12 | Observer, Strategy, Command, State, Iterator, Mediator, etc. |
+| **Modern** | 8 | Repository, DI, Circuit Breaker, Saga, CQRS, Event Sourcing |
+| **Enterprise Integration** | 5 | Message Routing, Transformation, Endpoints |
+| **DDD Patterns** | 5 | Aggregate, Value Object, Bounded Context, Domain Events |
+| **Cloud Resiliency** | 5 | Bulkhead, Retry, Strangler Fig, Sidecar |
+| **Concurrency** | 6 | Thread Pool, Producer-Consumer, Future/Promise |
+| **Reactive** | 4 | Observable, Backpressure, Operators |
+| **Data Access** | 5 | DTO, Active Record, Data Mapper, Identity Map |
+| **Additional** | 5 | Null Object, Specification, Object Pool, Lazy Init |
+| **Frontend** | 5 | Module, Container/Presentational, Hooks, HOC |
+| **Architectural** | 5 | MVC, MVP, MVVM, Clean Architecture |
+| **SOLID** | 2 | Principles Overview, Violations & Fixes |
+| **Testing** | 4 | Test Doubles, Testing Strategies |
+| **Framework Patterns** | 5 | React, Spring, Django, .NET patterns |
+| **Combining Patterns** | 4 | Real-world pattern combinations |
+| **API Patterns** | 4 | Pagination, Rate Limiting, Versioning |
+| **Anti-Patterns** | 4 | Creational, Structural, Behavioral anti-patterns |
+| **Comparisons** | 4 | Factory vs Builder, Strategy vs State, etc. |
+| **Practical** | 3 | Interview Guide, Real World, Refactoring |
+| **Reference** | 2 | Quick Reference, Glossary |
+| **TOTAL** | **116** | |
 
 ### Pattern Family Relationships
 
@@ -206,7 +249,7 @@ Design patterns content online falls into two categories: academic (dry, toy exa
 | **GeeksforGeeks** | SEO dominance, interview focus | Poor quality, inconsistent, ad-heavy | Quality over quantity, cohesive series |
 | **TutorialsPoint** | Broad coverage | Very basic, outdated examples | Depth, modern idiomatic code |
 
-### Content Gap Analysis (Updated After Expert Review)
+### Content Gap Analysis (Final After Cross-Reference)
 
 | Missing from Competitors | Our Approach |
 |--------------------------|--------------|
@@ -227,6 +270,34 @@ Design patterns content online falls into two categories: academic (dry, toy exa
 | **Performance considerations** | When patterns add overhead |
 | **Language-specific idioms** | Not translated Java — truly idiomatic code |
 | **Downloadable resources** | Cheat sheets, code templates, flashcards |
+| **Enterprise Integration Patterns** | Message routing, transformation, endpoints (5 docs) |
+| **DDD Tactical Patterns** | Aggregates, Value Objects, Bounded Context (5 docs) |
+| **Cloud Resiliency Patterns** | Bulkhead, Retry, Strangler Fig, Sidecar (5 docs) |
+| **Data Access Patterns** | DTO, Active Record, Data Mapper (5 docs) |
+| **Reactive/Stream Patterns** | Observable, Backpressure, Operators (4 docs) |
+| **Additional Common Patterns** | Null Object, Specification, Object Pool (5 docs) |
+
+### Competitive Coverage Comparison
+
+| Topic | Refactoring.guru | SourceMaking | Patterns.dev | GeeksforGeeks | **Our Coverage** |
+|-------|------------------|--------------|--------------|---------------|------------------|
+| GoF 23 Patterns | ✅ All | ✅ All | ❌ None | ✅ All | ✅ All + extras |
+| Multi-language Code | ✅ 9 langs | ✅ Limited | ❌ JS only | ⚠️ Java mostly | ✅ 5 langs idiomatic |
+| SOLID Principles | ✅ Separate | ✅ Separate | ❌ None | ⚠️ Basic | ✅ Integrated |
+| Concurrency Patterns | ❌ None | ❌ None | ❌ None | ⚠️ Basic | ✅ 6 patterns |
+| Architectural Patterns | ❌ None | ❌ None | ⚠️ React only | ⚠️ Basic | ✅ 5 patterns |
+| Enterprise Integration | ❌ None | ❌ None | ❌ None | ❌ None | ✅ 5 docs |
+| DDD Patterns | ❌ None | ❌ None | ❌ None | ⚠️ Basic | ✅ 5 patterns |
+| Cloud Resiliency | ❌ None | ❌ None | ❌ None | ❌ None | ✅ 5 patterns |
+| Reactive Patterns | ❌ None | ❌ None | ⚠️ Basic | ❌ None | ✅ 4 docs |
+| Testing Guidance | ❌ None | ❌ None | ❌ None | ❌ None | ✅ Every pattern |
+| Real Industry Examples | ❌ Toy examples | ❌ Toy examples | ⚠️ Some | ❌ Academic | ✅ Netflix, Stripe, AWS |
+| Interview Guide | ❌ None | ❌ None | ❌ None | ✅ Basic | ✅ Comprehensive |
+| Anti-patterns | ❌ None | ✅ Separate | ❌ None | ⚠️ Basic | ✅ Integrated |
+| Pattern Combinations | ❌ None | ❌ None | ❌ None | ❌ None | ✅ 4 docs |
+| Learning Paths | ❌ None | ❌ None | ❌ None | ❌ None | ✅ 3 levels |
+
+**Legend:** ✅ Comprehensive | ⚠️ Partial/Basic | ❌ Not covered
 
 ---
 
@@ -253,6 +324,145 @@ Design patterns content online falls into two categories: academic (dry, toy exa
 | `when to use [pattern]` | "when to use strategy pattern" | Decision framework sections |
 | `[pattern] interview questions` | "singleton pattern interview" | FAQ sections optimized for snippets |
 | `[pattern] anti-pattern` | "singleton anti-pattern" | Anti-pattern coverage |
+
+### Search Intent Coverage Map
+
+| Intent | Query Patterns | Content to Capture |
+|--------|----------------|--------------------|
+| **Informational** | "what is [pattern]", "design patterns definition", "types of design patterns" | Clear definitions, catalog overview, glossary |
+| **Implementation** | "[pattern] code", "[pattern] example", "[pattern] UML diagram" | Multi-language code, UML/sequence diagrams, step-by-step walkthroughs |
+| **Comparison/Evaluation** | "[pattern] vs [pattern]", "alternatives to [pattern]", "advantages disadvantages [pattern]" | Comparison pages, pros/cons, decision framework |
+| **Problem-Solution** | "reduce coupling", "object creation flexibility", "notify multiple objects" | Problem-based entry sections with pattern matches |
+| **Learning/Guided** | "design patterns tutorial", "learn design patterns", "design patterns roadmap" | Learning paths, guided introductions, progressive summaries |
+| **Career/Interview** | "[pattern] interview questions", "design patterns cheat sheet" | Interview guide, FAQ blocks, downloadable resources |
+| **Reference/Download** | "design patterns PDF", "quick reference", "pattern template" | Downloadables, quick reference, code templates |
+| **Navigational/Brand** | "GoF patterns list", "Gang of Four patterns", "Refactoring.guru factory method" | Catalog page, pattern list, "alternatives" positioning |
+
+### Keyword Modifier Matrix (Scale Coverage)
+
+Cover each core pattern with consistent modifier families:
+- **Definition/overview:** "what is", "definition", "meaning"
+- **Implementation:** "example", "code", "pseudocode", "UML diagram", "sequence diagram"
+- **Usage:** "when to use", "when not to use", "use cases", "best practices"
+- **Tradeoffs:** "advantages", "disadvantages", "pros and cons", "performance"
+- **Comparisons:** "vs", "difference between", "alternative to"
+- **Quality:** "anti-pattern", "common mistakes", "pitfalls"
+- **Learning:** "interview questions", "cheat sheet", "summary", "template"
+- **Language/framework:** "[pattern] in [language]", "[pattern] in [framework]"
+- **Recency:** "modern", "latest", "2025", "2026", "updated"
+
+### Query Cluster Coverage (Popular and Common)
+
+| Cluster | Common Queries | Content Coverage |
+|---------|----------------|------------------|
+| **Definitions** | "what is design pattern", "design pattern meaning", "what is [pattern]" | Clear definitions, glossary, pattern intros |
+| **Types & Lists** | "types of design patterns", "creational vs structural vs behavioral", "GoF patterns list" | Catalog, category overviews, quick reference |
+| **Implementation** | "how to implement [pattern]", "[pattern] code", "[pattern] example" | Step-by-step walkthroughs and code tabs |
+| **Diagrams** | "[pattern] UML", "[pattern] class diagram", "sequence diagram [pattern]" | UML and sequence diagrams with alt text |
+| **Usage Decisions** | "when to use [pattern]", "use cases for [pattern]" | Decision framework + "When to Use/Not" |
+| **Tradeoffs** | "advantages disadvantages [pattern]", "pros cons [pattern]" | Pros/cons, performance considerations |
+| **Comparisons** | "[pattern] vs [pattern]", "difference between [pattern] and [pattern]" | Comparison pages and tables |
+| **Real-World** | "[pattern] real world example", "use cases" | Industry case studies |
+| **Mistakes** | "[pattern] anti-pattern", "common mistakes [pattern]" | Anti-pattern sections + pitfalls |
+| **Concurrency** | "thread safe singleton", "double checked locking", "synchronization pattern" | Concurrency patterns + thread safety notes |
+| **Refactoring** | "refactor to [pattern]", "code smell [pattern]" | Refactoring guides + smell mapping |
+| **Testing** | "test [pattern]", "unit test [pattern]" | Testing guidance per pattern |
+| **Interview** | "design patterns interview questions", "LLD patterns" | Interview guide + Q&A sections |
+
+### Pattern Query Templates (Standardize Coverage)
+
+Use these H2/H3 templates in each pattern page to capture high-frequency queries:
+- "What is [Pattern]?"
+- "When to use [Pattern]?"
+- "When not to use [Pattern]?"
+- "[Pattern] in [Language]" (Python, TypeScript, Go, Java, C#)
+- "[Pattern] UML Diagram"
+- "Advantages and Disadvantages of [Pattern]"
+- "[Pattern] vs [Alternative]"
+- "Common Mistakes and Anti-Patterns"
+- "How to Test [Pattern]"
+
+### Alias, Acronym, and Close-Cousin Coverage
+
+Capture common alternate terms and clarify distinctions on-page:
+- **GoF / Gang of Four**, **OOP/OOD**, **LLD/HLD**
+- **IoC vs DI**, **Service Locator vs DI**
+- **Observer vs Pub/Sub**, **Decorator vs Wrapper**, **Adapter vs Wrapper**
+- **Strategy vs Policy**, **Template Method vs Strategy**
+- **Factory Method vs Abstract Factory**, **Builder vs Factory**
+- **Repository vs DAO**, **CQRS vs Event Sourcing**, **Saga vs Orchestration/Choreography**
+
+### Framework & Ecosystem Queries
+
+Target high-frequency framework searches with dedicated callouts or examples:
+- Spring, .NET, Django, Rails
+- Node/Express, React, Angular, Vue
+- Hibernate/ORM patterns, REST/GraphQL API patterns
+
+### Comparison & Alternatives Priority (High-Volume Pairs)
+
+Prioritize comparison pages and on-page sections for:
+- Factory Method vs Abstract Factory
+- Factory vs Builder
+- Adapter vs Facade vs Proxy vs Decorator
+- Strategy vs State
+- Observer vs Mediator vs Pub/Sub
+- Template Method vs Strategy
+- Composite vs Decorator
+- Singleton vs Dependency Injection
+- MVC vs MVP vs MVVM (architectural)
+
+### Skepticism, Opinion, and "Do I Need This?" Queries
+
+Include explicit sections to answer contrarian queries:
+- "are design patterns outdated"
+- "do I need design patterns"
+- "design patterns overengineering"
+- "why design patterns are bad"
+- "should I use [pattern] in small apps"
+
+### Problem-First Landing Hooks (Pain-Driven Queries)
+
+Open key pages with a short "problem statement" block to capture intent-driven searches:
+- "reduce coupling", "avoid tight dependencies"
+- "decouple object creation"
+- "notify many subscribers"
+- "change behavior at runtime"
+- "wrap legacy systems"
+- "add features without modifying code"
+- "avoid global state"
+
+### Freshness & Recency Hooks
+
+Add short updates on modern usage to capture year-based searches:
+- "modern design patterns", "latest design patterns"
+- "design patterns 2025/2026"
+- "patterns in modern frameworks and cloud-native systems"
+
+### Audience and Stage Segmentation
+
+Ensure queries across funnel stages are satisfied:
+- **Beginner:** "design patterns tutorial", "learn design patterns", "design patterns roadmap"
+- **Practitioner:** "best practices", "real world example", "performance impact"
+- **Advanced:** "architectural patterns", "DDD patterns", "microservices patterns"
+- **Interview:** "LLD design patterns", "system design patterns", "questions and answers"
+
+### Adjacent & Synonym Capture
+
+Ensure titles/headers and internal links cover adjacent queries:
+- "software design patterns", "object-oriented design patterns", "GoF patterns"
+- "design pattern catalog", "design patterns list", "Gang of Four patterns"
+- "architectural patterns", "enterprise integration patterns", "microservices patterns"
+- "design principles", "SOLID principles", "refactoring to patterns"
+
+### SERP Features & Rich Results Targets
+
+- **Featured snippets:** definition boxes, bullet lists, comparison tables
+- **People Also Ask:** concise FAQ blocks per pattern and per category
+- **Image pack:** UML/sequence diagrams with descriptive alt text
+- **Sitelinks:** consistent internal linking and clear IA
+- **Structured data:** `FAQPage` for FAQs, `ItemList` for catalogs, `BreadcrumbList` site-wide
+- **Video & code results:** short explainer videos and runnable snippets on key patterns
 
 ### Featured Snippet Optimization
 
@@ -1631,6 +1841,362 @@ flowchart TB
 #### 17.4 Versioning Patterns
 **URL:** `/docs/design-patterns/api/versioning`
 **Target Keywords:** "API versioning patterns", "REST versioning"
+
+---
+
+### Section 18: Enterprise Integration Patterns (NEW - Gap Identified)
+
+**Rationale:** 65 messaging patterns from the classic EIP book. Essential for anyone working with message queues (RabbitMQ, Kafka, AWS SQS). High search volume, minimal quality coverage online.
+
+#### 18.1 Enterprise Integration Overview
+**URL:** `/docs/design-patterns/enterprise-integration/`
+**Target Keywords:** "enterprise integration patterns", "messaging patterns", "EIP patterns"
+
+**Content:**
+- Why messaging matters in distributed systems
+- Synchronous vs asynchronous communication
+- Message-driven architecture benefits
+
+#### 18.2 Message Construction Patterns
+**URL:** `/docs/design-patterns/enterprise-integration/message-construction`
+**Target Keywords:** "message patterns", "command message", "event message"
+
+**Content:**
+- Command Message vs Document Message vs Event Message
+- Request-Reply Pattern
+- Correlation Identifier
+- Message Expiration
+
+#### 18.3 Message Routing Patterns
+**URL:** `/docs/design-patterns/enterprise-integration/routing`
+**Target Keywords:** "message routing patterns", "content-based router"
+
+**Content:**
+- Content-Based Router
+- Message Filter
+- Splitter & Aggregator
+- Scatter-Gather
+- Routing Slip
+
+```mermaid
+%%{init: {'theme': 'base'}}%%
+flowchart LR
+    subgraph routing["Message Routing Patterns"]
+        IN[Incoming<br/>Message] --> CBR{Content-Based<br/>Router}
+        CBR -->|"Type A"| QA[Queue A]
+        CBR -->|"Type B"| QB[Queue B]
+        CBR -->|"Type C"| QC[Queue C]
+        
+        MSG[Large<br/>Message] --> SPLIT[Splitter]
+        SPLIT --> P1[Part 1]
+        SPLIT --> P2[Part 2]
+        SPLIT --> P3[Part 3]
+        P1 & P2 & P3 --> AGG[Aggregator]
+        AGG --> OUT[Complete<br/>Response]
+    end
+```
+
+#### 18.4 Message Transformation Patterns
+**URL:** `/docs/design-patterns/enterprise-integration/transformation`
+**Target Keywords:** "message transformation", "canonical data model"
+
+**Content:**
+- Message Translator
+- Envelope Wrapper
+- Content Enricher
+- Content Filter
+- Canonical Data Model
+
+#### 18.5 Messaging Endpoint Patterns
+**URL:** `/docs/design-patterns/enterprise-integration/endpoints`
+**Target Keywords:** "messaging endpoints", "polling consumer", "competing consumers"
+
+**Content:**
+- Messaging Gateway
+- Polling Consumer vs Event-Driven Consumer
+- Competing Consumers
+- Message Dispatcher
+- Idempotent Receiver
+
+**Industry Example:** How Uber processes millions of ride requests using message queues.
+
+---
+
+### Section 19: Domain-Driven Design Patterns (NEW - Gap Identified)
+
+**Rationale:** DDD patterns are searched heavily but rarely explained well. Essential for complex business applications. Bridges gap between design patterns and system architecture.
+
+#### 19.1 DDD Patterns Overview
+**URL:** `/docs/design-patterns/ddd/`
+**Target Keywords:** "domain driven design patterns", "DDD patterns", "tactical DDD"
+
+**Content:**
+- What is Domain-Driven Design?
+- Strategic vs Tactical patterns
+- When DDD is overkill vs essential
+
+#### 19.2 Aggregate & Aggregate Root
+**URL:** `/docs/design-patterns/ddd/aggregate`
+**Target Keywords:** "aggregate root pattern", "DDD aggregate", "aggregate design"
+
+**Industry Example:** E-commerce Order aggregate containing OrderItems, Shipping, Payment.
+
+```mermaid
+%%{init: {'theme': 'base'}}%%
+classDiagram
+    class Order {
+        <<Aggregate Root>>
+        -orderId: OrderId
+        -items: List~OrderItem~
+        -shipping: ShippingInfo
+        -status: OrderStatus
+        +addItem(product, quantity)
+        +removeItem(itemId)
+        +submit()
+        +cancel()
+    }
+    
+    class OrderItem {
+        <<Entity>>
+        -itemId: ItemId
+        -productId: ProductId
+        -quantity: int
+        -price: Money
+    }
+    
+    class ShippingInfo {
+        <<Value Object>>
+        -address: Address
+        -method: ShippingMethod
+        -cost: Money
+    }
+    
+    class Money {
+        <<Value Object>>
+        -amount: decimal
+        -currency: string
+    }
+    
+    Order *-- OrderItem : contains
+    Order *-- ShippingInfo : has
+    OrderItem --> Money : uses
+    ShippingInfo --> Money : uses
+    
+    note for Order "Only access internal entities\nthrough the Aggregate Root"
+```
+
+#### 19.3 Entity vs Value Object
+**URL:** `/docs/design-patterns/ddd/entity-value-object`
+**Target Keywords:** "entity vs value object", "DDD value object", "identity vs equality"
+
+#### 19.4 Bounded Context & Context Mapping
+**URL:** `/docs/design-patterns/ddd/bounded-context`
+**Target Keywords:** "bounded context", "context mapping", "DDD strategic design"
+
+**Industry Example:** How Amazon separates Ordering, Inventory, Shipping contexts.
+
+#### 19.5 Domain Events
+**URL:** `/docs/design-patterns/ddd/domain-events`
+**Target Keywords:** "domain events pattern", "event-driven DDD"
+
+---
+
+### Section 20: Cloud Resiliency Patterns (NEW - Gap Identified)
+
+**Rationale:** Circuit Breaker alone isn't enough. Modern cloud apps need bulkhead, retry, and migration patterns. AWS/Azure documentation is comprehensive but dense—opportunity for approachable content.
+
+#### 20.1 Resiliency Patterns Overview
+**URL:** `/docs/design-patterns/cloud-resiliency/`
+**Target Keywords:** "cloud resiliency patterns", "fault tolerance patterns"
+
+#### 20.2 Bulkhead Pattern
+**URL:** `/docs/design-patterns/cloud-resiliency/bulkhead`
+**Target Keywords:** "bulkhead pattern", "isolation pattern", "failure isolation"
+
+**Industry Example:** How Netflix isolates services to prevent cascade failures.
+
+```mermaid
+%%{init: {'theme': 'base'}}%%
+flowchart TB
+    subgraph bulkhead["Bulkhead Pattern"]
+        CLIENT[Client Requests]
+        
+        subgraph pool1["Thread Pool 1<br/>(Critical Services)"]
+            T1A[Thread]
+            T1B[Thread]
+            T1C[Thread]
+        end
+        
+        subgraph pool2["Thread Pool 2<br/>(Non-Critical)"]
+            T2A[Thread]
+            T2B[Thread]
+        end
+        
+        subgraph pool3["Thread Pool 3<br/>(External APIs)"]
+            T3A[Thread]
+            T3B[Thread]
+        end
+        
+        CLIENT --> pool1
+        CLIENT --> pool2
+        CLIENT --> pool3
+        
+        pool1 --> S1[Payment Service]
+        pool2 --> S2[Recommendation<br/>Service]
+        pool3 --> S3[External<br/>Analytics]
+    end
+    
+    S3 -.->|"Failure here..."| FAIL[❌ Timeout]
+    FAIL -.->|"...doesn't affect"| S1
+    
+    style pool3 fill:#fee2e2,stroke:#dc2626
+    style pool1 fill:#dcfce7,stroke:#22c55e
+```
+
+#### 20.3 Retry Pattern
+**URL:** `/docs/design-patterns/cloud-resiliency/retry`
+**Target Keywords:** "retry pattern", "exponential backoff", "transient fault handling"
+
+**Content:**
+- Immediate retry vs delayed retry
+- Exponential backoff with jitter
+- Maximum retry limits
+- Retry vs Circuit Breaker decision
+
+#### 20.4 Strangler Fig Pattern
+**URL:** `/docs/design-patterns/cloud-resiliency/strangler-fig`
+**Target Keywords:** "strangler fig pattern", "legacy migration pattern", "incremental migration"
+
+**Industry Example:** How Shopify migrated from monolith to microservices.
+
+#### 20.5 Sidecar Pattern
+**URL:** `/docs/design-patterns/cloud-resiliency/sidecar`
+**Target Keywords:** "sidecar pattern", "service mesh", "Istio Envoy"
+
+---
+
+### Section 21: Data Access Patterns (NEW - Gap Identified)
+
+**Rationale:** Repository alone isn't enough. DTO, Active Record, Data Mapper are frequently confused. Essential for anyone building data-driven applications.
+
+#### 21.1 Data Access Overview
+**URL:** `/docs/design-patterns/data-access/`
+**Target Keywords:** "data access patterns", "persistence patterns"
+
+#### 21.2 Data Transfer Object (DTO)
+**URL:** `/docs/design-patterns/data-access/dto`
+**Target Keywords:** "DTO pattern", "data transfer object", "DTO vs entity"
+
+**Industry Example:** API response shaping, GraphQL resolvers.
+
+#### 21.3 Active Record Pattern
+**URL:** `/docs/design-patterns/data-access/active-record`
+**Target Keywords:** "active record pattern", "Rails active record"
+
+**Industry Example:** Ruby on Rails, Laravel Eloquent.
+
+#### 21.4 Data Mapper Pattern
+**URL:** `/docs/design-patterns/data-access/data-mapper`
+**Target Keywords:** "data mapper pattern", "ORM patterns"
+
+**Industry Example:** Hibernate, Entity Framework, SQLAlchemy.
+
+#### 21.5 Identity Map Pattern
+**URL:** `/docs/design-patterns/data-access/identity-map`
+**Target Keywords:** "identity map pattern", "object caching"
+
+---
+
+### Section 22: Additional Behavioral Patterns (NEW - Gap Identified)
+
+**Rationale:** Several important patterns outside GoF that are heavily used and searched.
+
+#### 22.1 Null Object Pattern
+**URL:** `/docs/design-patterns/additional/null-object`
+**Target Keywords:** "null object pattern", "avoid null checks", "null safety"
+
+**Content:**
+- Eliminating null checks
+- Implementing default behavior
+- When null is still appropriate
+
+```python
+# Instead of this:
+def get_discount(customer):
+    if customer is None:
+        return 0
+    return customer.calculate_discount()
+
+# Use Null Object:
+class NullCustomer:
+    def calculate_discount(self):
+        return 0  # Default behavior
+
+def get_discount(customer):
+    return customer.calculate_discount()  # No null check needed
+```
+
+#### 22.2 Specification Pattern
+**URL:** `/docs/design-patterns/additional/specification`
+**Target Keywords:** "specification pattern", "business rules pattern", "query specification"
+
+**Industry Example:** Complex filtering in e-commerce (price range + category + availability).
+
+#### 22.3 Object Pool Pattern
+**URL:** `/docs/design-patterns/additional/object-pool`
+**Target Keywords:** "object pool pattern", "resource pooling", "connection pool"
+
+**Industry Example:** Database connection pools, thread pools.
+
+#### 22.4 Lazy Initialization Pattern
+**URL:** `/docs/design-patterns/additional/lazy-initialization`
+**Target Keywords:** "lazy initialization", "lazy loading pattern", "deferred initialization"
+
+#### 22.5 Service Locator Pattern
+**URL:** `/docs/design-patterns/additional/service-locator`
+**Target Keywords:** "service locator pattern", "service locator vs DI", "anti-pattern debate"
+
+**Content:**
+- What it is and how it works
+- Why it's often considered an anti-pattern
+- When it might still be appropriate
+- Comparison with Dependency Injection
+
+---
+
+### Section 23: Reactive Patterns (NEW - Gap Identified)
+
+**Rationale:** Reactive programming is mainstream (RxJS, RxJava, Project Reactor). Patterns specific to streams and observables aren't covered by traditional GoF.
+
+#### 23.1 Reactive Patterns Overview
+**URL:** `/docs/design-patterns/reactive/`
+**Target Keywords:** "reactive patterns", "RxJS patterns", "reactive programming patterns"
+
+**Content:**
+- What is reactive programming?
+- Observables vs Promises vs Callbacks
+- When to use reactive patterns
+
+#### 23.2 Observable Pattern (Reactive)
+**URL:** `/docs/design-patterns/reactive/observable`
+**Target Keywords:** "observable pattern", "RxJS observable", "reactive streams"
+
+**Note:** Different from GoF Observer — focuses on stream processing.
+
+#### 23.3 Backpressure Patterns
+**URL:** `/docs/design-patterns/reactive/backpressure`
+**Target Keywords:** "backpressure pattern", "flow control", "reactive streams backpressure"
+
+**Industry Example:** Handling high-volume event streams without overwhelming consumers.
+
+#### 23.4 Operator Composition Patterns
+**URL:** `/docs/design-patterns/reactive/operators`
+**Target Keywords:** "RxJS operators", "reactive operators", "stream transformation"
+
+**Content:**
+- Map, Filter, Reduce on streams
+- FlatMap vs SwitchMap vs ConcatMap
+- Combining streams (merge, combineLatest, zip)
 
 ---
 
@@ -3013,10 +3579,44 @@ Focus on highest-search-volume patterns:
 | 86 | **API** | Rate Limiting Patterns | P2 | 🟡 |
 | 87 | **API** | Versioning Patterns | P2 | 🟡 |
 
+### Additional Sections (Cross-Reference Gap Analysis)
+
+| # | Section | Document | Priority | Difficulty |
+|---|---------|----------|----------|------------|
+| 88 | **Enterprise Integration** | EIP Overview | P1 | 🟡 |
+| 89 | **Enterprise Integration** | Message Construction Patterns | P2 | 🟡 |
+| 90 | **Enterprise Integration** | Message Routing Patterns | P1 | 🟡 |
+| 91 | **Enterprise Integration** | Message Transformation | P2 | 🔴 |
+| 92 | **Enterprise Integration** | Messaging Endpoints | P1 | 🟡 |
+| 93 | **DDD** | DDD Patterns Overview | P1 | 🟡 |
+| 94 | **DDD** | Aggregate & Aggregate Root | P0 | 🟡 |
+| 95 | **DDD** | Entity vs Value Object | P1 | 🟡 |
+| 96 | **DDD** | Bounded Context | P1 | 🔴 |
+| 97 | **DDD** | Domain Events | P1 | 🟡 |
+| 98 | **Cloud Resiliency** | Resiliency Overview | P1 | 🟡 |
+| 99 | **Cloud Resiliency** | Bulkhead Pattern | P1 | 🟡 |
+| 100 | **Cloud Resiliency** | Retry Pattern | P0 | 🟢 |
+| 101 | **Cloud Resiliency** | Strangler Fig Pattern | P1 | 🟡 |
+| 102 | **Cloud Resiliency** | Sidecar Pattern | P1 | 🟡 |
+| 103 | **Data Access** | Data Access Overview | P1 | 🟢 |
+| 104 | **Data Access** | DTO Pattern | P0 | 🟢 |
+| 105 | **Data Access** | Active Record Pattern | P1 | 🟡 |
+| 106 | **Data Access** | Data Mapper Pattern | P1 | 🟡 |
+| 107 | **Data Access** | Identity Map Pattern | P2 | 🟡 |
+| 108 | **Additional** | Null Object Pattern | P1 | 🟢 |
+| 109 | **Additional** | Specification Pattern | P2 | 🟡 |
+| 110 | **Additional** | Object Pool Pattern | P1 | 🟡 |
+| 111 | **Additional** | Lazy Initialization | P1 | 🟢 |
+| 112 | **Additional** | Service Locator Pattern | P2 | 🟡 |
+| 113 | **Reactive** | Reactive Patterns Overview | P1 | 🟡 |
+| 114 | **Reactive** | Observable Pattern (Reactive) | P1 | 🟡 |
+| 115 | **Reactive** | Backpressure Patterns | P2 | 🔴 |
+| 116 | **Reactive** | Operator Composition | P2 | 🟡 |
+
 **Priority Legend:**
-- **P0**: Launch-critical, highest SEO value (15 documents)
-- **P1**: Important for completeness (35 documents)
-- **P2**: Nice to have, lower search volume (37 documents)
+- **P0**: Launch-critical, highest SEO value (19 documents)
+- **P1**: Important for completeness (52 documents)
+- **P2**: Nice to have, lower search volume (45 documents)
 
 **Difficulty Legend:**
 - 🟢 **Beginner** — Every developer should know
@@ -3027,12 +3627,12 @@ Focus on highest-search-volume patterns:
 
 ## Summary
 
-### Visual Content Scope (Updated)
+### Visual Content Scope (Final)
 
 ```mermaid
 %%{init: {'theme': 'base'}}%%
 pie showData
-    title Content Distribution (87 Documents)
+    title Content Distribution (116 Documents)
     "GoF Patterns" : 26
     "Modern Patterns" : 8
     "Frontend Patterns" : 5
@@ -3043,6 +3643,12 @@ pie showData
     "Framework Patterns" : 5
     "Combining Patterns" : 4
     "API Patterns" : 4
+    "Enterprise Integration" : 5
+    "DDD Patterns" : 5
+    "Cloud Resiliency" : 5
+    "Data Access Patterns" : 5
+    "Additional Patterns" : 5
+    "Reactive Patterns" : 4
     "Anti-Patterns" : 4
     "Comparisons" : 4
     "Foundation & Reference" : 10
@@ -3130,8 +3736,8 @@ This design patterns series will differentiate itself through:
 8. **SOLID foundation** — Clear connection to underlying principles (NEW)
 9. **Experience-based paths** — Learning journeys for junior to senior developers (NEW)
 
-**Total Documents:** 78 (expanded from 56)
-**Priority 0 (Must-Have):** 15 documents
+**Total Documents:** 116 (expanded from original 56)
+**Priority 0 (Must-Have):** 19 documents
 **Target Languages:** 5 (Python, TypeScript, Go, Java, C#)
 
 ---
@@ -3201,22 +3807,65 @@ This plan was reviewed by an industry expert with 10+ years of experience in sof
 - Additional comparison pages
 - More FAQ opportunities
 
-### Final Metrics
+### Final Metrics (After Cross-Reference Review)
 
-| Metric | Original | After Review | Change |
-|--------|----------|--------------|--------|
-| Total Documents | 56 | 87 | +55% |
-| P0 (Critical) Documents | 12 | 15 | +25% |
-| Unique Content Sections | 10 | 17 | +70% |
-| Target Keywords | ~50 | ~120 | +140% |
+| Metric | Original | First Review | Final | Total Change |
+|--------|----------|--------------|-------|--------------|
+| Total Documents | 56 | 87 | 116 | **+107%** |
+| P0 (Critical) Documents | 12 | 15 | 19 | +58% |
+| Unique Content Sections | 10 | 17 | 23 | **+130%** |
+| Target Keywords | ~50 | ~120 | ~180 | **+260%** |
+
+### Cross-Reference Gap Analysis
+
+The following gaps were identified by cross-referencing against:
+- **Refactoring.guru** (dominant competitor)
+- **Head First Design Patterns** (classic book)
+- **Enterprise Integration Patterns** (Hohpe & Woolf)
+- **Domain-Driven Design** (Eric Evans)
+- **Microsoft Azure Architecture Patterns**
+- **AWS Prescriptive Guidance**
+- **Coursera/Udemy top-rated courses**
+
+| Gap Identified | Source | Impact | Added? |
+|----------------|--------|--------|--------|
+| Enterprise Integration Patterns | EIP book, Kafka/RabbitMQ usage | HIGH | ✅ |
+| DDD Tactical Patterns | DDD book, enterprise apps | HIGH | ✅ |
+| Cloud Resiliency (Bulkhead, Retry) | Azure/AWS docs | HIGH | ✅ |
+| Data Access Patterns (DTO, Active Record) | Martin Fowler, ORMs | MEDIUM | ✅ |
+| Null Object Pattern | SourceMaking, common usage | MEDIUM | ✅ |
+| Specification Pattern | DDD, business rules | MEDIUM | ✅ |
+| Object Pool Pattern | Performance optimization | MEDIUM | ✅ |
+| Reactive/Stream Patterns | RxJS/RxJava popularity | HIGH | ✅ |
+| Service Locator (as comparison) | DI discussions | LOW | ✅ |
+| Lazy Initialization | Performance, Singleton variant | MEDIUM | ✅ |
+
+### Coverage Verification
+
+| Category | Industry Standard | Our Coverage | Status |
+|----------|-------------------|--------------|--------|
+| **GoF 23 Patterns** | 23 patterns | 23 patterns | ✅ Complete |
+| **SOLID Principles** | 5 principles | 5 principles + violations | ✅ Complete |
+| **Architectural (MVC/MVVM)** | 4-5 patterns | 5 patterns | ✅ Complete |
+| **Enterprise Integration** | 65 patterns | 5 key categories | ✅ Core covered |
+| **DDD Tactical** | 8-10 patterns | 5 key patterns | ✅ Core covered |
+| **Cloud/Microservices** | 15+ patterns | 12 patterns | ✅ Complete |
+| **Concurrency** | 10+ patterns | 6 patterns | ✅ Core covered |
+| **Reactive** | 20+ operators | 4 pattern categories | ✅ Core covered |
+| **Data Access** | 6-8 patterns | 5 patterns | ✅ Core covered |
+| **Testing** | 5 doubles + strategies | 4 documents | ✅ Complete |
 
 ### Remaining Opportunities (Future Phases)
 
-These were identified but deferred to keep scope manageable:
+These were identified but deferred to keep initial scope achievable:
 
-1. **Mobile-specific patterns** (iOS/Android)
-2. **Game development patterns**
-3. **Machine learning pipeline patterns**
-4. **Blockchain/Web3 patterns**
-5. **Video course companion content**
-6. **Community contribution system**
+1. **Mobile-specific patterns** (iOS/Android architecture)
+2. **Game development patterns** (Game Loop, Entity-Component-System)
+3. **Machine learning pipeline patterns** (Feature Store, Model Registry)
+4. **Blockchain/Web3 patterns** (Smart Contract patterns)
+5. **GraphQL-specific patterns** (DataLoader, Schema stitching)
+6. **Functional programming patterns** (Monads, Functors, Applicatives)
+7. **Security patterns** (RBAC, ABAC, OAuth flows)
+8. **Video course companion content**
+9. **Community contribution system**
+10. **Pattern implementation challenges/exercises**

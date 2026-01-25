@@ -1,10 +1,10 @@
 ---
 # Required
 sidebar_position: 8
-title: "Proxy Pattern — Control Access to Objects"
+title: "Proxy Pattern — Controlling Access to Objects"
 description: >-
-  Learn the Proxy pattern to control access to objects, add caching, or defer
-  expensive initialization. Includes multi-language examples.
+  Learn the Proxy pattern to control access to objects, add caching, lazy
+  loading, or rate limiting. Useful for expensive or sensitive resources.
 
 # SEO
 keywords:
@@ -12,22 +12,22 @@ keywords:
   - proxy design pattern
   - lazy loading
   - caching proxy
-  - access control
+  - access control pattern
 
 difficulty: intermediate
 category: structural
 related_solid: [DIP, SRP]
 
 # Social sharing
-og_title: "Proxy Pattern: Control Access to Objects"
-og_description: "Use a proxy to add access control, caching, or lazy loading."
+og_title: "Proxy Pattern: Controlling Access to Objects"
+og_description: "Control access to objects with caching, lazy loading, or rate limiting."
 og_image: "/img/social-card.svg"
 
 # Content management
 date_published: 2026-01-25
 date_modified: 2026-01-25
 author: shivam
-reading_time: 12
+reading_time: 13
 content_type: explanation
 ---
 
@@ -35,72 +35,134 @@ content_type: explanation
 
 <PatternMeta>
   <Difficulty level="intermediate" />
-  <TimeToRead minutes={12} />
-  <Prerequisites patterns={["Facade"]} />
+  <TimeToRead minutes={13} />
+  <Prerequisites patterns={["Facade", "Decorator"]} />
 </PatternMeta>
 
-> **Definition:** The Proxy pattern provides a substitute object that controls access to a real object.
+The API client that kept getting rate-limited taught me why Proxy exists.
 
----
+At NVIDIA, our CI/CD platform integrated with an internal secrets management service. Every build needed secrets—API keys, certificates, database credentials. The secrets service was reliable but had strict rate limits: 100 requests per minute per client.
 
-## The Problem: Expensive or Sensitive Access
+The naive implementation called the secrets service every time a build needed a secret:
 
-We once had an API client that called an internal system with strict rate limits. Every service used the client directly, which caused bursts that triggered throttling.
+```python
+def get_database_url(self) -> str:
+    return self.secrets_client.get("database_url")  # Network call every time
+```
 
-**A proxy let us add caching and throttling without changing callers.**
+A busy build that checked secrets multiple times would burn through the rate limit instantly. We'd hit 429 errors, builds would fail, and developers would complain.
+
+**Proxy solved this by adding caching without changing any calling code:**
+
+```python
+class CachingSecretsProxy(SecretsClient):
+    def __init__(self, real_client: SecretsClient, ttl: int = 60):
+        self.real_client = real_client
+        self.cache = {}
+        self.ttl = ttl
+    
+    def get(self, key: str) -> str:
+        if key in self.cache and not self._expired(key):
+            return self.cache[key]
+        
+        value = self.real_client.get(key)
+        self.cache[key] = {"value": value, "time": now()}
+        return value
+```
+
+The calling code didn't change at all. We swapped the real client for the proxy, and rate limit errors disappeared.
 
 ---
 
 ## What Is the Proxy Pattern?
 
-Proxy wraps a real object and exposes the same interface. It can perform access control, caching, lazy loading, or logging.
+> **Definition:** Proxy provides a surrogate or placeholder for another object to control access to it.
 
-### Structure
+A proxy implements the same interface as the real object. Clients use the proxy as if it were the real object, but the proxy can add behavior: caching, access control, lazy initialization, logging, rate limiting.
+
+**The key insight: Proxy controls access without changing the interface.** Unlike Decorator (which adds functionality), Proxy controls *how* and *whether* the underlying object is accessed.
+
+---
+
+## Structure
 
 ```mermaid
 classDiagram
-  class DataSource {
-    <<interface>>
-    +get(key: string) string
-  }
-  class RealDataSource {
-    +get(key: string) string
-  }
-  class CachedProxy {
-    -real: RealDataSource
-    -cache: map
-    +get(key: string) string
-  }
-
-  DataSource <|.. RealDataSource
-  DataSource <|.. CachedProxy
-  CachedProxy --> RealDataSource
+    class SecretsClient {
+        <<interface>>
+        +get(key: string) string
+        +set(key: string, value: string) void
+    }
+    
+    class RealSecretsClient {
+        +get(key: string) string
+        +set(key: string, value: string) void
+    }
+    
+    class CachingProxy {
+        -realClient: SecretsClient
+        -cache: Map
+        +get(key: string) string
+        +set(key: string, value: string) void
+    }
+    
+    SecretsClient <|.. RealSecretsClient
+    SecretsClient <|.. CachingProxy
+    CachingProxy --> RealSecretsClient : delegates to
 ```
 
 ### Key Components
 
-- **Subject Interface:** The contract for both proxy and real object.
-- **Real Subject:** The actual implementation.
-- **Proxy:** Adds control logic while forwarding calls.
+| Component | Role |
+|-----------|------|
+| **Subject Interface** (`SecretsClient`) | Common interface for both proxy and real object |
+| **Real Subject** (`RealSecretsClient`) | The actual implementation being proxied |
+| **Proxy** (`CachingProxy`) | Controls access, adds behavior before/after delegation |
 
 ### SOLID Principles Connection
 
-- **DIP:** Clients depend on the interface, not the real object.
-- **SRP:** Access control and caching live in the proxy.
+- **Dependency Inversion:** Clients depend on the interface, not on real object or proxy
+- **Single Responsibility:** Access control logic is separated from business logic
+
+---
+
+## Types of Proxies
+
+### 1. Caching Proxy
+Stores results to avoid repeated expensive operations.
+
+### 2. Virtual Proxy (Lazy Loading)
+Defers expensive object creation until actually needed.
+
+### 3. Protection Proxy
+Controls access based on permissions.
+
+### 4. Remote Proxy
+Represents an object in a different address space.
+
+### 5. Logging Proxy
+Records requests for debugging or auditing.
 
 ---
 
 ## When to Use Proxy
 
-- You need lazy initialization of heavy objects.
-- You want to add caching, throttling, or access control.
-- You want to track usage without changing the real object.
+✅ **Use it when:**
 
-## When NOT to Use Proxy
+- You need to add caching without changing client code
+- You want lazy initialization of expensive objects
+- You need access control or permission checking
+- You want to add logging or metrics transparently
+- You need to represent remote objects locally
 
-- The added indirection hides important latency.
-- The proxy becomes a second implementation of core logic.
-- The real object is cheap and safe to access directly.
+❌ **Don't use it when:**
+
+- The indirection would hide important latency from users
+- You're adding functionality, not controlling access (use Decorator)
+- The real object is cheap to access anyway
+- The proxy would duplicate business logic
+
+**Rule of thumb:** If you're controlling *access*, use Proxy. If you're adding *behavior*, use Decorator.
 
 ---
 
@@ -109,128 +171,540 @@ classDiagram
 <CodeTabs>
   <TabItem value="python" label="Python">
     ```python
-    class DataSource:
+    from abc import ABC, abstractmethod
+    from dataclasses import dataclass
+    from time import time
+    from typing import Dict, Optional
+
+
+    class SecretsClient(ABC):
+        """Interface for secrets management."""
+        
+        @abstractmethod
         def get(self, key: str) -> str:
-            raise NotImplementedError
+            pass
+        
+        @abstractmethod
+        def set(self, key: str, value: str) -> None:
+            pass
 
 
-    class RealDataSource(DataSource):
+    class VaultClient(SecretsClient):
+        """Real implementation that talks to Vault."""
+        
+        def __init__(self, endpoint: str):
+            self.endpoint = endpoint
+            print(f"Connecting to Vault at {endpoint}")
+        
         def get(self, key: str) -> str:
-            return f"value:{key}"
+            print(f"Fetching {key} from Vault...")
+            # Simulates network call
+            return f"secret-value-for-{key}"
+        
+        def set(self, key: str, value: str) -> None:
+            print(f"Setting {key} in Vault...")
 
 
-    class CachedProxy(DataSource):
-        def __init__(self, real: RealDataSource) -> None:
-            self.real = real
-            self.cache: dict[str, str] = {}
+    @dataclass
+    class CacheEntry:
+        value: str
+        timestamp: float
 
+
+    class CachingProxy(SecretsClient):
+        """Proxy that caches secrets to reduce API calls."""
+        
+        def __init__(self, real_client: SecretsClient, ttl_seconds: int = 300):
+            self._real_client = real_client
+            self._cache: Dict[str, CacheEntry] = {}
+            self._ttl = ttl_seconds
+        
         def get(self, key: str) -> str:
-            if key not in self.cache:
-                self.cache[key] = self.real.get(key)
-            return self.cache[key]
+            entry = self._cache.get(key)
+            
+            if entry and (time() - entry.timestamp) < self._ttl:
+                print(f"Cache hit for {key}")
+                return entry.value
+            
+            print(f"Cache miss for {key}")
+            value = self._real_client.get(key)
+            self._cache[key] = CacheEntry(value=value, timestamp=time())
+            return value
+        
+        def set(self, key: str, value: str) -> None:
+            self._real_client.set(key, value)
+            # Invalidate cache on write
+            if key in self._cache:
+                del self._cache[key]
+
+
+    class LazyInitProxy(SecretsClient):
+        """Proxy that delays client creation until first use."""
+        
+        def __init__(self, endpoint: str):
+            self._endpoint = endpoint
+            self._real_client: Optional[VaultClient] = None
+        
+        def _get_client(self) -> VaultClient:
+            if self._real_client is None:
+                print("Lazy-initializing Vault client...")
+                self._real_client = VaultClient(self._endpoint)
+            return self._real_client
+        
+        def get(self, key: str) -> str:
+            return self._get_client().get(key)
+        
+        def set(self, key: str, value: str) -> None:
+            self._get_client().set(key, value)
+
+
+    class RateLimitingProxy(SecretsClient):
+        """Proxy that enforces rate limits."""
+        
+        def __init__(self, real_client: SecretsClient, max_requests: int = 100, window_seconds: int = 60):
+            self._real_client = real_client
+            self._max_requests = max_requests
+            self._window = window_seconds
+            self._requests: list[float] = []
+        
+        def _check_rate_limit(self) -> None:
+            now = time()
+            # Remove old requests outside the window
+            self._requests = [t for t in self._requests if now - t < self._window]
+            
+            if len(self._requests) >= self._max_requests:
+                raise Exception(f"Rate limit exceeded: {self._max_requests} requests per {self._window}s")
+            
+            self._requests.append(now)
+        
+        def get(self, key: str) -> str:
+            self._check_rate_limit()
+            return self._real_client.get(key)
+        
+        def set(self, key: str, value: str) -> None:
+            self._check_rate_limit()
+            self._real_client.set(key, value)
+
+
+    # Usage: compose proxies
+    real_client = VaultClient("https://vault.internal:8200")
+
+    # Add caching
+    cached_client = CachingProxy(real_client, ttl_seconds=300)
+
+    # Add rate limiting
+    protected_client = RateLimitingProxy(cached_client, max_requests=100)
+
+    # Use like any SecretsClient
+    secret = protected_client.get("database_url")
+    secret = protected_client.get("database_url")  # Cache hit
     ```
   </TabItem>
   <TabItem value="typescript" label="TypeScript">
     ```typescript
-    interface DataSource {
-      get(key: string): string;
+    interface SecretsClient {
+      get(key: string): Promise<string>;
+      set(key: string, value: string): Promise<void>;
     }
 
-    class RealDataSource implements DataSource {
-      get(key: string): string {
-        return `value:${key}`;
+    class VaultClient implements SecretsClient {
+      constructor(private endpoint: string) {
+        console.log(`Connecting to Vault at ${endpoint}`);
+      }
+
+      async get(key: string): Promise<string> {
+        console.log(`Fetching ${key} from Vault...`);
+        return `secret-value-for-${key}`;
+      }
+
+      async set(key: string, value: string): Promise<void> {
+        console.log(`Setting ${key} in Vault...`);
       }
     }
 
-    class CachedProxy implements DataSource {
-      private cache = new Map<string, string>();
-      constructor(private real: RealDataSource) {}
-      get(key: string): string {
-        if (!this.cache.has(key)) {
-          this.cache.set(key, this.real.get(key));
+    interface CacheEntry {
+      value: string;
+      timestamp: number;
+    }
+
+    class CachingProxy implements SecretsClient {
+      private cache = new Map<string, CacheEntry>();
+
+      constructor(
+        private realClient: SecretsClient,
+        private ttlSeconds = 300
+      ) {}
+
+      async get(key: string): Promise<string> {
+        const entry = this.cache.get(key);
+        const now = Date.now();
+
+        if (entry && now - entry.timestamp < this.ttlSeconds * 1000) {
+          console.log(`Cache hit for ${key}`);
+          return entry.value;
         }
-        return this.cache.get(key)!;
+
+        console.log(`Cache miss for ${key}`);
+        const value = await this.realClient.get(key);
+        this.cache.set(key, { value, timestamp: now });
+        return value;
+      }
+
+      async set(key: string, value: string): Promise<void> {
+        await this.realClient.set(key, value);
+        this.cache.delete(key);
+      }
+    }
+
+    class LazyInitProxy implements SecretsClient {
+      private realClient: VaultClient | null = null;
+
+      constructor(private endpoint: string) {}
+
+      private getClient(): VaultClient {
+        if (!this.realClient) {
+          console.log("Lazy-initializing Vault client...");
+          this.realClient = new VaultClient(this.endpoint);
+        }
+        return this.realClient;
+      }
+
+      async get(key: string): Promise<string> {
+        return this.getClient().get(key);
+      }
+
+      async set(key: string, value: string): Promise<void> {
+        return this.getClient().set(key, value);
+      }
+    }
+
+    class RateLimitingProxy implements SecretsClient {
+      private requests: number[] = [];
+
+      constructor(
+        private realClient: SecretsClient,
+        private maxRequests = 100,
+        private windowSeconds = 60
+      ) {}
+
+      private checkRateLimit(): void {
+        const now = Date.now();
+        const windowMs = this.windowSeconds * 1000;
+        
+        this.requests = this.requests.filter((t) => now - t < windowMs);
+        
+        if (this.requests.length >= this.maxRequests) {
+          throw new Error(`Rate limit exceeded`);
+        }
+        
+        this.requests.push(now);
+      }
+
+      async get(key: string): Promise<string> {
+        this.checkRateLimit();
+        return this.realClient.get(key);
+      }
+
+      async set(key: string, value: string): Promise<void> {
+        this.checkRateLimit();
+        return this.realClient.set(key, value);
       }
     }
     ```
   </TabItem>
   <TabItem value="go" label="Go">
     ```go
-    package data
+    package secrets
 
-    type DataSource interface {
-        Get(key string) string
+    import (
+        "fmt"
+        "sync"
+        "time"
+    )
+
+    // SecretsClient is the subject interface
+    type SecretsClient interface {
+        Get(key string) (string, error)
+        Set(key, value string) error
     }
 
-    type RealDataSource struct{}
-
-    func (r RealDataSource) Get(key string) string {
-        return "value:" + key
+    // VaultClient is the real implementation
+    type VaultClient struct {
+        endpoint string
     }
 
-    type CachedProxy struct {
-        Real  RealDataSource
-        Cache map[string]string
+    func NewVaultClient(endpoint string) *VaultClient {
+        fmt.Printf("Connecting to Vault at %s\n", endpoint)
+        return &VaultClient{endpoint: endpoint}
     }
 
-    func NewCachedProxy(real RealDataSource) CachedProxy {
-        return CachedProxy{Real: real, Cache: map[string]string{}}
+    func (v *VaultClient) Get(key string) (string, error) {
+        fmt.Printf("Fetching %s from Vault...\n", key)
+        return fmt.Sprintf("secret-value-for-%s", key), nil
     }
 
-    func (p CachedProxy) Get(key string) string {
-        if value, ok := p.Cache[key]; ok {
-            return value
+    func (v *VaultClient) Set(key, value string) error {
+        fmt.Printf("Setting %s in Vault...\n", key)
+        return nil
+    }
+
+    // CachingProxy adds caching
+    type CachingProxy struct {
+        realClient SecretsClient
+        cache      map[string]cacheEntry
+        ttl        time.Duration
+        mu         sync.RWMutex
+    }
+
+    type cacheEntry struct {
+        value     string
+        timestamp time.Time
+    }
+
+    func NewCachingProxy(client SecretsClient, ttl time.Duration) *CachingProxy {
+        return &CachingProxy{
+            realClient: client,
+            cache:      make(map[string]cacheEntry),
+            ttl:        ttl,
         }
-        value := p.Real.Get(key)
-        p.Cache[key] = value
-        return value
+    }
+
+    func (p *CachingProxy) Get(key string) (string, error) {
+        p.mu.RLock()
+        entry, exists := p.cache[key]
+        p.mu.RUnlock()
+
+        if exists && time.Since(entry.timestamp) < p.ttl {
+            fmt.Printf("Cache hit for %s\n", key)
+            return entry.value, nil
+        }
+
+        fmt.Printf("Cache miss for %s\n", key)
+        value, err := p.realClient.Get(key)
+        if err != nil {
+            return "", err
+        }
+
+        p.mu.Lock()
+        p.cache[key] = cacheEntry{value: value, timestamp: time.Now()}
+        p.mu.Unlock()
+
+        return value, nil
+    }
+
+    func (p *CachingProxy) Set(key, value string) error {
+        err := p.realClient.Set(key, value)
+        if err != nil {
+            return err
+        }
+
+        p.mu.Lock()
+        delete(p.cache, key)
+        p.mu.Unlock()
+
+        return nil
+    }
+
+    // LazyInitProxy delays initialization
+    type LazyInitProxy struct {
+        endpoint   string
+        realClient *VaultClient
+        once       sync.Once
+    }
+
+    func NewLazyInitProxy(endpoint string) *LazyInitProxy {
+        return &LazyInitProxy{endpoint: endpoint}
+    }
+
+    func (p *LazyInitProxy) getClient() *VaultClient {
+        p.once.Do(func() {
+            fmt.Println("Lazy-initializing Vault client...")
+            p.realClient = NewVaultClient(p.endpoint)
+        })
+        return p.realClient
+    }
+
+    func (p *LazyInitProxy) Get(key string) (string, error) {
+        return p.getClient().Get(key)
+    }
+
+    func (p *LazyInitProxy) Set(key, value string) error {
+        return p.getClient().Set(key, value)
     }
     ```
   </TabItem>
   <TabItem value="java" label="Java">
     ```java
-    interface DataSource { String get(String key); }
+    import java.util.*;
+    import java.util.concurrent.ConcurrentHashMap;
 
-    class RealDataSource implements DataSource {
-        public String get(String key) { return "value:" + key; }
+    interface SecretsClient {
+        String get(String key);
+        void set(String key, String value);
     }
 
-    class CachedProxy implements DataSource {
-        private final RealDataSource real;
-        private final java.util.Map<String, String> cache = new java.util.HashMap<>();
-        CachedProxy(RealDataSource real) { this.real = real; }
+    class VaultClient implements SecretsClient {
+        VaultClient(String endpoint) {
+            System.out.printf("Connecting to Vault at %s%n", endpoint);
+        }
+
+        @Override
         public String get(String key) {
-            if (!cache.containsKey(key)) {
-                cache.put(key, real.get(key));
+            System.out.printf("Fetching %s from Vault...%n", key);
+            return "secret-value-for-" + key;
+        }
+
+        @Override
+        public void set(String key, String value) {
+            System.out.printf("Setting %s in Vault...%n", key);
+        }
+    }
+
+    class CachingProxy implements SecretsClient {
+        private final SecretsClient realClient;
+        private final Map<String, CacheEntry> cache = new ConcurrentHashMap<>();
+        private final long ttlMs;
+
+        record CacheEntry(String value, long timestamp) {}
+
+        CachingProxy(SecretsClient realClient, int ttlSeconds) {
+            this.realClient = realClient;
+            this.ttlMs = ttlSeconds * 1000L;
+        }
+
+        @Override
+        public String get(String key) {
+            CacheEntry entry = cache.get(key);
+            long now = System.currentTimeMillis();
+
+            if (entry != null && (now - entry.timestamp()) < ttlMs) {
+                System.out.printf("Cache hit for %s%n", key);
+                return entry.value();
             }
-            return cache.get(key);
+
+            System.out.printf("Cache miss for %s%n", key);
+            String value = realClient.get(key);
+            cache.put(key, new CacheEntry(value, now));
+            return value;
+        }
+
+        @Override
+        public void set(String key, String value) {
+            realClient.set(key, value);
+            cache.remove(key);
+        }
+    }
+
+    class LazyInitProxy implements SecretsClient {
+        private final String endpoint;
+        private volatile VaultClient realClient;
+
+        LazyInitProxy(String endpoint) {
+            this.endpoint = endpoint;
+        }
+
+        private VaultClient getClient() {
+            if (realClient == null) {
+                synchronized (this) {
+                    if (realClient == null) {
+                        System.out.println("Lazy-initializing Vault client...");
+                        realClient = new VaultClient(endpoint);
+                    }
+                }
+            }
+            return realClient;
+        }
+
+        @Override
+        public String get(String key) {
+            return getClient().get(key);
+        }
+
+        @Override
+        public void set(String key, String value) {
+            getClient().set(key, value);
         }
     }
     ```
   </TabItem>
   <TabItem value="csharp" label="C#">
     ```csharp
-    public interface IDataSource
+    public interface ISecretsClient
     {
-        string Get(string key);
+        Task<string> GetAsync(string key);
+        Task SetAsync(string key, string value);
     }
 
-    public class RealDataSource : IDataSource
+    public class VaultClient : ISecretsClient
     {
-        public string Get(string key) => $"value:{key}";
-    }
-
-    public class CachedProxy : IDataSource
-    {
-        private readonly RealDataSource _real;
-        private readonly Dictionary<string, string> _cache = new();
-        public CachedProxy(RealDataSource real) { _real = real; }
-        public string Get(string key)
+        public VaultClient(string endpoint)
         {
-            if (!_cache.ContainsKey(key))
-                _cache[key] = _real.Get(key);
-            return _cache[key];
+            Console.WriteLine($"Connecting to Vault at {endpoint}");
         }
+
+        public Task<string> GetAsync(string key)
+        {
+            Console.WriteLine($"Fetching {key} from Vault...");
+            return Task.FromResult($"secret-value-for-{key}");
+        }
+
+        public Task SetAsync(string key, string value)
+        {
+            Console.WriteLine($"Setting {key} in Vault...");
+            return Task.CompletedTask;
+        }
+    }
+
+    public class CachingProxy : ISecretsClient
+    {
+        private readonly ISecretsClient _realClient;
+        private readonly Dictionary<string, (string Value, DateTime Timestamp)> _cache = new();
+        private readonly TimeSpan _ttl;
+
+        public CachingProxy(ISecretsClient realClient, TimeSpan ttl)
+        {
+            _realClient = realClient;
+            _ttl = ttl;
+        }
+
+        public async Task<string> GetAsync(string key)
+        {
+            if (_cache.TryGetValue(key, out var entry) && DateTime.UtcNow - entry.Timestamp < _ttl)
+            {
+                Console.WriteLine($"Cache hit for {key}");
+                return entry.Value;
+            }
+
+            Console.WriteLine($"Cache miss for {key}");
+            var value = await _realClient.GetAsync(key);
+            _cache[key] = (value, DateTime.UtcNow);
+            return value;
+        }
+
+        public async Task SetAsync(string key, string value)
+        {
+            await _realClient.SetAsync(key, value);
+            _cache.Remove(key);
+        }
+    }
+
+    public class LazyInitProxy : ISecretsClient
+    {
+        private readonly string _endpoint;
+        private readonly Lazy<VaultClient> _realClient;
+
+        public LazyInitProxy(string endpoint)
+        {
+            _endpoint = endpoint;
+            _realClient = new Lazy<VaultClient>(() =>
+            {
+                Console.WriteLine("Lazy-initializing Vault client...");
+                return new VaultClient(_endpoint);
+            });
+        }
+
+        public Task<string> GetAsync(string key) => _realClient.Value.GetAsync(key);
+        public Task SetAsync(string key, string value) => _realClient.Value.SetAsync(key, value);
     }
     ```
   </TabItem>
@@ -238,9 +712,30 @@ classDiagram
 
 ---
 
-## Real-World Example: Rate-Limited Clients
+## Real-World Example: Image Loading
 
-We used a proxy in front of an internal API client to enforce request budgets. The proxy cached common responses and throttled burst traffic. Callers were unaware, but the system stayed within limits.
+Virtual proxies are everywhere in image-heavy applications:
+
+```python
+class ImageProxy(Image):
+    """Proxy that loads the real image only when needed."""
+    
+    def __init__(self, path: str):
+        self.path = path
+        self._real_image: Optional[RealImage] = None
+    
+    def display(self) -> None:
+        # Only load the (expensive) real image when actually displayed
+        if self._real_image is None:
+            print(f"Loading image from {self.path}...")
+            self._real_image = RealImage(self.path)
+        
+        self._real_image.display()
+    
+    def get_dimensions(self) -> Tuple[int, int]:
+        # Can sometimes be read from metadata without full load
+        return self._read_dimensions_from_metadata()
+```
 
 ---
 
@@ -248,85 +743,120 @@ We used a proxy in front of an internal API client to enforce request budgets. T
 
 | Aspect | Impact | Notes |
 |--------|--------|-------|
-| Memory | Medium | Cache storage or proxy state |
-| Runtime | Low to Medium | Proxy logic on every call |
+| Memory | Varies | Caching proxies use more memory; lazy proxies use less initially |
+| Runtime | Can improve | Caching reduces network calls; lazy loading defers expensive work |
 | Complexity | Medium | Hidden behavior must be documented |
+
+**Critical:** Proxies can hide latency. If users don't know that a method call might hit the network (on cache miss), they might use it in performance-sensitive paths.
 
 ---
 
 ## Testing This Pattern
 
-Test that the proxy forwards correctly and applies control logic.
+Test that the proxy behaves correctly and forwards appropriately:
 
 ```python
-def test_proxy_caches_value() -> None:
-    proxy = CachedProxy(RealDataSource())
-    assert proxy.get("a") == "value:a"
-    assert proxy.get("a") == "value:a"
+def test_caching_proxy_returns_cached_value():
+    mock_client = Mock(SecretsClient)
+    mock_client.get.return_value = "secret123"
+    
+    proxy = CachingProxy(mock_client, ttl_seconds=300)
+    
+    # First call - cache miss
+    result1 = proxy.get("api_key")
+    # Second call - cache hit
+    result2 = proxy.get("api_key")
+    
+    assert result1 == "secret123"
+    assert result2 == "secret123"
+    assert mock_client.get.call_count == 1  # Only called once!
+
+
+def test_caching_proxy_invalidates_on_write():
+    mock_client = Mock(SecretsClient)
+    mock_client.get.return_value = "value"
+    
+    proxy = CachingProxy(mock_client, ttl_seconds=300)
+    
+    proxy.get("key")  # Cache the value
+    proxy.set("key", "new_value")  # Should invalidate
+    proxy.get("key")  # Should be a cache miss
+    
+    assert mock_client.get.call_count == 2
+
+
+def test_lazy_proxy_defers_initialization():
+    proxy = LazyInitProxy("https://vault:8200")
+    
+    # Client should not be created yet
+    assert proxy._real_client is None
+    
+    # Now access triggers initialization
+    proxy.get("key")
+    assert proxy._real_client is not None
 ```
 
 ---
 
 ## Common Mistakes
 
-- Hiding latency or failures behind the proxy.
-- Letting the proxy duplicate business logic.
-- Forgetting to invalidate cached data.
+### 1. Hiding latency inappropriately
+
+```python
+# Looks instant but might hit network
+value = client.get("key")  # Is this cached? 10ms? 2000ms?
+```
+
+Document proxy behavior clearly. Consider different interfaces for cached vs. uncached access.
+
+### 2. Cache invalidation bugs
+
+```python
+def set(self, key: str, value: str) -> None:
+    self.real_client.set(key, value)
+    # Forgot to invalidate cache!
+```
+
+Cache invalidation is "one of the two hard problems." Test it thoroughly.
+
+### 3. Proxy duplicating business logic
+
+```python
+class BadProxy(SecretsClient):
+    def get(self, key: str) -> str:
+        if not key.startswith("allowed_"):  # This is business logic!
+            raise PermissionError()
+        return self.real_client.get(key)
+```
+
+Proxies should control access, not implement business rules.
 
 ---
 
-## Related Patterns
+## Proxy vs. Decorator
 
-| Pattern | Relationship |
-|---------|--------------|
-| Decorator | Adds behavior; Proxy controls access |
-| Facade | Simplifies a subsystem |
-| Adapter | Changes interface rather than access |
+These patterns look similar but serve different purposes:
 
----
+| Aspect | Proxy | Decorator |
+|--------|-------|-----------|
+| Purpose | Control access | Add behavior |
+| Lifecycle | May manage object lifecycle | Doesn't manage lifecycle |
+| Interface | Same as subject | Same as component |
+| Use case | Caching, lazy loading, access control | Logging, timing, wrapping |
 
-## Pattern Combinations
-
-- **With Singleton:** Share one proxy instance.
-- **With Strategy:** Swap proxy strategies at runtime.
-
----
-
-## Try It Yourself
-
-Implement a proxy for a file system reader that lazily loads files on demand.
-
----
-
-## Frequently Asked Questions
-
-### Is Proxy the same as Decorator?
-They look similar. Proxy focuses on access control; Decorator focuses on behavior extension.
-
-### Does Proxy always cache?
-No. Caching is one proxy type.
-
-### Can Proxy be remote?
-Yes. Remote proxies represent objects in other processes.
-
-### How do I test code using Proxy?
-Verify that proxy and real object return identical results with added constraints.
+**Rule of thumb:** If you're controlling *whether/when* something is accessed, use Proxy. If you're adding *extra behavior* around access, use Decorator.
 
 ---
 
 ## Key Takeaways
 
-- **Proxy controls access without changing the public interface.**
-- **Use it for caching, throttling, or lazy initialization.**
-- **Document proxy behavior so callers are not surprised.**
+- **Proxy controls access without changing the interface.** Clients don't know they're using a proxy.
 
----
+- **Different proxy types for different purposes.** Caching, lazy loading, rate limiting, access control.
 
-## Downloads
+- **Be careful about hidden latency.** Document what the proxy does.
 
-- Proxy Cheat Sheet (Coming soon)
-- Complete Code Examples (Coming soon)
-- Practice Exercises (Coming soon)
+- **Cache invalidation is tricky.** Test it thoroughly.
 
 ---
 

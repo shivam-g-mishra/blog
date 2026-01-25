@@ -1,10 +1,10 @@
 ---
 # Required
 sidebar_position: 7
-title: "Flyweight Pattern — Share to Save Memory"
+title: "Flyweight Pattern — Sharing State to Save Memory"
 description: >-
-  Learn the Flyweight pattern to reduce memory usage by sharing common object
-  state. Includes multi-language examples and trade-offs.
+  Learn the Flyweight pattern to reduce memory by sharing common state across
+  many objects. Essential when you have millions of similar objects.
 
 # SEO
 keywords:
@@ -19,15 +19,15 @@ category: structural
 related_solid: [SRP, OCP]
 
 # Social sharing
-og_title: "Flyweight Pattern: Share to Save Memory"
-og_description: "Share common state across many objects to reduce memory."
+og_title: "Flyweight Pattern: Sharing State to Save Memory"
+og_description: "Share common state across many objects to dramatically reduce memory."
 og_image: "/img/social-card.svg"
 
 # Content management
 date_published: 2026-01-25
 date_modified: 2026-01-25
 author: shivam
-reading_time: 13
+reading_time: 12
 content_type: explanation
 ---
 
@@ -35,72 +35,118 @@ content_type: explanation
 
 <PatternMeta>
   <Difficulty level="advanced" />
-  <TimeToRead minutes={13} />
-  <Prerequisites patterns={["Composite"]} />
+  <TimeToRead minutes={12} />
+  <Prerequisites patterns={["Factory Method", "Composite"]} />
 </PatternMeta>
 
-> **Definition:** The Flyweight pattern reduces memory usage by sharing common (intrinsic) state across many objects while keeping unique (extrinsic) state outside.
+The metrics pipeline that ran out of memory taught me when Flyweight actually matters.
 
----
+At NVIDIA, our observability system collected metrics from thousands of services. Each metric had labels: `service="auth"`, `env="prod"`, `region="us-west"`. A single service might emit 10,000 metrics per minute, each with the same five labels.
 
-## The Problem: Too Many Similar Objects
+The naive implementation created a new label set for every metric:
 
-In telemetry pipelines, we often create thousands of tag objects with the same keys and values. Each one uses memory, and at scale that becomes a real cost.
+```python
+class Metric:
+    def __init__(self, name: str, value: float, labels: dict):
+        self.name = name
+        self.value = value
+        self.labels = labels  # New dict every time
 
-**Flyweight reduces duplication by sharing immutable state.**
+# 10,000 metrics × 5 labels × 1000 services = massive memory usage
+```
+
+The labels were identical for every metric from the same service. We were storing `{"service": "auth", "env": "prod"}` millions of times. Memory usage climbed to 8GB and the process kept getting OOM-killed.
+
+**Flyweight reduced memory by 90%.** Instead of creating new label dictionaries for each metric, we shared them:
+
+```python
+label_cache = {}
+
+def get_labels(service: str, env: str, region: str) -> dict:
+    key = (service, env, region)
+    if key not in label_cache:
+        label_cache[key] = {"service": service, "env": env, "region": region}
+    return label_cache[key]
+
+# Now 10,000 metrics share one label dict
+```
+
+Same functionality, 90% less memory.
 
 ---
 
 ## What Is the Flyweight Pattern?
 
-Flyweight separates object state into:
+> **Definition:** Flyweight reduces memory by sharing common state (intrinsic state) across many objects while keeping unique state (extrinsic state) external.
 
-- **Intrinsic state:** shared and immutable
-- **Extrinsic state:** unique per use and supplied by the client
+The pattern splits object state into two categories:
+- **Intrinsic state:** Shared, immutable, stored in the flyweight
+- **Extrinsic state:** Unique, varies by context, passed in by the client
 
-### Structure
+**The key insight: If many objects share the same data, store it once and reference it many times.** This only works when the shared state is immutable.
+
+---
+
+## Structure
 
 ```mermaid
 classDiagram
-  class Flyweight {
-    +render(extrinsic: string) void
-  }
-  class ConcreteFlyweight {
-    -sharedState: string
-    +render(extrinsic: string) void
-  }
-  class FlyweightFactory {
-    +get(key: string) Flyweight
-  }
-
-  Flyweight <|.. ConcreteFlyweight
-  FlyweightFactory --> Flyweight
+    class LabelSet {
+        <<flyweight>>
+        -service: string
+        -env: string
+        -region: string
+        +format() string
+    }
+    
+    class LabelFactory {
+        -cache: Map~string, LabelSet~
+        +getLabels(service, env, region) LabelSet
+    }
+    
+    class Metric {
+        -name: string
+        -value: float
+        -labels: LabelSet
+        -timestamp: int
+    }
+    
+    LabelFactory --> LabelSet : creates/returns
+    Metric --> LabelSet : references
 ```
 
 ### Key Components
 
-- **Flyweight:** The shared object interface.
-- **Concrete Flyweight:** Holds intrinsic state.
-- **Factory:** Manages and returns shared instances.
+| Component | Role |
+|-----------|------|
+| **Flyweight** (`LabelSet`) | Shared object containing intrinsic state |
+| **Flyweight Factory** (`LabelFactory`) | Creates and caches flyweights |
+| **Client** (`Metric`) | Uses flyweights, supplies extrinsic state |
 
 ### SOLID Principles Connection
 
-- **SRP:** Separates shared state from unique context.
-- **OCP:** Add new flyweights without changing client code.
+- **Single Responsibility:** Factory manages lifecycle; flyweight manages shared state
+- **Open/Closed:** Add new flyweight types without changing existing code
 
 ---
 
 ## When to Use Flyweight
 
-- You have a large number of similar objects.
-- Memory pressure is measurable.
-- Shared state is immutable and safe to reuse.
+✅ **Use it when:**
 
-## When NOT to Use Flyweight
+- You have a very large number of similar objects (thousands+)
+- Memory usage is a measured problem, not a theoretical concern
+- Objects contain significant shared, immutable state
+- The shared state can be factored out cleanly
 
-- The objects are few or small.
-- Shared state is mutable.
-- The complexity of a flyweight factory adds more cost than it saves.
+❌ **Don't use it when:**
+
+- You have few objects (hundreds or less)
+- Memory isn't actually constrained
+- The "shared" state is actually mutable
+- The complexity isn't worth the memory savings
+
+**Rule of thumb:** Profile first. Don't optimize memory until you've measured that it's a problem. Flyweight adds complexity that's only justified by real memory pressure.
 
 ---
 
@@ -109,116 +155,328 @@ classDiagram
 <CodeTabs>
   <TabItem value="python" label="Python">
     ```python
-    class TagFlyweight:
-        def __init__(self, key: str, value: str) -> None:
-            self.key = key
-            self.value = value
-
-        def render(self, target: str) -> str:
-            return f"{self.key}={self.value} -> {target}"
+    from dataclasses import dataclass
+    from typing import Dict, Tuple
+    import sys
 
 
-    class TagFactory:
+    @dataclass(frozen=True)  # Immutable!
+    class LabelSet:
+        """Flyweight: shared, immutable label configuration."""
+        service: str
+        env: str
+        region: str
+        
+        def format(self) -> str:
+            return f"service={self.service},env={self.env},region={self.region}"
+
+
+    class LabelFactory:
+        """Factory that creates and caches LabelSet flyweights."""
+        
         def __init__(self) -> None:
-            self._cache: dict[str, TagFlyweight] = {}
+            self._cache: Dict[Tuple[str, str, str], LabelSet] = {}
+        
+        def get_labels(self, service: str, env: str, region: str) -> LabelSet:
+            """Return a shared LabelSet, creating it if necessary."""
+            key = (service, env, region)
+            if key not in self._cache:
+                self._cache[key] = LabelSet(service, env, region)
+            return self._cache[key]
+        
+        def cache_size(self) -> int:
+            return len(self._cache)
 
-        def get(self, key: str, value: str) -> TagFlyweight:
-            cache_key = f"{key}:{value}"
-            if cache_key not in self._cache:
-                self._cache[cache_key] = TagFlyweight(key, value)
-            return self._cache[cache_key]
+
+    @dataclass
+    class Metric:
+        """Uses flyweight labels plus unique per-metric data."""
+        name: str
+        value: float
+        labels: LabelSet  # Shared flyweight
+        timestamp: int     # Extrinsic state (unique per metric)
+
+
+    # Demonstrate memory savings
+    factory = LabelFactory()
+
+    # Create 100,000 metrics from 100 services
+    metrics = []
+    for service_num in range(100):
+        service_name = f"service-{service_num}"
+        labels = factory.get_labels(service_name, "prod", "us-west")
+        
+        for i in range(1000):
+            metrics.append(Metric(
+                name="request_count",
+                value=float(i),
+                labels=labels,  # Same reference for all 1000 metrics
+                timestamp=1700000000 + i
+            ))
+
+    print(f"Total metrics: {len(metrics):,}")
+    print(f"Unique label sets: {factory.cache_size()}")
+
+    # Memory comparison
+    # Without flyweight: 100,000 dict objects for labels
+    # With flyweight: 100 LabelSet objects
+
+    # Check that labels are actually shared
+    assert metrics[0].labels is metrics[999].labels  # Same service
+    assert metrics[0].labels is not metrics[1000].labels  # Different service
     ```
   </TabItem>
   <TabItem value="typescript" label="TypeScript">
     ```typescript
-    class TagFlyweight {
-      constructor(private key: string, private value: string) {}
-      render(target: string): string {
-        return `${this.key}=${this.value} -> ${target}`;
+    // Flyweight: immutable, shared
+    class LabelSet {
+      constructor(
+        readonly service: string,
+        readonly env: string,
+        readonly region: string
+      ) {
+        // Freeze to ensure immutability
+        Object.freeze(this);
+      }
+
+      format(): string {
+        return `service=${this.service},env=${this.env},region=${this.region}`;
       }
     }
 
-    class TagFactory {
-      private cache = new Map<string, TagFlyweight>();
-      get(key: string, value: string): TagFlyweight {
-        const cacheKey = `${key}:${value}`;
-        if (!this.cache.has(cacheKey)) {
-          this.cache.set(cacheKey, new TagFlyweight(key, value));
+    class LabelFactory {
+      private cache = new Map<string, LabelSet>();
+
+      getLabels(service: string, env: string, region: string): LabelSet {
+        const key = `${service}:${env}:${region}`;
+        
+        if (!this.cache.has(key)) {
+          this.cache.set(key, new LabelSet(service, env, region));
         }
-        return this.cache.get(cacheKey)!;
+        
+        return this.cache.get(key)!;
+      }
+
+      get cacheSize(): number {
+        return this.cache.size;
       }
     }
+
+    interface Metric {
+      name: string;
+      value: number;
+      labels: LabelSet;  // Flyweight reference
+      timestamp: number; // Extrinsic state
+    }
+
+    // Usage
+    const factory = new LabelFactory();
+    const metrics: Metric[] = [];
+
+    for (let serviceNum = 0; serviceNum < 100; serviceNum++) {
+      const serviceName = `service-${serviceNum}`;
+      const labels = factory.getLabels(serviceName, "prod", "us-west");
+
+      for (let i = 0; i < 1000; i++) {
+        metrics.push({
+          name: "request_count",
+          value: i,
+          labels, // Shared reference
+          timestamp: 1700000000 + i,
+        });
+      }
+    }
+
+    console.log(`Total metrics: ${metrics.length.toLocaleString()}`);
+    console.log(`Unique label sets: ${factory.cacheSize}`);
     ```
   </TabItem>
   <TabItem value="go" label="Go">
     ```go
-    package tags
+    package metrics
 
-    type Flyweight struct {
-        Key   string
-        Value string
+    import (
+        "fmt"
+        "sync"
+    )
+
+    // LabelSet is the flyweight - immutable, shared
+    type LabelSet struct {
+        Service string
+        Env     string
+        Region  string
     }
 
-    func (f Flyweight) Render(target string) string {
-        return f.Key + "=" + f.Value + " -> " + target
+    func (l *LabelSet) Format() string {
+        return fmt.Sprintf("service=%s,env=%s,region=%s", l.Service, l.Env, l.Region)
     }
 
-    type Factory struct {
-        cache map[string]Flyweight
+    // LabelFactory manages flyweight creation and caching
+    type LabelFactory struct {
+        cache map[string]*LabelSet
+        mu    sync.RWMutex
     }
 
-    func NewFactory() *Factory {
-        return &Factory{cache: map[string]Flyweight{}}
-    }
-
-    func (f *Factory) Get(key, value string) Flyweight {
-        cacheKey := key + ":" + value
-        if cached, ok := f.cache[cacheKey]; ok {
-            return cached
+    func NewLabelFactory() *LabelFactory {
+        return &LabelFactory{
+            cache: make(map[string]*LabelSet),
         }
-        flyweight := Flyweight{Key: key, Value: value}
-        f.cache[cacheKey] = flyweight
-        return flyweight
+    }
+
+    func (f *LabelFactory) GetLabels(service, env, region string) *LabelSet {
+        key := fmt.Sprintf("%s:%s:%s", service, env, region)
+
+        // Fast path: read lock
+        f.mu.RLock()
+        if labels, ok := f.cache[key]; ok {
+            f.mu.RUnlock()
+            return labels
+        }
+        f.mu.RUnlock()
+
+        // Slow path: write lock
+        f.mu.Lock()
+        defer f.mu.Unlock()
+
+        // Double-check after acquiring write lock
+        if labels, ok := f.cache[key]; ok {
+            return labels
+        }
+
+        labels := &LabelSet{Service: service, Env: env, Region: region}
+        f.cache[key] = labels
+        return labels
+    }
+
+    func (f *LabelFactory) CacheSize() int {
+        f.mu.RLock()
+        defer f.mu.RUnlock()
+        return len(f.cache)
+    }
+
+    // Metric uses flyweight labels
+    type Metric struct {
+        Name      string
+        Value     float64
+        Labels    *LabelSet // Flyweight reference (shared)
+        Timestamp int64     // Extrinsic state (unique)
     }
     ```
   </TabItem>
   <TabItem value="java" label="Java">
     ```java
-    class TagFlyweight {
-        private final String key;
-        private final String value;
-        TagFlyweight(String key, String value) { this.key = key; this.value = value; }
-        String render(String target) { return key + "=" + value + " -> " + target; }
+    import java.util.*;
+    import java.util.concurrent.ConcurrentHashMap;
+
+    // Flyweight - immutable, shared
+    record LabelSet(String service, String env, String region) {
+        String format() {
+            return String.format("service=%s,env=%s,region=%s", service, env, region);
+        }
     }
 
-    class TagFactory {
-        private final java.util.Map<String, TagFlyweight> cache = new java.util.HashMap<>();
-        TagFlyweight get(String key, String value) {
-            String cacheKey = key + ":" + value;
-            return cache.computeIfAbsent(cacheKey, k -> new TagFlyweight(key, value));
+    class LabelFactory {
+        private final Map<String, LabelSet> cache = new ConcurrentHashMap<>();
+
+        LabelSet getLabels(String service, String env, String region) {
+            String key = service + ":" + env + ":" + region;
+            return cache.computeIfAbsent(key, k -> new LabelSet(service, env, region));
+        }
+
+        int cacheSize() {
+            return cache.size();
+        }
+    }
+
+    record Metric(
+        String name,
+        double value,
+        LabelSet labels,    // Flyweight reference
+        long timestamp      // Extrinsic state
+    ) {}
+
+    // Usage
+    class Demo {
+        public static void main(String[] args) {
+            LabelFactory factory = new LabelFactory();
+            List<Metric> metrics = new ArrayList<>();
+
+            for (int serviceNum = 0; serviceNum < 100; serviceNum++) {
+                String serviceName = "service-" + serviceNum;
+                LabelSet labels = factory.getLabels(serviceName, "prod", "us-west");
+
+                for (int i = 0; i < 1000; i++) {
+                    metrics.add(new Metric(
+                        "request_count",
+                        i,
+                        labels,  // Shared reference
+                        1700000000L + i
+                    ));
+                }
+            }
+
+            System.out.printf("Total metrics: %,d%n", metrics.size());
+            System.out.printf("Unique label sets: %d%n", factory.cacheSize());
         }
     }
     ```
   </TabItem>
   <TabItem value="csharp" label="C#">
     ```csharp
-    public class TagFlyweight
+    using System.Collections.Concurrent;
+
+    // Flyweight - immutable, shared
+    public sealed record LabelSet(string Service, string Env, string Region)
     {
-        private readonly string _key;
-        private readonly string _value;
-        public TagFlyweight(string key, string value) { _key = key; _value = value; }
-        public string Render(string target) => $"{_key}={_value} -> {target}";
+        public string Format() => $"service={Service},env={Env},region={Region}";
     }
 
-    public class TagFactory
+    public class LabelFactory
     {
-        private readonly Dictionary<string, TagFlyweight> _cache = new();
-        public TagFlyweight Get(string key, string value)
+        private readonly ConcurrentDictionary<string, LabelSet> _cache = new();
+
+        public LabelSet GetLabels(string service, string env, string region)
         {
-            var cacheKey = $"{key}:{value}";
-            if (!_cache.ContainsKey(cacheKey))
-                _cache[cacheKey] = new TagFlyweight(key, value);
-            return _cache[cacheKey];
+            var key = $"{service}:{env}:{region}";
+            return _cache.GetOrAdd(key, _ => new LabelSet(service, env, region));
+        }
+
+        public int CacheSize => _cache.Count;
+    }
+
+    public record Metric(
+        string Name,
+        double Value,
+        LabelSet Labels,    // Flyweight reference
+        long Timestamp      // Extrinsic state
+    );
+
+    // Usage
+    class Program
+    {
+        static void Main()
+        {
+            var factory = new LabelFactory();
+            var metrics = new List<Metric>();
+
+            for (int serviceNum = 0; serviceNum < 100; serviceNum++)
+            {
+                var serviceName = $"service-{serviceNum}";
+                var labels = factory.GetLabels(serviceName, "prod", "us-west");
+
+                for (int i = 0; i < 1000; i++)
+                {
+                    metrics.Add(new Metric(
+                        "request_count",
+                        i,
+                        labels,  // Shared reference
+                        1700000000 + i
+                    ));
+                }
+            }
+
+            Console.WriteLine($"Total metrics: {metrics.Count:N0}");
+            Console.WriteLine($"Unique label sets: {factory.CacheSize}");
         }
     }
     ```
@@ -227,9 +485,29 @@ classDiagram
 
 ---
 
-## Real-World Example: Metric Labels
+## Real-World Example: Text Rendering
 
-In metrics systems, the same label keys and values repeat across millions of data points. Flyweight lets you store the label pair once and reuse it across events.
+Classic Flyweight example: a text editor where each character has font, size, and color. Instead of storing these with every character:
+
+```python
+# Without flyweight: 1 million chars × (font + size + color) = huge memory
+
+# With flyweight
+class CharacterFormat:  # Flyweight
+    def __init__(self, font: str, size: int, color: str):
+        self.font = font
+        self.size = size
+        self.color = color
+
+class Character:  # Uses flyweight
+    def __init__(self, char: str, format: CharacterFormat, x: int, y: int):
+        self.char = char           # Extrinsic: unique per character
+        self.format = format       # Intrinsic: shared across many characters
+        self.x = x                 # Extrinsic: position is unique
+        self.y = y
+```
+
+Most characters in a document share the same format. Share the format, store position separately.
 
 ---
 
@@ -237,31 +515,84 @@ In metrics systems, the same label keys and values repeat across millions of dat
 
 | Aspect | Impact | Notes |
 |--------|--------|-------|
-| Memory | High benefit | Large reductions at scale |
-| Runtime | Medium | Cache lookup per access |
-| Complexity | Medium | Must manage shared state safely |
+| Memory | High benefit | Can reduce by 90%+ when pattern applies |
+| Runtime | Medium overhead | Cache lookup on every access |
+| Complexity | High | Must carefully separate intrinsic/extrinsic state |
+
+**Critical:** Flyweight only helps when you have many objects sharing the same intrinsic state. If every object has unique state, there's nothing to share.
 
 ---
 
 ## Testing This Pattern
 
-Test that the factory returns shared instances for the same key.
+Test that the factory returns shared instances:
 
 ```python
-def test_factory_shares_instances() -> None:
-    factory = TagFactory()
-    a = factory.get("env", "prod")
-    b = factory.get("env", "prod")
-    assert a is b
+def test_factory_returns_same_instance_for_same_keys():
+    factory = LabelFactory()
+    
+    labels1 = factory.get_labels("auth", "prod", "us-west")
+    labels2 = factory.get_labels("auth", "prod", "us-west")
+    
+    assert labels1 is labels2  # Same object
+
+
+def test_factory_returns_different_instances_for_different_keys():
+    factory = LabelFactory()
+    
+    labels1 = factory.get_labels("auth", "prod", "us-west")
+    labels2 = factory.get_labels("api", "prod", "us-west")
+    
+    assert labels1 is not labels2  # Different objects
+
+
+def test_flyweight_is_immutable():
+    factory = LabelFactory()
+    labels = factory.get_labels("auth", "prod", "us-west")
+    
+    # Should not be able to modify
+    with pytest.raises(AttributeError):
+        labels.service = "hacked"
 ```
 
 ---
 
 ## Common Mistakes
 
-- Treating mutable state as intrinsic.
-- Sharing objects that should be unique.
-- Using flyweights when memory pressure is not real.
+### 1. Mutable flyweights
+
+```python
+class BadLabelSet:
+    def __init__(self, service, env):
+        self.service = service
+        self.env = env
+    
+    def update_env(self, new_env):  # DANGER
+        self.env = new_env  # Affects all users!
+```
+
+Flyweights must be immutable. If one user changes it, all users see the change.
+
+### 2. Using Flyweight when you don't need it
+
+```python
+# 50 objects? Don't bother with Flyweight
+items = [Item(shared_data) for _ in range(50)]
+```
+
+Flyweight adds complexity. Only use it when you have thousands of objects and measurable memory pressure.
+
+### 3. Sharing extrinsic state accidentally
+
+```python
+class Metric:
+    def __init__(self, labels: LabelSet, timestamp: int):
+        self.labels = labels
+        self.timestamp = timestamp
+        self.cache = {}  # Bug: this should be per-metric, but gets shared
+```
+
+Double-check that only truly intrinsic state is in the flyweight.
 
 ---
 
@@ -269,54 +600,21 @@ def test_factory_shares_instances() -> None:
 
 | Pattern | Relationship |
 |---------|--------------|
-| Composite | Flyweights can be used in large trees |
-| Object Pool | Manages reusable instances, not shared state |
-| Proxy | Controls access rather than sharing |
-
----
-
-## Pattern Combinations
-
-- **With Factory Method:** Create flyweights through a factory interface.
-- **With Cache:** Use eviction policies for large flyweight sets.
-
----
-
-## Try It Yourself
-
-Model text rendering where each character shares font and style data via flyweights.
-
----
-
-## Frequently Asked Questions
-
-### Is Flyweight a caching pattern?
-It uses caching for shared objects, but the goal is memory reduction.
-
-### What if intrinsic state changes?
-It should not. Intrinsic state must be immutable.
-
-### Does Flyweight improve performance?
-It can improve memory at the cost of lookup overhead.
-
-### How do I test code using Flyweight?
-Verify shared instances for identical keys and unique instances for different ones.
+| **Factory Method** | Flyweight Factory is a specialized factory |
+| **Composite** | Flyweights can be leaves in composite structures |
+| **Singleton** | Both involve shared instances, but for different reasons |
 
 ---
 
 ## Key Takeaways
 
-- **Flyweight shares intrinsic state to save memory.**
-- **It is powerful at scale and unnecessary at small scale.**
-- **Keep shared state immutable and well-managed.**
+- **Flyweight shares intrinsic state to save memory.** Many objects reference one shared object.
 
----
+- **Intrinsic state must be immutable.** Mutable shared state is a bug factory.
 
-## Downloads
+- **Profile before using.** Don't add complexity until you've measured memory pressure.
 
-- Flyweight Cheat Sheet (Coming soon)
-- Complete Code Examples (Coming soon)
-- Practice Exercises (Coming soon)
+- **Separate intrinsic from extrinsic carefully.** Only truly shared, unchanging data belongs in the flyweight.
 
 ---
 

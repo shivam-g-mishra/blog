@@ -111,7 +111,7 @@ const config: Config = {
         inLanguage: 'en-US',
       }),
     },
-    // JSON-LD Structured Data: TechArticle Collection (Documentation)
+    // JSON-LD Structured Data: TechArticle Collection (CI/CD Documentation)
     {
       tagName: 'script',
       attributes: {
@@ -155,6 +155,52 @@ const config: Config = {
         datePublished: '2025-01-22',
         dateModified: '2025-01-24',
         numberOfItems: 18,
+      }),
+    },
+    // JSON-LD Structured Data: Design Patterns Collection
+    {
+      tagName: 'script',
+      attributes: {
+        type: 'application/ld+json',
+      },
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        '@id': 'https://blog.shivamm.info/docs/design-patterns/#collection',
+        url: 'https://blog.shivamm.info/docs/design-patterns/introduction',
+        name: 'Design Patterns — Practical Guide for Real Systems',
+        description: 'Comprehensive design patterns documentation covering creational, structural, and behavioral patterns with real-world examples, multi-language code, and practical decision frameworks.',
+        isPartOf: {
+          '@id': 'https://blog.shivamm.info/#website',
+        },
+        about: [
+          {
+            '@type': 'Thing',
+            name: 'Design Patterns',
+          },
+          {
+            '@type': 'Thing',
+            name: 'Software Architecture',
+          },
+          {
+            '@type': 'Thing',
+            name: 'Gang of Four Patterns',
+          },
+          {
+            '@type': 'Thing',
+            name: 'Object-Oriented Design',
+          },
+          {
+            '@type': 'Thing',
+            name: 'SOLID Principles',
+          },
+        ],
+        author: {
+          '@id': 'https://blog.shivamm.info/#author',
+        },
+        datePublished: '2026-01-25',
+        dateModified: '2026-01-25',
+        numberOfItems: 19,
       }),
     },
   ],
@@ -209,7 +255,7 @@ const config: Config = {
 
     // SEO metadata
     metadata: [
-      {name: 'keywords', content: 'CI/CD, continuous integration, continuous delivery, DevOps, Kubernetes, GitOps, deployment strategies, pipeline optimization, observability, OpenTelemetry, distributed systems, monitoring, Prometheus, Grafana, distributed tracing, software engineering'},
+      {name: 'keywords', content: 'CI/CD, continuous integration, continuous delivery, DevOps, Kubernetes, GitOps, deployment strategies, pipeline optimization, observability, OpenTelemetry, distributed systems, monitoring, Prometheus, Grafana, distributed tracing, software engineering, design patterns, factory pattern, singleton pattern, observer pattern, strategy pattern, Gang of Four'},
       {name: 'twitter:card', content: 'summary_large_image'},
       {name: 'twitter:creator', content: '@shivam_g_mishra'},
       {property: 'og:type', content: 'website'},
@@ -248,6 +294,11 @@ const config: Config = {
               type: 'doc',
               docId: 'cicd/introduction',
               label: 'CI/CD Guide',
+            },
+            {
+              type: 'doc',
+              docId: 'design-patterns/introduction',
+              label: 'Design Patterns',
             },
             {
               type: 'doc',
@@ -301,6 +352,10 @@ const config: Config = {
             {
               label: 'CI/CD Guide',
               to: '/docs/cicd/introduction',
+            },
+            {
+              label: 'Design Patterns',
+              to: '/docs/design-patterns/introduction',
             },
             {
               label: 'Observability',

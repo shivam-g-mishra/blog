@@ -1,10 +1,10 @@
 ---
 # Required
 sidebar_position: 3
-title: "Abstract Factory Pattern — Product Families"
+title: "Abstract Factory Pattern — Creating Product Families"
 description: >-
   Learn the Abstract Factory pattern for creating families of related objects
-  without hard-coding concrete classes. Includes multi-language examples.
+  without coupling to concrete classes. Real-world examples and implementations.
 
 # SEO
 keywords:
@@ -19,7 +19,7 @@ category: creational
 related_solid: [OCP, DIP]
 
 # Social sharing
-og_title: "Abstract Factory Pattern: Product Families"
+og_title: "Abstract Factory Pattern: Creating Product Families"
 og_description: "Create compatible families of objects without coupling to concrete classes."
 og_image: "/img/social-card.svg"
 
@@ -27,7 +27,7 @@ og_image: "/img/social-card.svg"
 date_published: 2026-01-25
 date_modified: 2026-01-25
 author: shivam
-reading_time: 13
+reading_time: 14
 content_type: explanation
 ---
 
@@ -35,97 +35,137 @@ content_type: explanation
 
 <PatternMeta>
   <Difficulty level="intermediate" />
-  <TimeToRead minutes={13} />
+  <TimeToRead minutes={14} />
   <Prerequisites patterns={["Factory Method"]} />
 </PatternMeta>
 
-> **Definition:** The Abstract Factory pattern provides an interface for creating families of related objects without specifying their concrete classes.
+The first time I needed Abstract Factory, I didn't recognize it.
 
----
+At NVIDIA, we were building a platform that supported multiple cloud environments—internal data centers, AWS for some teams, and GCP for others. Each environment required a matched set of components: a storage client, a secrets provider, and an audit logger. You couldn't mix them—AWS secrets with GCP storage would fail in subtle ways that didn't surface until production.
 
-## The Problem: Swapping a Family, Not a Single Class
+We started with separate factories for each component:
 
-In a platform I worked on, we supported both "internal" and "external" build environments. Each environment required a matched set of components: storage client, secret provider, and audit logger. Swapping one component without the others created subtle incompatibilities.
+```python
+storage = StorageFactory.create(env)
+secrets = SecretsFactory.create(env)
+logger = AuditLoggerFactory.create(env)
+```
 
-**The pain was not creating a single object. It was creating compatible sets.**
+Inevitably, someone passed the wrong environment to one factory:
+
+```python
+storage = StorageFactory.create("aws")
+secrets = SecretsFactory.create("gcp")  # Bug: mismatched environment
+logger = AuditLoggerFactory.create("aws")
+```
+
+This code passed review—nothing looked wrong. The bug didn't surface until the secrets provider tried to authenticate and failed because it was talking to the wrong cloud. We spent two days debugging an environment mismatch that could have been prevented at compile time.
+
+**Abstract Factory solves this by making it impossible to create mismatched products.** You ask for a factory, and that factory creates only compatible products. If you have an AWS factory, it creates AWS storage, AWS secrets, and AWS loggers. You can't accidentally mix environments.
 
 ---
 
 ## What Is the Abstract Factory Pattern?
 
-Abstract Factory is a factory of factories. It defines methods for each product in a family. Concrete factories produce consistent families.
+> **Definition:** Abstract Factory provides an interface for creating families of related objects without specifying their concrete classes.
 
-### Structure
+Think of it as a "factory of factories." Instead of asking for individual products, you ask for a factory that produces a compatible set. The factory ensures everything it creates works together.
+
+**The key insight: Abstract Factory enforces compatibility at the type level.** If Factory Method lets you swap individual products, Abstract Factory lets you swap entire product families while guaranteeing consistency.
+
+---
+
+## Structure
 
 ```mermaid
 classDiagram
-  class UiFactory {
-    <<interface>>
-    +createButton() Button
-    +createDialog() Dialog
-  }
-  class LightFactory {
-    +createButton() Button
-    +createDialog() Dialog
-  }
-  class DarkFactory {
-    +createButton() Button
-    +createDialog() Dialog
-  }
-  class Button {
-    <<interface>>
-    +render() void
-  }
-  class Dialog {
-    <<interface>>
-    +render() void
-  }
-  class LightButton {
-    +render() void
-  }
-  class DarkButton {
-    +render() void
-  }
-  class LightDialog {
-    +render() void
-  }
-  class DarkDialog {
-    +render() void
-  }
+    class CloudFactory {
+        <<interface>>
+        +createStorage() Storage
+        +createSecrets() SecretsProvider
+        +createLogger() AuditLogger
+    }
+    class AwsFactory {
+        +createStorage() Storage
+        +createSecrets() SecretsProvider
+        +createLogger() AuditLogger
+    }
+    class GcpFactory {
+        +createStorage() Storage
+        +createSecrets() SecretsProvider
+        +createLogger() AuditLogger
+    }
+    
+    class Storage {
+        <<interface>>
+        +read(key: string) bytes
+        +write(key: string, data: bytes) void
+    }
+    class S3Storage {
+        +read(key: string) bytes
+        +write(key: string, data: bytes) void
+    }
+    class GcsStorage {
+        +read(key: string) bytes
+        +write(key: string, data: bytes) void
+    }
+    
+    class SecretsProvider {
+        <<interface>>
+        +get(name: string) string
+    }
+    class AwsSecrets {
+        +get(name: string) string
+    }
+    class GcpSecrets {
+        +get(name: string) string
+    }
 
-  UiFactory <|.. LightFactory
-  UiFactory <|.. DarkFactory
-  Button <|.. LightButton
-  Button <|.. DarkButton
-  Dialog <|.. LightDialog
-  Dialog <|.. DarkDialog
+    CloudFactory <|.. AwsFactory
+    CloudFactory <|.. GcpFactory
+    Storage <|.. S3Storage
+    Storage <|.. GcsStorage
+    SecretsProvider <|.. AwsSecrets
+    SecretsProvider <|.. GcpSecrets
+    AwsFactory ..> S3Storage : creates
+    AwsFactory ..> AwsSecrets : creates
+    GcpFactory ..> GcsStorage : creates
+    GcpFactory ..> GcpSecrets : creates
 ```
 
 ### Key Components
 
-- **Abstract Factory:** Declares creation methods for each product.
-- **Concrete Factories:** Create product families that work together.
-- **Abstract Products:** Define interfaces for each product type.
-- **Concrete Products:** Implement those interfaces.
+| Component | Role |
+|-----------|------|
+| **Abstract Factory** (`CloudFactory`) | Declares creation methods for each product in the family |
+| **Concrete Factories** (`AwsFactory`, `GcpFactory`) | Implement creation methods to produce compatible products |
+| **Abstract Products** (`Storage`, `SecretsProvider`) | Interfaces for each product type |
+| **Concrete Products** (`S3Storage`, `GcpSecrets`) | Implementations for each environment |
 
 ### SOLID Principles Connection
 
-- **OCP:** Add new families without changing client code.
-- **DIP:** Clients depend on abstract factories and products.
+- **Open/Closed:** Add new product families (like Azure) without modifying existing code
+- **Dependency Inversion:** Client code depends on abstract factories and products, never concrete classes
 
 ---
 
 ## When to Use Abstract Factory
 
-- You need to create multiple related objects together.
-- You must swap an entire family based on configuration or environment.
-- You want to enforce compatibility between products.
+✅ **Use it when:**
 
-## When NOT to Use Abstract Factory
+- You need to create multiple related objects that must work together
+- Mixing products from different families would cause bugs
+- You want to enforce compatibility at the type system level
+- Product families are known and vary together (AWS vs GCP, Light theme vs Dark theme)
 
-- You only have one product type, not a family.
-- The number of products changes frequently (it makes interfaces heavy).
-- A simple dependency injection setup already solves the problem.
+❌ **Don't use it when:**
+
+- You only have one product type (use Factory Method instead)
+- The product types change frequently (the abstract factory interface becomes unstable)
+- Compatibility between products isn't a real concern
+- A simpler dependency injection setup would suffice
+
+**Rule of thumb:** If mixing products from different families is a bug, Abstract Factory is worth considering. If it's just a configuration choice, you probably don't need this level of type safety.
 
 ---
 
@@ -137,163 +177,440 @@ classDiagram
     from abc import ABC, abstractmethod
 
 
-    class Button(ABC):
+    # Abstract products
+    class Storage(ABC):
         @abstractmethod
-        def render(self) -> str:
-            raise NotImplementedError
-
-
-    class Dialog(ABC):
+        def read(self, key: str) -> bytes:
+            pass
+        
         @abstractmethod
-        def render(self) -> str:
-            raise NotImplementedError
+        def write(self, key: str, data: bytes) -> None:
+            pass
 
 
-    class LightButton(Button):
-        def render(self) -> str:
-            return "light button"
-
-
-    class LightDialog(Dialog):
-        def render(self) -> str:
-            return "light dialog"
-
-
-    class UiFactory(ABC):
+    class SecretsProvider(ABC):
         @abstractmethod
-        def create_button(self) -> Button:
-            raise NotImplementedError
+        def get(self, name: str) -> str:
+            pass
 
+
+    class AuditLogger(ABC):
         @abstractmethod
-        def create_dialog(self) -> Dialog:
-            raise NotImplementedError
+        def log(self, event: str) -> None:
+            pass
 
 
-    class LightFactory(UiFactory):
-        def create_button(self) -> Button:
-            return LightButton()
+    # AWS implementations
+    class S3Storage(Storage):
+        def read(self, key: str) -> bytes:
+            print(f"Reading from S3: {key}")
+            return b"s3-data"
+        
+        def write(self, key: str, data: bytes) -> None:
+            print(f"Writing to S3: {key}")
 
-        def create_dialog(self) -> Dialog:
-            return LightDialog()
+
+    class AwsSecretsManager(SecretsProvider):
+        def get(self, name: str) -> str:
+            print(f"Fetching from AWS Secrets Manager: {name}")
+            return "aws-secret"
+
+
+    class CloudWatchLogger(AuditLogger):
+        def log(self, event: str) -> None:
+            print(f"CloudWatch: {event}")
+
+
+    # GCP implementations
+    class GcsStorage(Storage):
+        def read(self, key: str) -> bytes:
+            print(f"Reading from GCS: {key}")
+            return b"gcs-data"
+        
+        def write(self, key: str, data: bytes) -> None:
+            print(f"Writing to GCS: {key}")
+
+
+    class GcpSecretManager(SecretsProvider):
+        def get(self, name: str) -> str:
+            print(f"Fetching from GCP Secret Manager: {name}")
+            return "gcp-secret"
+
+
+    class StackdriverLogger(AuditLogger):
+        def log(self, event: str) -> None:
+            print(f"Stackdriver: {event}")
+
+
+    # Abstract factory
+    class CloudFactory(ABC):
+        @abstractmethod
+        def create_storage(self) -> Storage:
+            pass
+        
+        @abstractmethod
+        def create_secrets(self) -> SecretsProvider:
+            pass
+        
+        @abstractmethod
+        def create_logger(self) -> AuditLogger:
+            pass
+
+
+    # Concrete factories
+    class AwsFactory(CloudFactory):
+        def create_storage(self) -> Storage:
+            return S3Storage()
+        
+        def create_secrets(self) -> SecretsProvider:
+            return AwsSecretsManager()
+        
+        def create_logger(self) -> AuditLogger:
+            return CloudWatchLogger()
+
+
+    class GcpFactory(CloudFactory):
+        def create_storage(self) -> Storage:
+            return GcsStorage()
+        
+        def create_secrets(self) -> SecretsProvider:
+            return GcpSecretManager()
+        
+        def create_logger(self) -> AuditLogger:
+            return StackdriverLogger()
+
+
+    # Client code—doesn't know or care which cloud
+    def deploy_artifact(factory: CloudFactory, artifact_id: str) -> None:
+        storage = factory.create_storage()
+        secrets = factory.create_secrets()
+        logger = factory.create_logger()
+        
+        api_key = secrets.get("deploy-api-key")
+        storage.write(f"artifacts/{artifact_id}", b"artifact-data")
+        logger.log(f"Deployed artifact {artifact_id}")
     ```
   </TabItem>
   <TabItem value="typescript" label="TypeScript">
     ```typescript
-    interface Button {
-      render(): string;
+    // Abstract products
+    interface Storage {
+      read(key: string): Promise<Buffer>;
+      write(key: string, data: Buffer): Promise<void>;
     }
 
-    interface Dialog {
-      render(): string;
+    interface SecretsProvider {
+      get(name: string): Promise<string>;
     }
 
-    class LightButton implements Button {
-      render(): string {
-        return "light button";
+    interface AuditLogger {
+      log(event: string): void;
+    }
+
+    // AWS implementations
+    class S3Storage implements Storage {
+      async read(key: string): Promise<Buffer> {
+        console.log(`Reading from S3: ${key}`);
+        return Buffer.from("s3-data");
+      }
+      async write(key: string, data: Buffer): Promise<void> {
+        console.log(`Writing to S3: ${key}`);
       }
     }
 
-    class LightDialog implements Dialog {
-      render(): string {
-        return "light dialog";
+    class AwsSecretsManager implements SecretsProvider {
+      async get(name: string): Promise<string> {
+        console.log(`Fetching from AWS Secrets Manager: ${name}`);
+        return "aws-secret";
       }
     }
 
-    interface UiFactory {
-      createButton(): Button;
-      createDialog(): Dialog;
+    class CloudWatchLogger implements AuditLogger {
+      log(event: string): void {
+        console.log(`CloudWatch: ${event}`);
+      }
     }
 
-    class LightFactory implements UiFactory {
-      createButton(): Button {
-        return new LightButton();
+    // GCP implementations
+    class GcsStorage implements Storage {
+      async read(key: string): Promise<Buffer> {
+        console.log(`Reading from GCS: ${key}`);
+        return Buffer.from("gcs-data");
       }
-      createDialog(): Dialog {
-        return new LightDialog();
+      async write(key: string, data: Buffer): Promise<void> {
+        console.log(`Writing to GCS: ${key}`);
       }
+    }
+
+    class GcpSecretManager implements SecretsProvider {
+      async get(name: string): Promise<string> {
+        console.log(`Fetching from GCP Secret Manager: ${name}`);
+        return "gcp-secret";
+      }
+    }
+
+    class StackdriverLogger implements AuditLogger {
+      log(event: string): void {
+        console.log(`Stackdriver: ${event}`);
+      }
+    }
+
+    // Abstract factory
+    interface CloudFactory {
+      createStorage(): Storage;
+      createSecrets(): SecretsProvider;
+      createLogger(): AuditLogger;
+    }
+
+    // Concrete factories
+    class AwsFactory implements CloudFactory {
+      createStorage(): Storage { return new S3Storage(); }
+      createSecrets(): SecretsProvider { return new AwsSecretsManager(); }
+      createLogger(): AuditLogger { return new CloudWatchLogger(); }
+    }
+
+    class GcpFactory implements CloudFactory {
+      createStorage(): Storage { return new GcsStorage(); }
+      createSecrets(): SecretsProvider { return new GcpSecretManager(); }
+      createLogger(): AuditLogger { return new StackdriverLogger(); }
+    }
+
+    // Client code
+    async function deployArtifact(factory: CloudFactory, artifactId: string): Promise<void> {
+      const storage = factory.createStorage();
+      const secrets = factory.createSecrets();
+      const logger = factory.createLogger();
+
+      const apiKey = await secrets.get("deploy-api-key");
+      await storage.write(`artifacts/${artifactId}`, Buffer.from("data"));
+      logger.log(`Deployed artifact ${artifactId}`);
     }
     ```
   </TabItem>
   <TabItem value="go" label="Go">
     ```go
-    package ui
+    package cloud
 
-    type Button interface {
-        Render() string
+    import "fmt"
+
+    // Abstract products
+    type Storage interface {
+        Read(key string) []byte
+        Write(key string, data []byte)
     }
 
-    type Dialog interface {
-        Render() string
+    type SecretsProvider interface {
+        Get(name string) string
     }
 
-    type LightButton struct{}
-
-    func (b LightButton) Render() string { return "light button" }
-
-    type LightDialog struct{}
-
-    func (d LightDialog) Render() string { return "light dialog" }
-
-    type UiFactory interface {
-        CreateButton() Button
-        CreateDialog() Dialog
+    type AuditLogger interface {
+        Log(event string)
     }
 
-    type LightFactory struct{}
+    // AWS implementations
+    type S3Storage struct{}
+    func (s S3Storage) Read(key string) []byte {
+        fmt.Printf("Reading from S3: %s\n", key)
+        return []byte("s3-data")
+    }
+    func (s S3Storage) Write(key string, data []byte) {
+        fmt.Printf("Writing to S3: %s\n", key)
+    }
 
-    func (f LightFactory) CreateButton() Button { return LightButton{} }
-    func (f LightFactory) CreateDialog() Dialog { return LightDialog{} }
+    type AwsSecretsManager struct{}
+    func (a AwsSecretsManager) Get(name string) string {
+        fmt.Printf("Fetching from AWS Secrets Manager: %s\n", name)
+        return "aws-secret"
+    }
+
+    type CloudWatchLogger struct{}
+    func (c CloudWatchLogger) Log(event string) {
+        fmt.Printf("CloudWatch: %s\n", event)
+    }
+
+    // GCP implementations
+    type GcsStorage struct{}
+    func (g GcsStorage) Read(key string) []byte {
+        fmt.Printf("Reading from GCS: %s\n", key)
+        return []byte("gcs-data")
+    }
+    func (g GcsStorage) Write(key string, data []byte) {
+        fmt.Printf("Writing to GCS: %s\n", key)
+    }
+
+    type GcpSecretManager struct{}
+    func (g GcpSecretManager) Get(name string) string {
+        fmt.Printf("Fetching from GCP Secret Manager: %s\n", name)
+        return "gcp-secret"
+    }
+
+    type StackdriverLogger struct{}
+    func (s StackdriverLogger) Log(event string) {
+        fmt.Printf("Stackdriver: %s\n", event)
+    }
+
+    // Abstract factory
+    type CloudFactory interface {
+        CreateStorage() Storage
+        CreateSecrets() SecretsProvider
+        CreateLogger() AuditLogger
+    }
+
+    // Concrete factories
+    type AwsFactory struct{}
+    func (f AwsFactory) CreateStorage() Storage { return S3Storage{} }
+    func (f AwsFactory) CreateSecrets() SecretsProvider { return AwsSecretsManager{} }
+    func (f AwsFactory) CreateLogger() AuditLogger { return CloudWatchLogger{} }
+
+    type GcpFactory struct{}
+    func (f GcpFactory) CreateStorage() Storage { return GcsStorage{} }
+    func (f GcpFactory) CreateSecrets() SecretsProvider { return GcpSecretManager{} }
+    func (f GcpFactory) CreateLogger() AuditLogger { return StackdriverLogger{} }
+
+    // Client code
+    func DeployArtifact(factory CloudFactory, artifactID string) {
+        storage := factory.CreateStorage()
+        secrets := factory.CreateSecrets()
+        logger := factory.CreateLogger()
+
+        secrets.Get("deploy-api-key")
+        storage.Write("artifacts/"+artifactID, []byte("data"))
+        logger.Log("Deployed artifact " + artifactID)
+    }
     ```
   </TabItem>
   <TabItem value="java" label="Java">
     ```java
-    interface Button { String render(); }
-    interface Dialog { String render(); }
-
-    class LightButton implements Button {
-        public String render() { return "light button"; }
+    // Abstract products
+    interface Storage {
+        byte[] read(String key);
+        void write(String key, byte[] data);
     }
 
-    class LightDialog implements Dialog {
-        public String render() { return "light dialog"; }
+    interface SecretsProvider {
+        String get(String name);
     }
 
-    interface UiFactory {
-        Button createButton();
-        Dialog createDialog();
+    interface AuditLogger {
+        void log(String event);
     }
 
-    class LightFactory implements UiFactory {
-        public Button createButton() { return new LightButton(); }
-        public Dialog createDialog() { return new LightDialog(); }
+    // AWS implementations
+    class S3Storage implements Storage {
+        public byte[] read(String key) {
+            System.out.printf("Reading from S3: %s%n", key);
+            return "s3-data".getBytes();
+        }
+        public void write(String key, byte[] data) {
+            System.out.printf("Writing to S3: %s%n", key);
+        }
+    }
+
+    class AwsSecretsManager implements SecretsProvider {
+        public String get(String name) {
+            System.out.printf("Fetching from AWS Secrets Manager: %s%n", name);
+            return "aws-secret";
+        }
+    }
+
+    class CloudWatchLogger implements AuditLogger {
+        public void log(String event) {
+            System.out.printf("CloudWatch: %s%n", event);
+        }
+    }
+
+    // Abstract factory
+    interface CloudFactory {
+        Storage createStorage();
+        SecretsProvider createSecrets();
+        AuditLogger createLogger();
+    }
+
+    // Concrete factories
+    class AwsFactory implements CloudFactory {
+        public Storage createStorage() { return new S3Storage(); }
+        public SecretsProvider createSecrets() { return new AwsSecretsManager(); }
+        public AuditLogger createLogger() { return new CloudWatchLogger(); }
+    }
+
+    class GcpFactory implements CloudFactory {
+        public Storage createStorage() { return new GcsStorage(); }
+        public SecretsProvider createSecrets() { return new GcpSecretManager(); }
+        public AuditLogger createLogger() { return new StackdriverLogger(); }
     }
     ```
   </TabItem>
   <TabItem value="csharp" label="C#">
     ```csharp
-    public interface IButton { string Render(); }
-    public interface IDialog { string Render(); }
-
-    public class LightButton : IButton
+    // Abstract products
+    public interface IStorage
     {
-        public string Render() => "light button";
+        byte[] Read(string key);
+        void Write(string key, byte[] data);
     }
 
-    public class LightDialog : IDialog
+    public interface ISecretsProvider
     {
-        public string Render() => "light dialog";
+        string Get(string name);
     }
 
-    public interface IUiFactory
+    public interface IAuditLogger
     {
-        IButton CreateButton();
-        IDialog CreateDialog();
+        void Log(string eventMessage);
     }
 
-    public class LightFactory : IUiFactory
+    // AWS implementations
+    public class S3Storage : IStorage
     {
-        public IButton CreateButton() => new LightButton();
-        public IDialog CreateDialog() => new LightDialog();
+        public byte[] Read(string key)
+        {
+            Console.WriteLine($"Reading from S3: {key}");
+            return System.Text.Encoding.UTF8.GetBytes("s3-data");
+        }
+        public void Write(string key, byte[] data)
+        {
+            Console.WriteLine($"Writing to S3: {key}");
+        }
+    }
+
+    public class AwsSecretsManager : ISecretsProvider
+    {
+        public string Get(string name)
+        {
+            Console.WriteLine($"Fetching from AWS Secrets Manager: {name}");
+            return "aws-secret";
+        }
+    }
+
+    public class CloudWatchLogger : IAuditLogger
+    {
+        public void Log(string eventMessage)
+        {
+            Console.WriteLine($"CloudWatch: {eventMessage}");
+        }
+    }
+
+    // Abstract factory
+    public interface ICloudFactory
+    {
+        IStorage CreateStorage();
+        ISecretsProvider CreateSecrets();
+        IAuditLogger CreateLogger();
+    }
+
+    // Concrete factories
+    public class AwsFactory : ICloudFactory
+    {
+        public IStorage CreateStorage() => new S3Storage();
+        public ISecretsProvider CreateSecrets() => new AwsSecretsManager();
+        public IAuditLogger CreateLogger() => new CloudWatchLogger();
+    }
+
+    public class GcpFactory : ICloudFactory
+    {
+        public IStorage CreateStorage() => new GcsStorage();
+        public ISecretsProvider CreateSecrets() => new GcpSecretManager();
+        public IAuditLogger CreateLogger() => new StackdriverLogger();
     }
     ```
   </TabItem>
@@ -301,9 +618,43 @@ classDiagram
 
 ---
 
-## Real-World Example: Environment-Specific Clients
+## Real-World Example: Multi-Environment Testing
 
-In internal infrastructure tooling, we had separate client families for production and staging. Each environment required a matched set of components with consistent logging and security behavior. Abstract Factory made that compatibility explicit and prevented mixed environments.
+On our platform, we needed to run the same tests against multiple environments. Each environment had different telemetry clients, different mock services, and different configuration sources. Abstract Factory ensured tests couldn't accidentally mix components:
+
+```python
+class TestEnvironmentFactory(ABC):
+    @abstractmethod
+    def create_telemetry_client(self) -> TelemetryClient: pass
+    
+    @abstractmethod
+    def create_config_source(self) -> ConfigSource: pass
+    
+    @abstractmethod
+    def create_service_mocks(self) -> ServiceMocks: pass
+
+
+class LocalTestFactory(TestEnvironmentFactory):
+    def create_telemetry_client(self) -> TelemetryClient:
+        return InMemoryTelemetry()
+    
+    def create_config_source(self) -> ConfigSource:
+        return FileConfigSource("./test-config.yaml")
+    
+    def create_service_mocks(self) -> ServiceMocks:
+        return LocalMocks()
+
+
+class IntegrationTestFactory(TestEnvironmentFactory):
+    def create_telemetry_client(self) -> TelemetryClient:
+        return StagingTelemetry()
+    
+    def create_config_source(self) -> ConfigSource:
+        return VaultConfigSource("staging")
+    
+    def create_service_mocks(self) -> ServiceMocks:
+        return StagingMocks()
+```
 
 ---
 
@@ -311,30 +662,57 @@ In internal infrastructure tooling, we had separate client families for producti
 
 | Aspect | Impact | Notes |
 |--------|--------|-------|
-| Memory | Medium | More classes and interfaces |
-| Runtime | Low | Indirection on creation |
-| Complexity | High | Multiple factories to manage |
+| Memory | Medium | More classes and interfaces than Factory Method |
+| Runtime | Low | Factory calls are trivial |
+| Complexity | High | Multiple factories and product types to maintain |
+
+Abstract Factory's main cost is **conceptual complexity**, not runtime performance. You're adding a layer of abstraction that takes time to understand. Make sure the compatibility guarantee is worth that cost.
 
 ---
 
 ## Testing This Pattern
 
-Test the client code against the abstract factory and then add small unit tests for each concrete factory.
+Test the factory produces compatible products, then test each product in isolation:
 
 ```python
-def test_light_factory_creates_family() -> None:
-    factory = LightFactory()
-    assert factory.create_button().render() == "light button"
-    assert factory.create_dialog().render() == "light dialog"
+def test_aws_factory_creates_compatible_products():
+    factory = AwsFactory()
+    
+    storage = factory.create_storage()
+    secrets = factory.create_secrets()
+    logger = factory.create_logger()
+    
+    # All products should work with AWS
+    assert isinstance(storage, S3Storage)
+    assert isinstance(secrets, AwsSecretsManager)
+    assert isinstance(logger, CloudWatchLogger)
+
+
+def test_client_code_with_fake_factory():
+    class FakeFactory(CloudFactory):
+        def create_storage(self): return FakeStorage()
+        def create_secrets(self): return FakeSecrets()
+        def create_logger(self): return FakeLogger()
+    
+    deploy_artifact(FakeFactory(), "test-artifact")
+    # Assert against fake product state
 ```
 
 ---
 
 ## Common Mistakes
 
-- Mixing products from different families.
-- Adding too many product types to the abstract factory.
-- Using Abstract Factory when Factory Method would be simpler.
+### 1. Using Abstract Factory for a single product
+
+If you only have one product type, you don't need Abstract Factory—Factory Method is simpler. Abstract Factory's value is in enforcing compatibility *across multiple products*.
+
+### 2. Abstract factory interface keeps changing
+
+If you're constantly adding new methods to the abstract factory interface, something is wrong. Either your product types aren't stable, or you're using the wrong pattern.
+
+### 3. Products that don't actually need to be compatible
+
+Not every group of related classes needs Abstract Factory. Ask: "What breaks if I mix products from different families?" If the answer is "nothing," you don't need this pattern.
 
 ---
 
@@ -342,54 +720,22 @@ def test_light_factory_creates_family() -> None:
 
 | Pattern | Relationship |
 |---------|--------------|
-| Factory Method | Abstract Factory often uses Factory Method internally |
-| Builder | Another way to create complex products |
-| Dependency Injection | Can replace factories in some codebases |
-
----
-
-## Pattern Combinations
-
-- **With Builder:** Use the factory to choose which builder to use.
-- **With Strategy:** Switch between factories at runtime.
-
----
-
-## Try It Yourself
-
-Design a UI toolkit that supports light and dark themes, each with buttons and dialogs. Implement the UI factory for both themes.
-
----
-
-## Frequently Asked Questions
-
-### Is Abstract Factory overkill for small projects?
-Often yes. It shines when product families grow and compatibility matters.
-
-### How is this different from Dependency Injection?
-DI wires dependencies; Abstract Factory defines families and guarantees compatibility.
-
-### What is the hardest part of Abstract Factory?
-Keeping the abstract factory interface from ballooning.
-
-### How do I test code using Abstract Factory?
-Test with a fake factory that returns stub products and verify behavior.
+| **Factory Method** | Abstract Factory often uses Factory Method for each product |
+| **Builder** | Can be combined—factory creates builders for complex products |
+| **Dependency Injection** | Modern DI containers can replace Abstract Factory in many cases |
+| **Prototype** | Alternative when products are easier to clone than construct |
 
 ---
 
 ## Key Takeaways
 
-- **Abstract Factory creates compatible families of products.**
-- **It keeps client code stable while product families evolve.**
-- **Use it when compatibility is a real risk, not a theoretical one.**
+- **Abstract Factory creates compatible families of products.** You can't accidentally mix products from different families.
 
----
+- **Use it when mixing products would be a bug.** If AWS secrets with GCP storage would fail, Abstract Factory prevents that at the type level.
 
-## Downloads
+- **It's higher complexity than Factory Method.** Only use it when you genuinely need product families, not just single product variants.
 
-- Abstract Factory Cheat Sheet (Coming soon)
-- Complete Code Examples (Coming soon)
-- Practice Exercises (Coming soon)
+- **The main benefit is type-safety, not flexibility.** Abstract Factory trades flexibility for safety.
 
 ---
 

@@ -1,10 +1,10 @@
 ---
 # Required
 sidebar_position: 3
-title: "Bridge Pattern — Separate Abstraction From Implementation"
+title: "Bridge Pattern — Separating Abstraction from Implementation"
 description: >-
-  Learn the Bridge pattern to decouple an abstraction from its implementation
-  so both can evolve independently. Includes multi-language examples.
+  Learn the Bridge pattern to decouple an abstraction from its implementation,
+  letting both evolve independently. Solves class explosion problems.
 
 # SEO
 keywords:
@@ -12,13 +12,14 @@ keywords:
   - bridge design pattern
   - abstraction implementation separation
   - when to use bridge
+  - avoiding class explosion
 
 difficulty: intermediate
 category: structural
 related_solid: [OCP, DIP]
 
 # Social sharing
-og_title: "Bridge Pattern: Separate Abstraction From Implementation"
+og_title: "Bridge Pattern: Separating Abstraction from Implementation"
 og_description: "Decouple abstractions so both sides can evolve independently."
 og_image: "/img/social-card.svg"
 
@@ -26,7 +27,7 @@ og_image: "/img/social-card.svg"
 date_published: 2026-01-25
 date_modified: 2026-01-25
 author: shivam
-reading_time: 12
+reading_time: 13
 content_type: explanation
 ---
 
@@ -34,74 +35,120 @@ content_type: explanation
 
 <PatternMeta>
   <Difficulty level="intermediate" />
-  <TimeToRead minutes={12} />
+  <TimeToRead minutes={13} />
   <Prerequisites patterns={["Adapter"]} />
 </PatternMeta>
 
-> **Definition:** The Bridge pattern decouples an abstraction from its implementation so the two can vary independently.
+The dashboard rendering crisis taught me when you actually need Bridge.
 
----
+In 2021, we were building a metrics visualization dashboard at NVIDIA. Each chart type (line, bar, area, scatter) needed to render in multiple formats: SVG for the web interface, PNG for email reports, and ASCII for terminal output. The initial design used inheritance:
 
-## The Problem: Exploding Combinations
+```
+Chart
+├── LineChart
+│   ├── SvgLineChart
+│   ├── PngLineChart
+│   └── AsciiLineChart
+├── BarChart
+│   ├── SvgBarChart
+│   ├── PngBarChart
+│   └── AsciiBarChart
+└── ... (9 more combinations)
+```
 
-We once built a dashboard that rendered charts in both SVG and Canvas, and each chart needed to support light and dark themes. Without a bridge, the combinations multiplied into a messy inheritance tree.
+Every new chart type required three new classes. Every new rendering format required one new class per chart type. When product asked for PDF support, we realized we'd need to add four more classes—one for each chart type. The combinatorial explosion was unsustainable.
 
-**Bridge lets you mix and match without multiplying classes.**
+**Bridge solves this by separating what varies independently.** Chart types vary. Rendering formats vary. But they vary *independently*—there's no reason a line chart must know about PNG rendering. Split them apart, and you get 4 chart classes + 4 renderer classes instead of 16 combinations.
 
 ---
 
 ## What Is the Bridge Pattern?
 
-Bridge separates the high-level abstraction (the API clients use) from the low-level implementation. The abstraction holds a reference to the implementation, not a subclass relationship.
+> **Definition:** Bridge decouples an abstraction from its implementation so the two can vary independently.
 
-### Structure
+The name "bridge" refers to the connection between the abstraction and its implementation—composition rather than inheritance. Instead of building all combinations into a class hierarchy, you compose them at runtime.
+
+**The key insight: Bridge is for when you have two dimensions of variation that shouldn't be coupled.** If changing one dimension (chart type) forces you to update the other dimension (renderer), you've coupled things that should be independent.
+
+---
+
+## Structure
 
 ```mermaid
 classDiagram
-  class Chart {
-    -renderer: Renderer
-    +draw() void
-  }
-  class Renderer {
-    <<interface>>
-    +renderCircle() void
-  }
-  class SvgRenderer {
-    +renderCircle() void
-  }
-  class CanvasRenderer {
-    +renderCircle() void
-  }
-
-  Chart --> Renderer
-  Renderer <|.. SvgRenderer
-  Renderer <|.. CanvasRenderer
+    class Chart {
+        <<abstract>>
+        -renderer: Renderer
+        +render() void
+    }
+    
+    class LineChart {
+        +render() void
+    }
+    
+    class BarChart {
+        +render() void
+    }
+    
+    class Renderer {
+        <<interface>>
+        +drawLine(x1, y1, x2, y2) void
+        +drawRect(x, y, w, h) void
+        +drawText(x, y, text) void
+    }
+    
+    class SvgRenderer {
+        +drawLine(x1, y1, x2, y2) void
+        +drawRect(x, y, w, h) void
+        +drawText(x, y, text) void
+    }
+    
+    class PngRenderer {
+        +drawLine(x1, y1, x2, y2) void
+        +drawRect(x, y, w, h) void
+        +drawText(x, y, text) void
+    }
+    
+    Chart --> Renderer : uses
+    Chart <|-- LineChart
+    Chart <|-- BarChart
+    Renderer <|.. SvgRenderer
+    Renderer <|.. PngRenderer
 ```
 
 ### Key Components
 
-- **Abstraction:** The high-level API.
-- **Implementation:** The low-level details.
-- **Bridge:** A reference from abstraction to implementation.
+| Component | Role |
+|-----------|------|
+| **Abstraction** (`Chart`) | High-level interface that clients use. Contains reference to implementer. |
+| **Refined Abstraction** (`LineChart`, `BarChart`) | Extends abstraction with specific behavior. |
+| **Implementer** (`Renderer`) | Interface for implementation classes. |
+| **Concrete Implementers** (`SvgRenderer`, `PngRenderer`) | Actual implementations. |
 
 ### SOLID Principles Connection
 
-- **OCP:** Add new abstractions or implementations without changing existing code.
-- **DIP:** Abstraction depends on an interface, not a concrete class.
+- **Open/Closed:** Add new abstractions or implementations without modifying existing code
+- **Dependency Inversion:** Abstraction depends on implementer interface, not concrete classes
 
 ---
 
 ## When to Use Bridge
 
-- You have two dimensions of variability.
-- Subclassing leads to a class explosion.
-- You want to change implementation at runtime.
+✅ **Use it when:**
 
-## When NOT to Use Bridge
+- You have two independent dimensions of variation
+- Class hierarchies are exploding combinatorially
+- You want to switch implementations at runtime
+- Changes in one dimension shouldn't require changes in the other
 
-- There is only one implementation.
-- The abstraction and implementation are unlikely to evolve independently.
-- The added indirection would confuse the team.
+❌ **Don't use it when:**
+
+- There's only one dimension of variation (use Strategy instead)
+- The dimensions aren't actually independent
+- The added abstraction isn't worth the complexity
+- You're designing prematurely—wait until you see the explosion
+
+**Rule of thumb:** If you're creating classes like `XYZChart` where X, Y, and Z can vary independently, you might need Bridge. If X and Y are tightly coupled, you don't.
 
 ---
 
@@ -110,40 +157,211 @@ classDiagram
 <CodeTabs>
   <TabItem value="python" label="Python">
     ```python
-    class Renderer:
-        def render_circle(self) -> str:
-            raise NotImplementedError
+    from abc import ABC, abstractmethod
+
+
+    class Renderer(ABC):
+        """Implementation interface for different rendering formats."""
+        
+        @abstractmethod
+        def draw_line(self, x1: int, y1: int, x2: int, y2: int) -> None:
+            pass
+        
+        @abstractmethod
+        def draw_rect(self, x: int, y: int, width: int, height: int) -> None:
+            pass
+        
+        @abstractmethod
+        def draw_text(self, x: int, y: int, text: str) -> None:
+            pass
+        
+        @abstractmethod
+        def get_output(self) -> str:
+            pass
 
 
     class SvgRenderer(Renderer):
-        def render_circle(self) -> str:
-            return "<svg>circle</svg>"
+        def __init__(self) -> None:
+            self.elements: list[str] = []
+        
+        def draw_line(self, x1: int, y1: int, x2: int, y2: int) -> None:
+            self.elements.append(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}"/>')
+        
+        def draw_rect(self, x: int, y: int, width: int, height: int) -> None:
+            self.elements.append(f'<rect x="{x}" y="{y}" width="{width}" height="{height}"/>')
+        
+        def draw_text(self, x: int, y: int, text: str) -> None:
+            self.elements.append(f'<text x="{x}" y="{y}">{text}</text>')
+        
+        def get_output(self) -> str:
+            return f'<svg>{"".join(self.elements)}</svg>'
 
 
-    class Chart:
+    class AsciiRenderer(Renderer):
+        def __init__(self, width: int = 40, height: int = 20) -> None:
+            self.width = width
+            self.height = height
+            self.canvas = [[' '] * width for _ in range(height)]
+        
+        def draw_line(self, x1: int, y1: int, x2: int, y2: int) -> None:
+            # Simplified: just draw endpoints
+            self._set_pixel(x1, y1, '*')
+            self._set_pixel(x2, y2, '*')
+        
+        def draw_rect(self, x: int, y: int, width: int, height: int) -> None:
+            for i in range(width):
+                self._set_pixel(x + i, y, '-')
+                self._set_pixel(x + i, y + height, '-')
+            for j in range(height):
+                self._set_pixel(x, y + j, '|')
+                self._set_pixel(x + width, y + j, '|')
+        
+        def draw_text(self, x: int, y: int, text: str) -> None:
+            for i, char in enumerate(text):
+                self._set_pixel(x + i, y, char)
+        
+        def _set_pixel(self, x: int, y: int, char: str) -> None:
+            if 0 <= x < self.width and 0 <= y < self.height:
+                self.canvas[y][x] = char
+        
+        def get_output(self) -> str:
+            return '\n'.join(''.join(row) for row in self.canvas)
+
+
+    class Chart(ABC):
+        """Abstraction that uses a renderer."""
+        
         def __init__(self, renderer: Renderer) -> None:
             self.renderer = renderer
+        
+        @abstractmethod
+        def render(self, data: list[tuple[int, int]]) -> str:
+            pass
 
-        def draw(self) -> str:
-            return self.renderer.render_circle()
+
+    class LineChart(Chart):
+        def render(self, data: list[tuple[int, int]]) -> str:
+            self.renderer.draw_text(0, 0, "Line Chart")
+            for i in range(len(data) - 1):
+                x1, y1 = data[i]
+                x2, y2 = data[i + 1]
+                self.renderer.draw_line(x1, y1, x2, y2)
+            return self.renderer.get_output()
+
+
+    class BarChart(Chart):
+        def render(self, data: list[tuple[int, int]]) -> str:
+            self.renderer.draw_text(0, 0, "Bar Chart")
+            for i, (x, height) in enumerate(data):
+                self.renderer.draw_rect(i * 5, 10 - height, 4, height)
+            return self.renderer.get_output()
+
+
+    # Usage: compose at runtime
+    data = [(5, 10), (10, 15), (15, 8), (20, 12)]
+
+    # Same chart type, different renderers
+    svg_line = LineChart(SvgRenderer())
+    ascii_line = LineChart(AsciiRenderer())
+
+    print(svg_line.render(data))
+    print(ascii_line.render(data))
+
+    # Same renderer, different chart types
+    svg_renderer = SvgRenderer()
+    svg_bar = BarChart(SvgRenderer())
+    print(svg_bar.render([(1, 5), (2, 8), (3, 3), (4, 7)]))
     ```
   </TabItem>
   <TabItem value="typescript" label="TypeScript">
     ```typescript
     interface Renderer {
-      renderCircle(): string;
+      drawLine(x1: number, y1: number, x2: number, y2: number): void;
+      drawRect(x: number, y: number, width: number, height: number): void;
+      drawText(x: number, y: number, text: string): void;
+      getOutput(): string;
     }
 
     class SvgRenderer implements Renderer {
-      renderCircle(): string {
-        return "<svg>circle</svg>";
+      private elements: string[] = [];
+
+      drawLine(x1: number, y1: number, x2: number, y2: number): void {
+        this.elements.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`);
+      }
+
+      drawRect(x: number, y: number, width: number, height: number): void {
+        this.elements.push(`<rect x="${x}" y="${y}" width="${width}" height="${height}"/>`);
+      }
+
+      drawText(x: number, y: number, text: string): void {
+        this.elements.push(`<text x="${x}" y="${y}">${text}</text>`);
+      }
+
+      getOutput(): string {
+        return `<svg>${this.elements.join("")}</svg>`;
       }
     }
 
-    class Chart {
-      constructor(private renderer: Renderer) {}
-      draw(): string {
-        return this.renderer.renderCircle();
+    class AsciiRenderer implements Renderer {
+      private canvas: string[][];
+
+      constructor(private width = 40, private height = 20) {
+        this.canvas = Array(height).fill(null).map(() => Array(width).fill(" "));
+      }
+
+      drawLine(x1: number, y1: number, x2: number, y2: number): void {
+        this.setPixel(x1, y1, "*");
+        this.setPixel(x2, y2, "*");
+      }
+
+      drawRect(x: number, y: number, width: number, height: number): void {
+        for (let i = 0; i < width; i++) {
+          this.setPixel(x + i, y, "-");
+          this.setPixel(x + i, y + height, "-");
+        }
+      }
+
+      drawText(x: number, y: number, text: string): void {
+        for (let i = 0; i < text.length; i++) {
+          this.setPixel(x + i, y, text[i]);
+        }
+      }
+
+      private setPixel(x: number, y: number, char: string): void {
+        if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
+          this.canvas[y][x] = char;
+        }
+      }
+
+      getOutput(): string {
+        return this.canvas.map((row) => row.join("")).join("\n");
+      }
+    }
+
+    abstract class Chart {
+      constructor(protected renderer: Renderer) {}
+      abstract render(data: [number, number][]): string;
+    }
+
+    class LineChart extends Chart {
+      render(data: [number, number][]): string {
+        this.renderer.drawText(0, 0, "Line Chart");
+        for (let i = 0; i < data.length - 1; i++) {
+          const [x1, y1] = data[i];
+          const [x2, y2] = data[i + 1];
+          this.renderer.drawLine(x1, y1, x2, y2);
+        }
+        return this.renderer.getOutput();
+      }
+    }
+
+    class BarChart extends Chart {
+      render(data: [number, number][]): string {
+        this.renderer.drawText(0, 0, "Bar Chart");
+        data.forEach(([x, height], i) => {
+          this.renderer.drawRect(i * 5, 10 - height, 4, height);
+        });
+        return this.renderer.getOutput();
       }
     }
     ```
@@ -152,43 +370,154 @@ classDiagram
     ```go
     package charts
 
+    import (
+        "fmt"
+        "strings"
+    )
+
+    // Renderer is the implementation interface
     type Renderer interface {
-        RenderCircle() string
+        DrawLine(x1, y1, x2, y2 int)
+        DrawRect(x, y, width, height int)
+        DrawText(x, y int, text string)
+        GetOutput() string
     }
 
-    type SvgRenderer struct{}
-
-    func (r SvgRenderer) RenderCircle() string {
-        return "<svg>circle</svg>"
+    // SvgRenderer renders to SVG format
+    type SvgRenderer struct {
+        elements []string
     }
 
-    type Chart struct {
+    func (r *SvgRenderer) DrawLine(x1, y1, x2, y2 int) {
+        r.elements = append(r.elements, fmt.Sprintf(
+            `<line x1="%d" y1="%d" x2="%d" y2="%d"/>`, x1, y1, x2, y2))
+    }
+
+    func (r *SvgRenderer) DrawRect(x, y, width, height int) {
+        r.elements = append(r.elements, fmt.Sprintf(
+            `<rect x="%d" y="%d" width="%d" height="%d"/>`, x, y, width, height))
+    }
+
+    func (r *SvgRenderer) DrawText(x, y int, text string) {
+        r.elements = append(r.elements, fmt.Sprintf(
+            `<text x="%d" y="%d">%s</text>`, x, y, text))
+    }
+
+    func (r *SvgRenderer) GetOutput() string {
+        return fmt.Sprintf("<svg>%s</svg>", strings.Join(r.elements, ""))
+    }
+
+    // Chart is the abstraction
+    type Chart interface {
+        Render(data [][2]int) string
+    }
+
+    // LineChart is a refined abstraction
+    type LineChart struct {
         renderer Renderer
     }
 
-    func NewChart(r Renderer) Chart {
-        return Chart{renderer: r}
+    func NewLineChart(renderer Renderer) *LineChart {
+        return &LineChart{renderer: renderer}
     }
 
-    func (c Chart) Draw() string {
-        return c.renderer.RenderCircle()
+    func (c *LineChart) Render(data [][2]int) string {
+        c.renderer.DrawText(0, 0, "Line Chart")
+        for i := 0; i < len(data)-1; i++ {
+            c.renderer.DrawLine(data[i][0], data[i][1], data[i+1][0], data[i+1][1])
+        }
+        return c.renderer.GetOutput()
+    }
+
+    // BarChart is a refined abstraction
+    type BarChart struct {
+        renderer Renderer
+    }
+
+    func NewBarChart(renderer Renderer) *BarChart {
+        return &BarChart{renderer: renderer}
+    }
+
+    func (c *BarChart) Render(data [][2]int) string {
+        c.renderer.DrawText(0, 0, "Bar Chart")
+        for i, point := range data {
+            c.renderer.DrawRect(i*5, 10-point[1], 4, point[1])
+        }
+        return c.renderer.GetOutput()
     }
     ```
   </TabItem>
   <TabItem value="java" label="Java">
     ```java
+    import java.util.*;
+
     interface Renderer {
-        String renderCircle();
+        void drawLine(int x1, int y1, int x2, int y2);
+        void drawRect(int x, int y, int width, int height);
+        void drawText(int x, int y, String text);
+        String getOutput();
     }
 
     class SvgRenderer implements Renderer {
-        public String renderCircle() { return "<svg>circle</svg>"; }
+        private final List<String> elements = new ArrayList<>();
+
+        @Override
+        public void drawLine(int x1, int y1, int x2, int y2) {
+            elements.add(String.format("<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\"/>",
+                x1, y1, x2, y2));
+        }
+
+        @Override
+        public void drawRect(int x, int y, int width, int height) {
+            elements.add(String.format("<rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\"/>",
+                x, y, width, height));
+        }
+
+        @Override
+        public void drawText(int x, int y, String text) {
+            elements.add(String.format("<text x=\"%d\" y=\"%d\">%s</text>", x, y, text));
+        }
+
+        @Override
+        public String getOutput() {
+            return "<svg>" + String.join("", elements) + "</svg>";
+        }
     }
 
-    class Chart {
-        private final Renderer renderer;
-        Chart(Renderer renderer) { this.renderer = renderer; }
-        public String draw() { return renderer.renderCircle(); }
+    abstract class Chart {
+        protected final Renderer renderer;
+
+        protected Chart(Renderer renderer) {
+            this.renderer = renderer;
+        }
+
+        abstract String render(int[][] data);
+    }
+
+    class LineChart extends Chart {
+        LineChart(Renderer renderer) { super(renderer); }
+
+        @Override
+        String render(int[][] data) {
+            renderer.drawText(0, 0, "Line Chart");
+            for (int i = 0; i < data.length - 1; i++) {
+                renderer.drawLine(data[i][0], data[i][1], data[i+1][0], data[i+1][1]);
+            }
+            return renderer.getOutput();
+        }
+    }
+
+    class BarChart extends Chart {
+        BarChart(Renderer renderer) { super(renderer); }
+
+        @Override
+        String render(int[][] data) {
+            renderer.drawText(0, 0, "Bar Chart");
+            for (int i = 0; i < data.length; i++) {
+                renderer.drawRect(i * 5, 10 - data[i][1], 4, data[i][1]);
+            }
+            return renderer.getOutput();
+        }
     }
     ```
   </TabItem>
@@ -196,19 +525,71 @@ classDiagram
     ```csharp
     public interface IRenderer
     {
-        string RenderCircle();
+        void DrawLine(int x1, int y1, int x2, int y2);
+        void DrawRect(int x, int y, int width, int height);
+        void DrawText(int x, int y, string text);
+        string GetOutput();
     }
 
     public class SvgRenderer : IRenderer
     {
-        public string RenderCircle() => "<svg>circle</svg>";
+        private readonly List<string> _elements = new();
+
+        public void DrawLine(int x1, int y1, int x2, int y2)
+        {
+            _elements.Add($"<line x1=\"{x1}\" y1=\"{y1}\" x2=\"{x2}\" y2=\"{y2}\"/>");
+        }
+
+        public void DrawRect(int x, int y, int width, int height)
+        {
+            _elements.Add($"<rect x=\"{x}\" y=\"{y}\" width=\"{width}\" height=\"{height}\"/>");
+        }
+
+        public void DrawText(int x, int y, string text)
+        {
+            _elements.Add($"<text x=\"{x}\" y=\"{y}\">{text}</text>");
+        }
+
+        public string GetOutput() => $"<svg>{string.Join("", _elements)}</svg>";
     }
 
-    public class Chart
+    public abstract class Chart
     {
-        private readonly IRenderer _renderer;
-        public Chart(IRenderer renderer) { _renderer = renderer; }
-        public string Draw() => _renderer.RenderCircle();
+        protected readonly IRenderer Renderer;
+
+        protected Chart(IRenderer renderer) { Renderer = renderer; }
+
+        public abstract string Render((int x, int y)[] data);
+    }
+
+    public class LineChart : Chart
+    {
+        public LineChart(IRenderer renderer) : base(renderer) { }
+
+        public override string Render((int x, int y)[] data)
+        {
+            Renderer.DrawText(0, 0, "Line Chart");
+            for (int i = 0; i < data.Length - 1; i++)
+            {
+                Renderer.DrawLine(data[i].x, data[i].y, data[i + 1].x, data[i + 1].y);
+            }
+            return Renderer.GetOutput();
+        }
+    }
+
+    public class BarChart : Chart
+    {
+        public BarChart(IRenderer renderer) : base(renderer) { }
+
+        public override string Render((int x, int y)[] data)
+        {
+            Renderer.DrawText(0, 0, "Bar Chart");
+            for (int i = 0; i < data.Length; i++)
+            {
+                Renderer.DrawRect(i * 5, 10 - data[i].y, 4, data[i].y);
+            }
+            return Renderer.GetOutput();
+        }
     }
     ```
   </TabItem>
@@ -216,9 +597,19 @@ classDiagram
 
 ---
 
-## Real-World Example: Storage Backends
+## Bridge vs. Adapter
 
-In infrastructure platforms, a storage abstraction might support S3, GCS, and a local filesystem. Bridge lets the API remain stable while storage backends evolve independently.
+People often confuse these. Here's the difference:
+
+| Aspect | Adapter | Bridge |
+|--------|---------|--------|
+| **When designed** | After the fact—connecting existing interfaces | Upfront—preventing class explosion |
+| **Purpose** | Make incompatible interfaces work together | Allow independent variation |
+| **Interface relationship** | Target and adaptee have different interfaces | Abstraction and implementer are designed together |
+
+**Adapter** is a retrofit—you have two things that don't match, and you need a translator.
+
+**Bridge** is architecture—you see two dimensions of variation coming and you design them to be independent from the start.
 
 ---
 
@@ -226,89 +617,70 @@ In infrastructure platforms, a storage abstraction might support S3, GCS, and a 
 
 | Aspect | Impact | Notes |
 |--------|--------|-------|
-| Memory | Low | One extra reference |
-| Runtime | Low | Indirection on each call |
-| Complexity | Medium | Two parallel class hierarchies |
+| Memory | Low | One extra reference per object |
+| Runtime | Low | One level of indirection per call |
+| Complexity | Medium | Two parallel hierarchies to understand |
+
+Bridge's cost is conceptual, not runtime. You're trading class explosion for a design that requires understanding two independent dimensions.
 
 ---
 
 ## Testing This Pattern
 
-Mock the renderer to verify the abstraction without depending on the implementation.
+Test each dimension independently:
 
 ```python
-class FakeRenderer(Renderer):
-    def render_circle(self) -> str:
-        return "fake"
+def test_svg_renderer():
+    renderer = SvgRenderer()
+    renderer.draw_line(0, 0, 10, 10)
+    output = renderer.get_output()
+    assert '<line' in output
+    assert 'x1="0"' in output
 
 
-def test_chart_draws() -> None:
-    chart = Chart(FakeRenderer())
-    assert chart.draw() == "fake"
+def test_line_chart_with_mock_renderer():
+    class MockRenderer:
+        def __init__(self):
+            self.lines = []
+        def draw_line(self, x1, y1, x2, y2):
+            self.lines.append((x1, y1, x2, y2))
+        def draw_text(self, x, y, text): pass
+        def get_output(self): return "mock"
+    
+    renderer = MockRenderer()
+    chart = LineChart(renderer)
+    chart.render([(0, 0), (10, 10), (20, 5)])
+    
+    assert len(renderer.lines) == 2
 ```
 
 ---
 
 ## Common Mistakes
 
-- Using Bridge when simple composition would work.
-- Confusing Bridge with Adapter.
-- Over-abstracting early.
+### 1. Using Bridge when there's only one dimension
 
----
+If chart types vary but rendering is always SVG, you don't need Bridge. Just use regular inheritance or Strategy.
 
-## Related Patterns
+### 2. Coupled dimensions
 
-| Pattern | Relationship |
-|---------|--------------|
-| Adapter | Translates interfaces; Bridge separates dimensions |
-| Facade | Simplifies a subsystem rather than splitting it |
-| Strategy | Swappable behavior within one dimension |
+If certain chart types only work with certain renderers, they're not independent—Bridge won't help.
 
----
+### 3. Over-abstracting early
 
-## Pattern Combinations
-
-- **With Strategy:** Strategy picks the implementation at runtime.
-- **With Abstract Factory:** Use a factory to assemble matched pairs.
-
----
-
-## Try It Yourself
-
-Build a notification system where channels (Email, SMS) are separate from formatting (Plain, HTML).
-
----
-
-## Frequently Asked Questions
-
-### Is Bridge just dependency injection?
-DI wires dependencies; Bridge defines the split between abstraction and implementation.
-
-### When does Bridge add too much overhead?
-When there is only one implementation and no need for parallel evolution.
-
-### Can I swap implementations at runtime?
-Yes, that is one of the benefits.
-
-### How do I test code using Bridge?
-Mock the implementation interface and validate the abstraction in isolation.
+Don't design for Bridge until you see the class explosion happening. It's easy to add later if needed.
 
 ---
 
 ## Key Takeaways
 
-- **Bridge prevents class explosion across multiple dimensions.**
-- **It allows abstraction and implementation to evolve independently.**
-- **Use it when you see combinatorial growth.**
+- **Bridge prevents class explosion from multiple dimensions of variation.** N × M combinations become N + M classes.
 
----
+- **Use it when you have two independent dimensions that vary.** If they're not independent, it won't help.
 
-## Downloads
+- **Design upfront, unlike Adapter.** Bridge is architectural; Adapter is retrofit.
 
-- Bridge Cheat Sheet (Coming soon)
-- Complete Code Examples (Coming soon)
-- Practice Exercises (Coming soon)
+- **Don't use it prematurely.** Wait until you actually see the combinatorial explosion.
 
 ---
 
