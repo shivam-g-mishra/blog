@@ -2,7 +2,7 @@
   "label": "Design Patterns",
   "position": 2,
   "link": {
-    "type": "doc",
-    "id": "design-patterns/introduction"
+    "type": "generated-index",
+    "description": "A practical, end-to-end guide to design patterns with real-world context, multi-language implementations, and decision frameworks."
   }
 }
