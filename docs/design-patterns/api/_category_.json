@@ -1,0 +1,8 @@
+{
+  "label": "API Design Patterns",
+  "position": 14,
+  "link": {
+    "type": "generated-index",
+    "description": "Practical patterns for building resilient, evolvable APIs."
+  }
+}

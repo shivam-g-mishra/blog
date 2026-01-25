@@ -1,0 +1,8 @@
+{
+  "label": "Reactive Patterns",
+  "position": 20,
+  "link": {
+    "type": "generated-index",
+    "description": "Patterns for event-driven and streaming architectures."
+  }
+}

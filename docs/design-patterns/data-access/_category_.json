@@ -1,0 +1,8 @@
+{
+  "label": "Data Access Patterns",
+  "position": 18,
+  "link": {
+    "type": "generated-index",
+    "description": "Patterns that structure data access and persistence logic."
+  }
+}

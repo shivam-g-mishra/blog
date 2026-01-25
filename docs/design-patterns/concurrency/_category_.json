@@ -1,0 +1,8 @@
+{
+  "label": "Concurrency Patterns",
+  "position": 9,
+  "link": {
+    "type": "generated-index",
+    "description": "Patterns for safe, scalable concurrency and coordination."
+  }
+}

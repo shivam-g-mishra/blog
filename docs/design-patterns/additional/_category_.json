@@ -1,0 +1,8 @@
+{
+  "label": "Additional Patterns",
+  "position": 19,
+  "link": {
+    "type": "generated-index",
+    "description": "Specialized patterns that solve recurring design challenges."
+  }
+}

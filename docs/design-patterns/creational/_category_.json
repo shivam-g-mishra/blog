@@ -1,0 +1,8 @@
+{
+  "label": "Creational Patterns",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "description": "Patterns that manage object creation with flexibility and control."
+  }
+}

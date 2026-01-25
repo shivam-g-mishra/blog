@@ -1,0 +1,8 @@
+{
+  "label": "Cloud Resiliency",
+  "position": 17,
+  "link": {
+    "type": "generated-index",
+    "description": "Patterns for building fault-tolerant systems in the cloud."
+  }
+}

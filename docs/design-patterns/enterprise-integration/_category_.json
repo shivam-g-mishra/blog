@@ -1,0 +1,8 @@
+{
+  "label": "Enterprise Integration",
+  "position": 15,
+  "link": {
+    "type": "generated-index",
+    "description": "Patterns for messaging, routing, and integration across systems."
+  }
+}

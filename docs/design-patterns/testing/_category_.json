@@ -1,0 +1,8 @@
+{
+  "label": "Testing Patterns",
+  "position": 11,
+  "link": {
+    "type": "generated-index",
+    "description": "Patterns and strategies for testing code that uses design patterns."
+  }
+}

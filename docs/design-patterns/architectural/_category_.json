@@ -1,0 +1,8 @@
+{
+  "label": "Architectural Patterns",
+  "position": 10,
+  "link": {
+    "type": "generated-index",
+    "description": "High-level patterns that structure entire systems and teams."
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "label": "Frontend Patterns",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "Patterns that make UI codebases modular, testable, and easier to scale."
+  }
+}

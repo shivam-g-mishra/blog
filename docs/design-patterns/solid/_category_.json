@@ -1,0 +1,8 @@
+{
+  "label": "SOLID Principles",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "description": "Design principles that reinforce and connect to common patterns."
+  }
+}

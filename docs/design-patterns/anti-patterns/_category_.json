@@ -1,0 +1,8 @@
+{
+  "label": "Anti-Patterns",
+  "position": 6,
+  "link": {
+    "type": "generated-index",
+    "description": "Common misuses of patterns and how to avoid them."
+  }
+}

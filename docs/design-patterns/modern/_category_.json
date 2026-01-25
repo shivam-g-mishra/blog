@@ -1,0 +1,8 @@
+{
+  "label": "Modern Patterns",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Patterns that emerged in modern architectures, data systems, and distributed workflows."
+  }
+}
