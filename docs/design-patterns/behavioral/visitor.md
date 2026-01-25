@@ -968,4 +968,4 @@ Visitors should compute results, not modify elements.
 ## Navigation
 
 - **Previous:** [Memento Pattern](/docs/design-patterns/behavioral/memento)
-- **Next:** [Modern Patterns](/docs/design-patterns/modern)
+- **Up:** [Behavioral Patterns Overview](/docs/design-patterns/behavioral)

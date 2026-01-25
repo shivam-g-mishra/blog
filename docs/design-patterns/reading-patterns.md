@@ -152,8 +152,8 @@ classDiagram
 | Arrow | Meaning | Example |
 |-------|---------|---------|
 | `-->` (solid arrow) | "uses" or "has reference to" | Client uses Service |
-| `<|..` (dashed with triangle) | "implements interface" | ConcreteClass implements Interface |
-| `<|--` (solid with triangle) | "extends" or "inherits from" | Child extends Parent |
+| `<\|..` (dashed with triangle) | "implements interface" | ConcreteClass implements Interface |
+| `<\|--` (solid with triangle) | "extends" or "inherits from" | Child extends Parent |
 | `o--` (diamond) | "contains" or "is composed of" | Collection contains Items |
 
 ### Reading Pattern Diagrams
