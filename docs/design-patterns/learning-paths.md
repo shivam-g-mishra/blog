@@ -41,13 +41,23 @@ Instead, I start with the patterns they'll use next week. In nine years of build
 
 Here's a truth nobody tells you: **five patterns cover 80% of the situations where patterns help.**
 
-| Pattern | Why It's Essential |
-|---------|-------------------|
-| **Factory Method** | You'll create objects everywhere. This is how you do it flexibly. |
-| **Strategy** | Swapping algorithms is one of the most common change types. |
-| **Observer** | Events are everywhere—UI updates, notifications, pub/sub. |
-| **Adapter** | You'll integrate with legacy systems and third-party APIs constantly. |
-| **Decorator** | Adding cross-cutting concerns (logging, retries, metrics) without inheritance. |
+```mermaid
+pie title Pattern Usage in Real Projects
+    "Factory Method" : 25
+    "Strategy" : 20
+    "Observer" : 18
+    "Adapter" : 12
+    "Decorator" : 12
+    "All Other Patterns" : 13
+```
+
+| Pattern | Why It's Essential | You'll Use It For |
+|---------|-------------------|-------------------|
+| **Factory Method** | You'll create objects everywhere. This is how you do it flexibly. | Plugin systems, handlers, exporters |
+| **Strategy** | Swapping algorithms is one of the most common change types. | Payment providers, auth backends, compression |
+| **Observer** | Events are everywhere—UI updates, notifications, pub/sub. | Dashboards, webhooks, reactive UIs |
+| **Adapter** | You'll integrate with legacy systems and third-party APIs constantly. | API wrappers, legacy bridges |
+| **Decorator** | Adding cross-cutting concerns (logging, retries, metrics) without inheritance. | Logging, caching, metrics, auth |
 
 Learn these five well, and you'll handle most design problems. The other eighteen patterns? Learn them when you need them.
 
@@ -100,12 +110,26 @@ flowchart TB
 | Week | Pattern | Focus On | Practice Exercise |
 |------|---------|----------|-------------------|
 | 1 | [Factory Method](/docs/design-patterns/creational/factory-method) | Creating objects without hard-coding classes | Build a notification system with email, Slack, and SMS handlers |
-| 1 | Strategy *(coming soon)* | Swapping algorithms at runtime | Implement different sorting or validation strategies |
-| 2 | Observer *(coming soon)* | Event-driven updates | Build a simple pub/sub system or dashboard updater |
+| 1 | [Strategy](/docs/design-patterns/behavioral/strategy) | Swapping algorithms at runtime | Implement different sorting or validation strategies |
+| 2 | [Observer](/docs/design-patterns/behavioral/observer) | Event-driven updates | Build a simple pub/sub system or dashboard updater |
 | 2 | [Adapter](/docs/design-patterns/structural/adapter) | Making interfaces compatible | Wrap a third-party API to match your internal interface |
 | 3 | [Decorator](/docs/design-patterns/structural/decorator) | Adding behavior without inheritance | Add logging, timing, and retry logic to an API client |
 
 ### How to Study Each Pattern
+
+```mermaid
+flowchart LR
+    A["📖 Read the\nproblem story"] --> B["✏️ Draw diagram\nfrom memory"]
+    B --> C["💻 Build in a\ntoy project"]
+    C --> D["🔍 Find it in\nreal frameworks"]
+    D --> E["✅ Pattern\nmastered"]
+    
+    style A fill:#e1f5fe
+    style B fill:#fff3e0
+    style C fill:#e8f5e9
+    style D fill:#fce4ec
+    style E fill:#f3e5f5
+```
 
 1. **Read the problem story.** Can you relate to it? If not, you might not need this pattern yet.
 
@@ -114,6 +138,19 @@ flowchart TB
 3. **Implement it in a toy project.** Don't just read—build something. The pattern won't stick otherwise.
 
 4. **Find it in code you use.** React's useState is a State pattern. Express middleware is Chain of Responsibility. Seeing patterns in real code builds recognition.
+
+### Patterns in the Wild
+
+Patterns are everywhere in frameworks you already use. Recognizing them builds intuition:
+
+| Framework | Pattern | Where to Look |
+|-----------|---------|---------------|
+| **React** | Observer | `useState`, `useEffect`, Context API |
+| **Express/Koa** | Chain of Responsibility | Middleware pipeline |
+| **Redux** | Command | Actions as serializable commands |
+| **Mongoose** | Builder | Schema and query builders |
+| **Spring** | Factory Method | `@Bean` methods, dependency injection |
+| **Jest** | Composite | Matchers composing into assertions |
 
 ### Junior Path Checklist
 
@@ -141,18 +178,49 @@ flowchart TB
 | 1 | [Facade](/docs/design-patterns/structural/facade) | Simplifying complex subsystems for external callers |
 | 2 | [Composite](/docs/design-patterns/structural/composite) | Tree structures—pipelines, org charts, UI hierarchies |
 | 2 | [Proxy](/docs/design-patterns/structural/proxy) | Caching, lazy loading, access control |
-| 3 | Template Method *(coming soon)* | Defining skeleton algorithms with customizable steps |
-| 3 | Command *(coming soon)* | Undo/redo, queuing operations, macro recording |
+| 3 | [Template Method](/docs/design-patterns/behavioral/template-method) | Defining skeleton algorithms with customizable steps |
+| 3 | [Command](/docs/design-patterns/behavioral/command) | Undo/redo, queuing operations, macro recording |
 
 ### Mid-Level Focus Areas
 
 At this stage, focus on:
+
+```mermaid
+mindmap
+  root((Mid-Level Skills))
+    Pattern Combinations
+      Factory + Strategy
+      Decorator + Composite
+      Facade + Adapter
+    Trade-off Analysis
+      Complexity cost
+      Maintenance burden
+      Team familiarity
+    Testing Patterns
+      Seams and mocks
+      Integration points
+      Test doubles
+```
 
 **Pattern combinations.** Real systems combine patterns. Factory + Strategy lets you create strategies at runtime. Decorator + Composite lets you wrap entire tree structures. Study the "Related Patterns" sections.
 
 **Trade-off analysis.** Every pattern has costs. Builder adds classes. Facade can hide useful functionality. Start weighing complexity against benefit.
 
 **Testing patterns.** Each pattern creates different testing seams. Understand how patterns affect your test strategy.
+
+:::tip Real Example: HTTP Client
+A production HTTP client might combine three patterns:
+```
+LoggingDecorator(
+  RetryDecorator(
+    MetricsDecorator(
+      HttpClient()
+    )
+  )
+)
+```
+Each decorator adds one concern. The client doesn't know it's being wrapped.
+:::
 
 ### Mid-Level Checklist
 
@@ -180,16 +248,44 @@ At this stage, focus on:
 | [Bridge](/docs/design-patterns/structural/bridge) | Two dimensions of variation that multiply into class explosion |
 | [Flyweight](/docs/design-patterns/structural/flyweight) | Memory pressure from millions of similar objects |
 | [Prototype](/docs/design-patterns/creational/prototype) | Expensive initialization that can be avoided via cloning |
-| State *(coming soon)* | Complex state machines with many transitions |
-| Visitor *(coming soon)* | Operations across complex object structures |
+| [State](/docs/design-patterns/behavioral/state) | Complex state machines with many transitions |
+| [Visitor](/docs/design-patterns/behavioral/visitor) | Operations across complex object structures |
 
 ### Senior-Level Focus Areas
 
 At this stage, the question isn't "how do I implement this pattern?" It's "should I implement this pattern at all?"
 
+```mermaid
+quadrantChart
+    title Pattern Complexity vs. Problem Frequency
+    x-axis Low Frequency --> High Frequency
+    y-axis Low Complexity --> High Complexity
+    quadrant-1 Learn when needed
+    quadrant-2 Know the trade-offs
+    quadrant-3 Learn early
+    quadrant-4 Learn immediately
+    Abstract Factory: [0.2, 0.8]
+    Bridge: [0.15, 0.75]
+    Flyweight: [0.1, 0.85]
+    Visitor: [0.2, 0.7]
+    Factory Method: [0.9, 0.3]
+    Strategy: [0.85, 0.25]
+    Observer: [0.8, 0.4]
+    Decorator: [0.7, 0.4]
+    Builder: [0.6, 0.45]
+```
+
 **When to avoid patterns.** The senior skill is knowing when a pattern's complexity isn't justified. Abstract Factory for two product types? Over-engineering. Flyweight when memory isn't constrained? Wasted effort.
 
 **Pattern evolution.** Watch how patterns morph as systems grow. A simple Factory becomes Abstract Factory when product families emerge. A single Decorator becomes a chain. Learn to recognize when the pattern should evolve.
+
+```mermaid
+flowchart LR
+    A[Simple Factory] -->|"product families emerge"| B[Abstract Factory]
+    C[Single Decorator] -->|"more concerns added"| D[Decorator Chain]
+    E[Switch Statement] -->|"cases keep growing"| F[Strategy Pattern]
+    G[Boolean Flags] -->|"state transitions complex"| H[State Pattern]
+```
 
 **Teaching patterns.** You'll mentor juniors who misapply patterns. Develop language for explaining why a pattern doesn't fit, not just which pattern is right.
 
@@ -212,8 +308,8 @@ Beyond the experience-based paths, you might want to focus on a specific domain:
 Focus on patterns that come up in system design and coding interviews:
 
 1. [Factory Method](/docs/design-patterns/creational/factory-method) (most common creational question)
-2. Strategy *(behavioral, coming soon)* — behavioral pattern of choice
-3. Observer *(behavioral, coming soon)* — event systems, pub/sub
+2. [Strategy](/docs/design-patterns/behavioral/strategy) — behavioral pattern of choice
+3. [Observer](/docs/design-patterns/behavioral/observer) — event systems, pub/sub
 4. [Singleton](/docs/design-patterns/creational/singleton) (asked frequently, even though it's often an anti-pattern)
 5. [Decorator](/docs/design-patterns/structural/decorator) (commonly asked for extensibility questions)
 
@@ -280,21 +376,67 @@ The best way to solidify understanding is to explain it to someone else. Write a
 
 ## Common Learning Mistakes
 
-### Mistake: Learning patterns before feeling the pain
+:::danger Avoid These Traps
+These mistakes slow down your learning and can lead to over-engineered code.
+:::
+
+### Mistake 1: Learning patterns before feeling the pain
+
+```mermaid
+flowchart LR
+    A["Feel the pain"] --> B["Search for solution"]
+    B --> C["Discover pattern"]
+    C --> D["Pattern sticks"]
+    
+    X["Read about pattern"] --> Y["Try to apply it"]
+    Y --> Z["Feels like overkill"]
+    Z --> X
+    
+    style A fill:#e8f5e9
+    style D fill:#e8f5e9
+    style X fill:#ffebee
+    style Z fill:#ffebee
+```
 
 If you've never struggled with object creation, Factory Method will feel like unnecessary complexity. Learn patterns when you need them, not before.
 
-### Mistake: Memorizing implementations
+### Mistake 2: Memorizing implementations
+
+| What to Memorize | What to Look Up |
+|-----------------|-----------------|
+| The problem the pattern solves | Exact class structure |
+| When to use vs. when to avoid | Language-specific syntax |
+| Trade-offs and costs | Implementation details |
+| Related patterns | Boilerplate code |
 
 The code is secondary. Understanding the problem and the trade-offs is primary. You can always look up the implementation.
 
-### Mistake: Applying patterns to prove you know them
+### Mistake 3: Applying patterns to prove you know them
 
 The goal is working software, not pattern density. Every pattern you add should reduce total complexity, not increase it.
 
-### Mistake: Stopping at GoF
+**Warning signs you're over-patterning:**
+- Creating interfaces with only one implementation
+- Adding factories for objects that never vary
+- Decorators that will never be composed differently
+- Strategy patterns with only two strategies
+
+### Mistake 4: Stopping at GoF
 
 The Gang of Four patterns are thirty years old. Modern systems use additional patterns: Repository, Dependency Injection, Circuit Breaker, Event Sourcing. Stay curious.
+
+```mermaid
+timeline
+    title Pattern Evolution
+    1994 : GoF Patterns Published
+         : Factory, Strategy, Observer...
+    2000s : Enterprise Patterns
+          : Repository, Unit of Work
+    2010s : Cloud & Resilience Patterns
+          : Circuit Breaker, Saga, CQRS
+    2020s : Modern Patterns
+          : Event Sourcing, Serverless patterns
+```
 
 ---
 

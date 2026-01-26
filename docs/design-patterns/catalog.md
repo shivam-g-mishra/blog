@@ -61,6 +61,44 @@ Beyond the classic GoF patterns, modern systems use additional patterns for spec
 | **DDD** | Aggregate Root, Entity vs Value Object, Bounded Context, Domain Events | Domain-driven design |
 | **Data Access** | DTO, Active Record, Data Mapper, Identity Map | Database layers |
 
+### How Pattern Families Connect
+
+Understanding how the three GoF families relate helps you see the bigger picture:
+
+```mermaid
+flowchart LR
+    subgraph Creational["🏗️ Creational"]
+        direction TB
+        C1[Factory Method]
+        C2[Builder]
+        C3[Singleton]
+    end
+
+    subgraph Structural["🧱 Structural"]
+        direction TB
+        S1[Adapter]
+        S2[Decorator]
+        S3[Facade]
+    end
+
+    subgraph Behavioral["⚡ Behavioral"]
+        direction TB
+        B1[Strategy]
+        B2[Observer]
+        B3[Command]
+    end
+
+    Creational -->|"Creates objects that..."| Structural
+    Structural -->|"Are composed to..."| Behavioral
+    Behavioral -->|"Coordinate how objects..."| Creational
+
+    C1 -.->|"Creates"| B1
+    S2 -.->|"Wraps"| B1
+    B2 -.->|"Notifies"| S3
+```
+
+**The flow:** Creational patterns *create* the objects. Structural patterns *organize* them into larger structures. Behavioral patterns *coordinate* how they work together.
+
 ---
 
 ## The Patterns You'll Use Most Often
@@ -90,9 +128,6 @@ These patterns solve less common problems, but when those problems appear, nothi
 | **Composite** | Treat single objects and groups uniformly | Pipelines, org charts, file systems |
 | **Proxy** | Control access to an object | Caching, lazy loading, rate limiting |
 
-:::info Behavioral Patterns Coming Soon
-Detailed pages for behavioral patterns (Strategy, Observer, Command, State, etc.) are currently being written. See the [Behavioral Patterns Overview](/docs/design-patterns/behavioral) for a preview of what's coming.
-:::
 
 ---
 
@@ -205,6 +240,23 @@ Sometimes you know the domain better than the problem. Here's how patterns clust
 
 Patterns don't exist in isolation. Understanding how they relate helps you combine them effectively.
 
+```mermaid
+graph TB
+    subgraph "Common Combinations"
+        FM[Factory Method] -->|creates| ST[Strategy]
+        ST -->|wrapped by| DE[Decorator]
+        OB[Observer] -->|triggers| CM[Command]
+        FA[Facade] -->|uses| AD[Adapter]
+        BU[Builder] -->|configures| PR[Prototype]
+    end
+    
+    subgraph "Similar Patterns - Different Intent"
+        DE2[Decorator] <-.->|"add behavior vs control access"| PX[Proxy]
+        AD2[Adapter] <-.->|"wrap vs design for change"| BR[Bridge]
+        ST2[Strategy] <-.->|"external choice vs internal state"| STA[State]
+    end
+```
+
 ### Patterns That Work Well Together
 
 | Combination | How They Complement |
@@ -217,23 +269,44 @@ Patterns don't exist in isolation. Understanding how they relate helps you combi
 
 ### Patterns That Solve Similar Problems
 
-| If You're Considering... | Also Consider... |
-|-------------------------|------------------|
-| Strategy | State (if behavior depends on object state) |
-| Decorator | Proxy (if you're adding access control, not behavior) |
-| Factory Method | Abstract Factory (if you need product families) |
-| Adapter | Bridge (if you control both sides) |
-| Composite | Decorator (if you only need single wrapping) |
+When you're stuck between two patterns, ask the deciding question:
+
+| If You're Considering... | Also Consider... | Ask Yourself |
+|-------------------------|------------------|--------------|
+| Strategy | State | Is behavior chosen *externally* or does it change based on *internal state*? |
+| Decorator | Proxy | Am I *adding new behavior* or *controlling access* to existing behavior? |
+| Factory Method | Abstract Factory | Do I need *one type of object* or *families of related objects*? |
+| Adapter | Bridge | Am I *wrapping legacy code* or *designing for future variation*? |
+| Composite | Decorator | Do I need a *tree hierarchy* or just *layered wrapping*? |
+| Template Method | Strategy | Should subclasses *override steps* or should I *inject algorithms*? |
 
 ---
 
 ## Anti-Pattern Alert: The Pattern Zoo
 
+:::warning Pattern Overload
 One failure mode I've seen in large codebases is what I call the "Pattern Zoo"—every pattern in the catalog shows up somewhere, often solving problems that didn't need solving.
+:::
 
 The codebase becomes a tour of design pattern implementations rather than a system that solves a business problem. New engineers spend their first month just learning all the patterns used, before they can contribute anything.
 
+**Signs you have a Pattern Zoo:**
+- More than 6-7 patterns used regularly across the codebase
+- Engineers need "pattern onboarding" before contributing
+- Patterns that exist but are used only once
+- Code reviews focus on "which pattern should this be" rather than "does this solve the problem"
+
 **The fix:** Limit yourself to the patterns that solve your actual problems. If your codebase uses more than six or seven patterns regularly, take a hard look at whether some of those patterns are pulling their weight.
+
+```mermaid
+pie title Healthy Pattern Distribution
+    "Essential 5 (Factory, Strategy, Observer, Adapter, Decorator)" : 70
+    "Secondary (Builder, Facade, Composite)" : 20
+    "Occasional (Singleton, Proxy)" : 8
+    "Rare (Bridge, Flyweight, Visitor)" : 2
+```
+
+**The pattern rule I follow:** If I've used a pattern less than three times in production, I probably shouldn't add it to new code without careful thought.
 
 ---
 

@@ -128,20 +128,56 @@ classDiagram
 
 ## Types of Proxies
 
-### 1. Caching Proxy
-Stores results to avoid repeated expensive operations.
+Understanding proxy types helps you choose the right one for your problem:
 
-### 2. Virtual Proxy (Lazy Loading)
-Defers expensive object creation until actually needed.
+```mermaid
+flowchart TB
+    subgraph "Proxy Types"
+        direction TB
+        CP["🗄️ Caching Proxy"]
+        VP["💤 Virtual Proxy"]
+        PP["🔐 Protection Proxy"]
+        RP["🌐 Remote Proxy"]
+        LP["📝 Logging Proxy"]
+    end
+    
+    CP --> CP_DESC["Stores results to avoid\nrepeated expensive operations"]
+    VP --> VP_DESC["Defers object creation\nuntil actually needed"]
+    PP --> PP_DESC["Controls access based\non permissions"]
+    RP --> RP_DESC["Represents object in\ndifferent address space"]
+    LP --> LP_DESC["Records requests for\ndebugging or auditing"]
+```
 
-### 3. Protection Proxy
-Controls access based on permissions.
+| Type | Use Case | Example |
+|------|----------|---------|
+| **Caching Proxy** | Expensive operations that return same results | API responses, database queries |
+| **Virtual Proxy** | Heavy objects that may not be needed | Image loading, lazy initialization |
+| **Protection Proxy** | Access control | Permission checks, rate limiting |
+| **Remote Proxy** | Distributed systems | RPC clients, service meshes |
+| **Logging Proxy** | Observability | Audit logs, debugging, metrics |
 
-### 4. Remote Proxy
-Represents an object in a different address space.
+### How a Caching Proxy Works
 
-### 5. Logging Proxy
-Records requests for debugging or auditing.
+```mermaid
+sequenceDiagram
+    participant Client
+    participant CachingProxy
+    participant Cache
+    participant RealService
+    
+    Client->>CachingProxy: get("api_key")
+    CachingProxy->>Cache: lookup("api_key")
+    
+    alt Cache Hit
+        Cache-->>CachingProxy: cached value
+        CachingProxy-->>Client: return cached value
+    else Cache Miss
+        CachingProxy->>RealService: get("api_key")
+        RealService-->>CachingProxy: fresh value
+        CachingProxy->>Cache: store("api_key", value)
+        CachingProxy-->>Client: return fresh value
+    end
+```
 
 ---
 
@@ -714,7 +750,30 @@ Records requests for debugging or auditing.
 
 ## Real-World Example: Image Loading
 
-Virtual proxies are everywhere in image-heavy applications:
+Virtual proxies are everywhere in image-heavy applications. Think of any gallery app that shows thumbnails but loads full images on demand:
+
+```mermaid
+sequenceDiagram
+    participant App as Gallery App
+    participant Proxy as ImageProxy
+    participant Real as RealImage
+    participant Disk as File System
+    
+    App->>Proxy: create(path)
+    Note over Proxy: No disk I/O yet
+    
+    App->>Proxy: get_dimensions()
+    Proxy->>Disk: read metadata only
+    Disk-->>Proxy: 1920x1080
+    Proxy-->>App: (1920, 1080)
+    Note over Real: Still not loaded
+    
+    App->>Proxy: display()
+    Proxy->>Disk: load full image
+    Disk-->>Real: image data
+    Real-->>Proxy: loaded
+    Proxy-->>App: displayed
+```
 
 ```python
 class ImageProxy(Image):
@@ -736,6 +795,8 @@ class ImageProxy(Image):
         # Can sometimes be read from metadata without full load
         return self._read_dimensions_from_metadata()
 ```
+
+**Why this matters:** In a gallery with 1,000 images, loading all of them at startup would take minutes. With virtual proxies, only visible images load. Users see thumbnails instantly, and full images load on-demand.
 
 ---
 
@@ -837,12 +898,55 @@ Proxies should control access, not implement business rules.
 
 These patterns look similar but serve different purposes:
 
+```mermaid
+flowchart TB
+    subgraph Proxy["🔒 Proxy Pattern"]
+        direction TB
+        P1["Controls ACCESS"]
+        P2["May prevent calls entirely"]
+        P3["Often manages lifecycle"]
+        P4["Caching, lazy loading, auth"]
+    end
+    
+    subgraph Decorator["🎁 Decorator Pattern"]
+        direction TB
+        D1["Adds BEHAVIOR"]
+        D2["Always delegates to wrapped"]
+        D3["Doesn't manage lifecycle"]
+        D4["Logging, metrics, retry"]
+    end
+    
+    Question{"What are you doing?"}
+    Question -->|"Controlling IF/WHEN\nclient accesses object"| Proxy
+    Question -->|"Adding behavior\nBEFORE/AFTER access"| Decorator
+```
+
 | Aspect | Proxy | Decorator |
 |--------|-------|-----------|
-| Purpose | Control access | Add behavior |
-| Lifecycle | May manage object lifecycle | Doesn't manage lifecycle |
-| Interface | Same as subject | Same as component |
-| Use case | Caching, lazy loading, access control | Logging, timing, wrapping |
+| **Intent** | Control access | Add behavior |
+| **May block calls?** | Yes (caching, rate limiting) | No (always delegates) |
+| **Lifecycle** | May manage object lifecycle | Doesn't manage lifecycle |
+| **Stacking** | Rarely stacked | Commonly stacked |
+| **Example** | Cache that returns stored value | Logger that wraps and logs |
+
+### Quick Decision Guide
+
+```python
+# Use PROXY when you might NOT call the real object:
+class CachingProxy:
+    def get(self, key):
+        if key in self.cache:
+            return self.cache[key]  # Real object NOT called
+        return self.real.get(key)
+
+# Use DECORATOR when you ALWAYS call the real object:
+class LoggingDecorator:
+    def get(self, key):
+        print(f"Getting {key}")
+        result = self.wrapped.get(key)  # Real object ALWAYS called
+        print(f"Got {result}")
+        return result
+```
 
 **Rule of thumb:** If you're controlling *whether/when* something is accessed, use Proxy. If you're adding *extra behavior* around access, use Decorator.
 
@@ -850,17 +954,36 @@ These patterns look similar but serve different purposes:
 
 ## Key Takeaways
 
+:::tip Quick Reference Card
+| Question | Answer |
+|----------|--------|
+| **What does Proxy do?** | Controls access to an object without changing its interface |
+| **When to use it?** | Caching, lazy loading, access control, rate limiting |
+| **Key benefit?** | Add cross-cutting concerns transparently |
+| **Watch out for?** | Hidden latency, cache invalidation bugs |
+| **Similar patterns?** | Decorator (adds behavior, doesn't control access) |
+:::
+
 - **Proxy controls access without changing the interface.** Clients don't know they're using a proxy.
 
 - **Different proxy types for different purposes.** Caching, lazy loading, rate limiting, access control.
 
-- **Be careful about hidden latency.** Document what the proxy does.
+- **Be careful about hidden latency.** Document what the proxy does. A method that *looks* fast might hit the network on cache miss.
 
-- **Cache invalidation is tricky.** Test it thoroughly.
+- **Cache invalidation is tricky.** Test it thoroughly. As the saying goes: "There are only two hard things in computer science: cache invalidation and naming things."
+
+```mermaid
+flowchart LR
+    subgraph "Remember"
+        A["Proxy = Access Control"]
+        B["Same Interface"]
+        C["May Skip Real Object"]
+    end
+```
 
 ---
 
 ## Navigation
 
 - **Previous:** [Flyweight Pattern](/docs/design-patterns/structural/flyweight)
-- **Next:** Behavioral Patterns Overview (coming soon)
+- **Next:** [Behavioral Patterns Overview](/docs/design-patterns/behavioral)
