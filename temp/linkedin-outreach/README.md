@@ -13,6 +13,10 @@ Ready-to-use posts for the 8-week LinkedIn content campaign.
 ```
 linkedin-outreach/
 ├── README.md (this file)
+├── METRICS-TRACKER.md (performance tracking template)
+├── TIMEZONE-GUIDE.md (international posting times)
+├── carousels/
+│   └── README.md (design specifications)
 ├── week-1/
 │   ├── 01-tue-3am-nightmare.md
 │   ├── 02-wed-everything-green.md
@@ -119,6 +123,34 @@ Track weekly:
 - Profile views
 - Blog clicks (check analytics with UTM filter)
 - New followers
+
+## Pre-Launch Verification
+
+Before Week 1, verify all links are live:
+
+### Blog Links (test each one)
+- [ ] https://blog.shivam.info/docs/observability/introduction
+- [ ] https://blog.shivam.info/docs/observability/three-pillars
+- [ ] https://blog.shivam.info/blog/observability-fundamentals
+- [ ] https://blog.shivam.info/blog/single-node-observability-setup
+- [ ] https://blog.shivam.info/blog/scalable-observability-architecture
+
+### GitHub Repository
+- [ ] https://github.com/shivam-g-mishra/opensource-otel-setup exists
+- [ ] README has clear setup instructions
+- [ ] Repository is public
+
+### Analytics Setup
+- [ ] Google Analytics tracking LinkedIn UTM parameters
+- [ ] Can filter by `utm_source=linkedin`
+
+## Additional Resources
+
+| File | Purpose |
+|------|---------|
+| `METRICS-TRACKER.md` | Weekly performance tracking template |
+| `TIMEZONE-GUIDE.md` | International posting time reference |
+| `carousels/README.md` | Carousel design specifications |
 
 ## Need Help?
 

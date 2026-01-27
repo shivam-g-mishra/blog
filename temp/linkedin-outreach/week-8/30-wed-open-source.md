@@ -53,7 +53,7 @@ PRs welcome.
 📚 Get started here:
 
 **GitHub Repo:**
-github.com/shivam-g-mishra/opensource-otel-setup
+https://github.com/shivam-g-mishra/opensource-otel-setup
 
 **Setup Guide:**
 https://blog.shivam.info/blog/single-node-observability-setup?utm_source=linkedin&utm_medium=social&utm_campaign=week8

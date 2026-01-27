@@ -34,6 +34,8 @@ You need observability.
 
 Which approach does your team use today?
 
+(Drop "MONITORING" or "OBSERVABILITY" in comments - I'll share the right resources for where you are)
+
 ---
 #Observability #Monitoring #DevOps
 

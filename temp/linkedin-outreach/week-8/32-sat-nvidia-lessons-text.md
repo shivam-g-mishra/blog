@@ -62,7 +62,7 @@ It covers:
 → What I'd do differently today
 
 Plus: I open-sourced our entire stack:
-github.com/shivam-g-mishra/opensource-otel-setup
+https://github.com/shivam-g-mishra/opensource-otel-setup
 
 8 weeks of content. Thank you for following along.
 

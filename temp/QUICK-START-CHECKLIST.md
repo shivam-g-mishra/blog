@@ -26,8 +26,14 @@
 ### Tools Ready
 - [ ] Calendar blocked: Tue/Wed/Thu 7AM, Sat 8:30AM (Pacific)
 - [ ] Phone alarm set for posting times
-- [ ] Spreadsheet/Notion for tracking metrics
-- [ ] Canva account for carousels
+- [ ] Spreadsheet/Notion for tracking metrics (use `linkedin-outreach/METRICS-TRACKER.md`)
+- [ ] Canva account for carousels (see `linkedin-outreach/carousels/README.md`)
+
+### Pre-Launch Link Verification
+- [ ] https://blog.shivam.info is live
+- [ ] All blog URLs return 200 (test each from `linkedin-outreach/README.md`)
+- [ ] https://github.com/shivam-g-mishra/opensource-otel-setup exists and is public
+- [ ] Google Analytics tracks UTM parameter `utm_source=linkedin`
 
 ---
 
@@ -122,6 +128,10 @@ temp/
 ├── linkedin-content-strategy-v2.1-final.md  (Full strategy document)
 ├── QUICK-START-CHECKLIST.md                 (This file)
 ├── linkedin-outreach/
+│   ├── README.md                            (Overview & quick start)
+│   ├── METRICS-TRACKER.md                   (Performance tracking template)
+│   ├── TIMEZONE-GUIDE.md                    (International posting times)
+│   ├── REVIEW-RECOMMENDATIONS.md            (Program review & improvements)
 │   ├── week-1/
 │   │   ├── 01-tue-3am-nightmare.md
 │   │   ├── 02-wed-everything-green.md
@@ -134,9 +144,7 @@ temp/
 │   │   └── 08-sat-5-metrics.md
 │   ├── week-3/ ... week-8/
 │   └── carousels/
-│       ├── week-1-monitoring-vs-observability.md
-│       ├── week-2-three-pillars.md
-│       └── ...
+│       └── README.md                        (Design specifications)
 ```
 
 ---
