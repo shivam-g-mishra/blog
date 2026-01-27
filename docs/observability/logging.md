@@ -1,6 +1,6 @@
 ---
 # Required
-sidebar_position: 5
+sidebar_position: 6
 title: "Logging Done Right — Structured Logging Guide"
 description: >-
   Master structured logging with this practical guide. Learn what to log, 
@@ -753,4 +753,4 @@ Good logging is an investment that pays dividends every time something goes wron
 
 ---
 
-**Next**: [Alerting Best Practices →](./alerting)
+**Next**: [Understanding OpenTelemetry →](./opentelemetry)

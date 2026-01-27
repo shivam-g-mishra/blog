@@ -866,6 +866,145 @@ catch (Exception ex)
 }
 ```
 
+## Common Mistakes
+
+Learn from these patterns that cause production headaches.
+
+### Mistake 1: Not Using Dependency Injection for ActivitySource
+
+```csharp
+// ❌ BAD: Static ActivitySource, hard to test and manage
+public class OrderService
+{
+    private static readonly ActivitySource _source = new("OrderService");
+    
+    public void Process() 
+    {
+        using var activity = _source.StartActivity("Process");
+        // ...
+    }
+}
+
+// ✅ GOOD: Inject ActivitySource
+public class OrderService
+{
+    private readonly ActivitySource _activitySource;
+    
+    public OrderService(ActivitySource activitySource)
+    {
+        _activitySource = activitySource;
+    }
+    
+    public void Process()
+    {
+        using var activity = _activitySource.StartActivity("Process");
+        // ...
+    }
+}
+```
+
+**Impact**: Static instances are hard to test, can't be configured per-environment, and make dependency tracking difficult.
+
+### Mistake 2: Forgetting to Register Your ActivitySource
+
+```csharp
+// ❌ BAD: Custom spans never appear
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing => tracing
+        .AddAspNetCoreInstrumentation()
+        // Missing: .AddSource("MyService")
+    );
+
+// ✅ GOOD: Register your service's ActivitySource
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing => tracing
+        .AddAspNetCoreInstrumentation()
+        .AddSource("MyService")  // Required for custom spans!
+    );
+```
+
+**Impact**: All your carefully crafted custom spans are silently discarded.
+
+### Mistake 3: Not Handling Null Activities
+
+```csharp
+// ❌ BAD: NullReferenceException when sampling is active
+using var activity = _activitySource.StartActivity("Operation");
+activity.SetTag("order_id", orderId);  // Crashes if activity is null!
+
+// ✅ GOOD: Use null-conditional operator
+using var activity = _activitySource.StartActivity("Operation");
+activity?.SetTag("order_id", orderId);  // Safe even when sampled out
+```
+
+**Impact**: Production crashes when sampling is enabled (activity returns null for non-sampled requests).
+
+### Mistake 4: Logging Without Scope
+
+```csharp
+// ❌ BAD: Logs lack context for correlation
+_logger.LogInformation("Processing order {OrderId}", orderId);
+
+// ✅ GOOD: Use scopes for consistent context
+using (_logger.BeginScope(new Dictionary<string, object>
+{
+    ["OrderId"] = orderId,
+    ["UserId"] = userId
+}))
+{
+    _logger.LogInformation("Starting order processing");
+    // All logs in this scope include OrderId and UserId
+}
+```
+
+**Impact**: Logs can't be filtered by business context, making debugging specific orders nearly impossible.
+
+### Mistake 5: Including SQL Parameters in Statements
+
+```csharp
+// ❌ BAD: PII and sensitive data in traces
+.AddSqlClientInstrumentation(opts =>
+{
+    opts.SetDbStatementForText = true;  // Logs full SQL with parameters!
+})
+
+// ✅ GOOD: Be careful with SQL statements
+.AddSqlClientInstrumentation(opts =>
+{
+    opts.SetDbStatementForText = true;
+    opts.RecordException = true;
+    opts.Filter = (cmd) => 
+    {
+        // Don't trace queries to sensitive tables
+        return !cmd.CommandText.Contains("user_credentials");
+    };
+})
+```
+
+**Impact**: Credit card numbers, passwords, and PII end up in your tracing backend. Compliance nightmare.
+
+### Mistake 6: Blocking on Async in Synchronous Context
+
+```csharp
+// ❌ BAD: Can deadlock, loses async context
+public void ProcessSync()
+{
+    using var activity = _activitySource.StartActivity("Process");
+    ProcessAsync().Result;  // Deadlock risk!
+}
+
+// ✅ GOOD: Stay async all the way
+public async Task ProcessAsync()
+{
+    using var activity = _activitySource.StartActivity("Process");
+    await DoWorkAsync();
+}
+```
+
+**Impact**: Deadlocks in ASP.NET, plus trace context doesn't propagate correctly through `.Result`.
+
+---
+
 ## Troubleshooting
 
 | Issue | Cause | Solution |
@@ -878,4 +1017,4 @@ catch (Exception ex)
 
 ---
 
-**Next**: [Java Integration →](./java)
+**Previous**: [← Go Integration](./go) | **Next**: [Node.js Integration →](./nodejs)

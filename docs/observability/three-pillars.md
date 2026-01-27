@@ -36,7 +36,9 @@ Let me explain each pillar not in abstract terms, but in terms of the questions 
 
 ## Traces: Following a Request's Journey
 
-Imagine you're a detective following a suspect through a city. A trace is like a complete record of everywhere they went, how long they spent at each location, and what they did there.
+Imagine you're a detective solving a crime, but you can only see isolated security camera snapshots from different locations—no timestamps, no sequence, no connection between them. That's debugging without traces.
+
+Now imagine having a complete GPS record of the suspect: everywhere they went, in order, with exact timestamps. You see they entered the bank at 2:15 PM, spent 8 minutes at the vault, 30 seconds at the exit, and drove to the airport. That's what a trace gives you for a request in your system.
 
 In software terms, a trace follows a single request as it travels through your distributed system. Here's what that looks like:
 
@@ -230,44 +232,88 @@ Now you can:
 
 ## The Real Power: Correlation
 
-Each pillar is useful on its own, but the real power comes from combining them. Here's a typical debugging flow:
+Each pillar is useful on its own, but **the real power comes from combining them through a shared identifier: the trace ID**.
 
+```mermaid
+flowchart TB
+    subgraph request["A Single Request Generates"]
+        traceid["trace_id: 7b3e9f2a4c1d8e5b"]
+    end
+    
+    traceid --> trace
+    traceid --> log1
+    traceid --> log2
+    traceid --> log3
+    traceid --> metric
+    
+    subgraph signals["All Telemetry Signals"]
+        trace["🔍 TRACE<br/>5 spans across 3 services"]
+        log1["📝 LOG 1<br/>'Request started'"]
+        log2["📝 LOG 2<br/>'Query executed'"]
+        log3["📝 LOG 3<br/>'Error occurred'"]
+        metric["📊 METRIC<br/>with exemplar linked"]
+    end
+    
+    subgraph power["The Power of Correlation"]
+        link["All linked by trace_id<br/>Click any one → see them all"]
+    end
+    
+    trace --> link
+    log1 --> link
+    log2 --> link
+    log3 --> link
+    metric --> link
+    
+    style request fill:#f3e8ff,stroke:#9333ea
+    style signals fill:#dbeafe,stroke:#2563eb
+    style power fill:#dcfce7,stroke:#16a34a
 ```
-┌────────────────────────────────────────────────────────────┐
-│  1. ALERT FIRES (Metrics)                                  │
-│     "Error rate > 1% for order-service"                    │
-└─────────────────────────┬──────────────────────────────────┘
-                          │
-                          ▼
-┌────────────────────────────────────────────────────────────┐
-│  2. INVESTIGATE METRICS                                    │
-│     Error rate spiked at 10:15 AM                          │
-│     Latency also increased                                 │
-│     Database connection pool at 100%                       │
-└─────────────────────────┬──────────────────────────────────┘
-                          │
-                          ▼
-┌────────────────────────────────────────────────────────────┐
-│  3. SEARCH LOGS                                            │
-│     Filter: service=order-service, level=error, time=10:15 │
-│     Found: "Connection pool exhausted"                     │
-│     Found: "Timeout waiting for database connection"       │
-└─────────────────────────┬──────────────────────────────────┘
-                          │
-                          ▼
-┌────────────────────────────────────────────────────────────┐
-│  4. EXAMINE TRACES                                         │
-│     Click trace_id from error log                          │
-│     See: inventory-service making 50 DB queries per request│
-│     See: Each query holding connection for 2+ seconds      │
-└─────────────────────────┬──────────────────────────────────┘
-                          │
-                          ▼
-┌────────────────────────────────────────────────────────────┐
-│  5. ROOT CAUSE IDENTIFIED                                  │
-│     A recent deployment introduced an N+1 query bug        │
-│     Under high load, this exhausted the connection pool    │
-└────────────────────────────────────────────────────────────┘
+
+When you search for `trace_id = 7b3e9f2a4c1d8e5b`:
+- **In Jaeger/Tempo**: You see the complete trace with all spans
+- **In Loki**: You find every log entry from that request
+- **In Prometheus/Mimir**: Exemplars link metrics to example traces
+
+This correlation is what transforms three separate data streams into a unified debugging experience. Here's a typical debugging flow:
+
+```mermaid
+flowchart TB
+    subgraph step1["1️⃣ ALERT FIRES"]
+        alert["📢 Error rate > 1% for order-service"]
+    end
+    
+    subgraph step2["2️⃣ INVESTIGATE METRICS"]
+        m1["Error rate spiked at 10:15 AM"]
+        m2["Latency also increased"]
+        m3["Database connection pool at 100%"]
+    end
+    
+    subgraph step3["3️⃣ SEARCH LOGS"]
+        l1["Filter: service=order-service, level=error"]
+        l2["Found: 'Connection pool exhausted'"]
+        l3["Found: 'Timeout waiting for DB connection'"]
+    end
+    
+    subgraph step4["4️⃣ EXAMINE TRACES"]
+        t1["Click trace_id from error log"]
+        t2["See: 50 DB queries per request"]
+        t3["See: Each query holding connection 2+ seconds"]
+    end
+    
+    subgraph step5["5️⃣ ROOT CAUSE IDENTIFIED"]
+        root["🎯 N+1 query bug in recent deployment<br/>Under high load → connection pool exhausted"]
+    end
+    
+    step1 --> step2
+    step2 --> step3
+    step3 --> step4
+    step4 --> step5
+    
+    style step1 fill:#fee2e2,stroke:#dc2626
+    style step2 fill:#dbeafe,stroke:#2563eb
+    style step3 fill:#fef3c7,stroke:#d97706
+    style step4 fill:#f3e8ff,stroke:#9333ea
+    style step5 fill:#dcfce7,stroke:#16a34a
 ```
 
 This investigation took 10 minutes with proper observability. Without it? Could easily be hours of guessing, adding debug logging, redeploying, and hoping you get lucky.
@@ -282,9 +328,66 @@ Now that you understand the three pillars, dive into each one:
 |--------|-----------|-------------------|
 | **Traces** | [Distributed Tracing Explained →](./tracing) | Trace IDs, spans, context propagation, debugging microservices |
 | **Metrics** | [Metrics That Matter →](./metrics) | Metric types, golden signals, dashboards |
-| **Logs** | [Logging Done Right →](./logging) | Structured logging, log levels, canonical log lines |
 | **Alerting** | [Alerting Best Practices →](./alerting) | Alert design, SLO-based alerting, runbooks, on-call |
+| **Logs** | [Logging Done Right →](./logging) | Structured logging, log levels, canonical log lines |
 
-After exploring the pillars and alerting, learn about the standard that unifies them all:
+After exploring the pillars and alerting, learn about the standard that unifies them all.
+
+---
+
+## Frequently Asked Questions
+
+### Which pillar is most important?
+
+All three are essential, but their value differs by use case:
+
+- **Metrics** are most important for **alerting and capacity planning**. They tell you when something's wrong.
+- **Traces** are most important for **debugging distributed systems**. They show you where time is spent.
+- **Logs** are most important for **detailed context**. They tell you exactly what happened.
+
+If forced to choose one: start with **metrics** for alerting, add **traces** for debugging, then enhance with **structured logs** for detail.
+
+### Can I use just logs instead of traces and metrics?
+
+You can derive some metrics from logs (count errors, calculate latency from timestamps), but:
+
+- **Logs are expensive at scale** — storing every request's log is costly
+- **Aggregation is slow** — counting log lines is slower than querying pre-aggregated metrics
+- **Distributed context is lost** — correlating logs across services requires trace IDs anyway
+
+Logs complement traces and metrics; they don't replace them.
+
+### How do I correlate traces, metrics, and logs?
+
+The key is the **trace ID**. Include it everywhere:
+
+1. **In traces**: Automatic (trace ID is the primary key)
+2. **In logs**: Add `trace_id` as a field in every structured log entry
+3. **In metrics**: Use **exemplars** to attach sample trace IDs to metric observations
+
+Then your workflow becomes:
+- Alert fires (metrics) → View dashboard → Click exemplar → See trace → Search logs by trace_id
+
+### What's the difference between spans and logs?
+
+| Aspect | Spans | Logs |
+|--------|-------|------|
+| **Structure** | Hierarchical (parent-child) | Flat (sequential) |
+| **Duration** | Has start and end time | Point-in-time events |
+| **Purpose** | Track operation flow | Record discrete events |
+| **Cardinality** | One per operation | Multiple per operation |
+
+Use **spans** to track the flow and timing of operations. Use **logs** to record specific events, errors, or context within those operations.
+
+### How much data should I collect?
+
+Start with:
+- **Traces**: Sample 10-100% depending on traffic (keep 100% of errors)
+- **Metrics**: All golden signals (latency, traffic, errors, saturation)
+- **Logs**: INFO level and above in production
+
+Increase collection when debugging specific issues. Decrease when costs become problematic.
+
+---
 
 **Next**: [Distributed Tracing Explained →](./tracing)

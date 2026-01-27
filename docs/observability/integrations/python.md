@@ -848,6 +848,128 @@ span.set_attributes({
 })
 ```
 
+## Common Mistakes
+
+These patterns cause real production pain. Avoid them.
+
+### Mistake 1: Importing App Before Telemetry
+
+```python
+# ❌ BAD: Flask imports before OTel - instrumentation won't work!
+from flask import Flask
+app = Flask(__name__)
+
+from telemetry import setup_telemetry
+setup_telemetry()  # Too late! Flask already loaded
+
+# ✅ GOOD: Telemetry first, always
+from telemetry import setup_telemetry
+setup_telemetry()
+
+from flask import Flask
+app = Flask(__name__)
+```
+
+**Impact**: Auto-instrumentation doesn't hook into frameworks. You get zero automatic spans.
+
+### Mistake 2: Not Using Context Managers for Spans
+
+```python
+# ❌ BAD: Span might not end on exception
+span = tracer.start_span("process_order")
+process_order(order)
+span.end()  # Never reached if process_order raises!
+
+# ✅ GOOD: Context manager guarantees span ends
+with tracer.start_as_current_span("process_order") as span:
+    process_order(order)  # Span ends even on exception
+```
+
+**Impact**: Unclosed spans leak memory and create incomplete traces that confuse debugging.
+
+### Mistake 3: Losing Context in Async Code
+
+```python
+# ❌ BAD: Context lost when spawning tasks
+async def process_batch(orders):
+    tasks = [process_order(order) for order in orders]  # No context!
+    await asyncio.gather(*tasks)
+
+# ✅ GOOD: Propagate context explicitly
+from opentelemetry import context as otel_context
+
+async def process_batch(orders):
+    current_ctx = otel_context.get_current()
+    tasks = [
+        otel_context.attach(current_ctx) or process_order(order)
+        for order in orders
+    ]
+    await asyncio.gather(*tasks)
+```
+
+**Impact**: Async tasks appear as separate traces, losing the connection to their parent.
+
+### Mistake 4: Logging Without Trace Correlation
+
+```python
+# ❌ BAD: Logs can't be connected to traces
+logger.info(f"Processing order {order_id}")
+
+# ✅ GOOD: Include trace context
+from opentelemetry import trace
+
+span = trace.get_current_span()
+logger.info(
+    "Processing order",
+    extra={
+        "order_id": order_id,
+        "trace_id": span.get_span_context().trace_id,
+        "span_id": span.get_span_context().span_id,
+    }
+)
+```
+
+**Impact**: Can't correlate logs with traces. Investigation requires manual timestamp matching.
+
+### Mistake 5: Synchronous Exporter in Production
+
+```python
+# ❌ BAD: Blocks your app on every span export
+from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+provider.add_span_processor(SimpleSpanProcessor(exporter))
+
+# ✅ GOOD: Batch for production
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+provider.add_span_processor(BatchSpanProcessor(exporter))
+```
+
+**Impact**: Every span export blocks your request. Latency spikes and throughput drops.
+
+### Mistake 6: Not Handling Exceptions Properly
+
+```python
+# ❌ BAD: Exception recorded but not re-raised
+with tracer.start_as_current_span("operation") as span:
+    try:
+        risky_operation()
+    except Exception as e:
+        span.record_exception(e)
+        # Exception swallowed! Caller doesn't know it failed
+
+# ✅ GOOD: Record AND re-raise
+with tracer.start_as_current_span("operation") as span:
+    try:
+        risky_operation()
+    except Exception as e:
+        span.record_exception(e)
+        span.set_status(Status(StatusCode.ERROR))
+        raise  # Let the caller handle it
+```
+
+**Impact**: Silent failures that are logged but never surface to error handling.
+
+---
+
 ## Troubleshooting
 
 | Issue | Cause | Solution |
@@ -860,4 +982,4 @@ span.set_attributes({
 
 ---
 
-**Next**: [Java Integration →](./java)
+**Previous**: [← Node.js Integration](./nodejs) | **Next**: [Java Integration →](./java)

@@ -824,6 +824,135 @@ try {
 }
 ```
 
+## Common Mistakes
+
+These patterns cause real production pain. Learn to recognize and avoid them.
+
+### Mistake 1: Not Closing Spans in Finally Block
+
+```java
+// ❌ BAD: Span stays open if exception is thrown
+Span span = tracer.spanBuilder("operation").startSpan();
+try (Scope scope = span.makeCurrent()) {
+    doWork();
+    span.end();  // Never reached on exception!
+}
+
+// ✅ GOOD: End span in finally
+Span span = tracer.spanBuilder("operation").startSpan();
+try (Scope scope = span.makeCurrent()) {
+    doWork();
+} finally {
+    span.end();  // Always called
+}
+```
+
+**Impact**: Memory leaks and incomplete traces that can't be analyzed.
+
+### Mistake 2: Mixing Java Agent and SDK
+
+```java
+// ❌ BAD: Using agent AND manual SDK setup
+// In startup: -javaagent:opentelemetry-javaagent.jar
+// In code:
+SdkTracerProvider provider = SdkTracerProvider.builder()
+    .addSpanProcessor(...)  // Creates duplicate traces!
+    .build();
+
+// ✅ GOOD: Choose one approach
+// Either use the agent alone (zero-code)
+// Or use SDK alone (full control)
+// Don't mix them!
+```
+
+**Impact**: Every request generates two traces. Storage costs double, and traces are confusing.
+
+### Mistake 3: Forgetting makeCurrent()
+
+```java
+// ❌ BAD: Child spans won't be linked
+Span span = tracer.spanBuilder("parent").startSpan();
+// Missing makeCurrent()!
+Span child = tracer.spanBuilder("child").startSpan();  // Orphaned!
+
+// ✅ GOOD: Always make span current before creating children
+Span span = tracer.spanBuilder("parent").startSpan();
+try (Scope scope = span.makeCurrent()) {
+    Span child = tracer.spanBuilder("child").startSpan();  // Linked!
+}
+```
+
+**Impact**: Traces appear fragmented. Parent-child relationships are lost.
+
+### Mistake 4: Using Span.current() Without Active Span
+
+```java
+// ❌ BAD: Returns invalid span if none is active
+Span span = Span.current();
+span.setAttribute("key", "value");  // Silently does nothing!
+
+// ✅ GOOD: Check validity or use the result of startSpan
+Span span = Span.current();
+if (span.getSpanContext().isValid()) {
+    span.setAttribute("key", "value");
+}
+```
+
+**Impact**: Attributes silently dropped. You think you're adding context, but nothing is recorded.
+
+### Mistake 5: Blocking in Async Handlers
+
+```java
+// ❌ BAD: Blocks thread pool, loses context
+CompletableFuture.supplyAsync(() -> {
+    Span span = Span.current();  // Wrong span!
+    return processOrder(order);
+});
+
+// ✅ GOOD: Propagate context to async code
+Context context = Context.current();
+CompletableFuture.supplyAsync(() -> {
+    try (Scope scope = context.makeCurrent()) {
+        return processOrder(order);
+    }
+});
+```
+
+**Impact**: Async operations appear as separate traces. Correlation is lost.
+
+### Mistake 6: Excessive Span Creation
+
+```java
+// ❌ BAD: Span per loop iteration creates thousands of spans
+for (Item item : items) {
+    Span span = tracer.spanBuilder("processItem").startSpan();
+    try (Scope scope = span.makeCurrent()) {
+        process(item);
+    } finally {
+        span.end();
+    }
+}
+
+// ✅ GOOD: One span for the batch, events for details
+Span span = tracer.spanBuilder("processItems")
+    .setAttribute("items.count", items.size())
+    .startSpan();
+try (Scope scope = span.makeCurrent()) {
+    for (Item item : items) {
+        process(item);
+        span.addEvent("item_processed", Attributes.of(
+            AttributeKey.stringKey("item.id"), item.getId()
+        ));
+    }
+} finally {
+    span.end();
+}
+```
+
+**Impact**: Storage costs explode. Traces become unreadable walls of tiny spans.
+
+---
+
 ## Troubleshooting
 
 | Issue | Cause | Solution |
@@ -836,4 +965,4 @@ try {
 
 ---
 
-These integration guides provide comprehensive coverage for the most popular languages and frameworks. Each guide follows a consistent pattern—from quick start to production-ready configurations.
+**Previous**: [← Python Integration](./python)

@@ -947,6 +947,102 @@ if err != nil {
 span.SetStatus(codes.Ok, "")
 ```
 
+## Common Mistakes
+
+These mistakes cost teams hours of debugging. Learn from them.
+
+### Mistake 1: Not Passing Context
+
+```go
+// ❌ BAD: Context lost, spans won't be connected
+func ProcessOrder(order Order) error {
+    ctx, span := tracer.Start(context.Background(), "ProcessOrder")
+    defer span.End()
+    return saveToDatabase(order) // No context passed!
+}
+
+// ✅ GOOD: Context flows through all functions
+func ProcessOrder(ctx context.Context, order Order) error {
+    ctx, span := tracer.Start(ctx, "ProcessOrder")
+    defer span.End()
+    return saveToDatabase(ctx, order) // Context preserved
+}
+```
+
+**Impact**: Without context propagation, you get disconnected spans that can't be correlated. Your traces become useless fragments.
+
+### Mistake 2: Forgetting to End Spans
+
+```go
+// ❌ BAD: Span never ends, memory leak
+func handleRequest(ctx context.Context) {
+    ctx, span := tracer.Start(ctx, "handleRequest")
+    // No defer span.End() - span stays open forever!
+    doWork(ctx)
+}
+
+// ✅ GOOD: Defer immediately after Start
+func handleRequest(ctx context.Context) {
+    ctx, span := tracer.Start(ctx, "handleRequest")
+    defer span.End() // Always immediately after Start
+    doWork(ctx)
+}
+```
+
+**Impact**: Unclosed spans consume memory indefinitely and create incomplete traces.
+
+### Mistake 3: Using http.DefaultClient Without Instrumentation
+
+```go
+// ❌ BAD: Outgoing HTTP calls won't be traced
+resp, err := http.Get("https://api.example.com/users")
+
+// ✅ GOOD: Use otelhttp transport
+client := &http.Client{
+    Transport: otelhttp.NewTransport(http.DefaultTransport),
+}
+resp, err := client.Get("https://api.example.com/users")
+```
+
+**Impact**: Calls to downstream services appear as gaps in your traces. You can't see where time is spent.
+
+### Mistake 4: Logging Without Trace Context
+
+```go
+// ❌ BAD: Logs can't be correlated with traces
+log.Printf("Processing order %s", orderID)
+
+// ✅ GOOD: Include trace context in logs
+span := trace.SpanFromContext(ctx)
+logger.InfoContext(ctx, "Processing order",
+    slog.String("order_id", orderID),
+    slog.String("trace_id", span.SpanContext().TraceID().String()),
+)
+```
+
+**Impact**: When investigating issues, you can't jump from logs to traces. Debugging takes 10x longer.
+
+### Mistake 5: High-Cardinality Attributes
+
+```go
+// ❌ BAD: Creates millions of unique time series
+span.SetAttributes(
+    attribute.String("user.session_id", sessionID), // Unbounded!
+    attribute.String("request.body", requestBody),  // Potentially huge!
+)
+
+// ✅ GOOD: Use bounded, useful attributes
+span.SetAttributes(
+    attribute.String("user.id", userID),           // Bounded by user count
+    attribute.String("user.tier", "premium"),       // Few distinct values
+    attribute.Int("request.body_size", len(body)), // Numeric, bounded
+)
+```
+
+**Impact**: Storage costs explode, queries become slow, and you may crash your metrics backend.
+
+---
+
 ## Troubleshooting
 
 | Issue | Cause | Solution |
@@ -959,4 +1055,4 @@ span.SetStatus(codes.Ok, "")
 
 ---
 
-**Next**: [.NET Integration →](./dotnet)
+**Previous**: [← Integration Overview](./overview) | **Next**: [.NET Integration →](./dotnet)

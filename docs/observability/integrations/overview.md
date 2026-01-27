@@ -163,3 +163,5 @@ Once you've instrumented your code, you need infrastructure to receive and visua
 ---
 
 Choose your language guide to get started with detailed, production-ready instrumentation.
+
+**Next**: [Go Integration →](./go)

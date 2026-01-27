@@ -791,6 +791,151 @@ span.setAttributes({
 });
 ```
 
+## Common Mistakes
+
+These patterns cause real production pain. Avoid them.
+
+### Mistake 1: Loading Instrumentation After App Code
+
+```typescript
+// ❌ BAD: Express loads before OTel - no automatic instrumentation!
+import express from 'express';
+import './instrumentation';  // Too late!
+
+const app = express();
+
+// ✅ GOOD: Instrumentation MUST be first
+import './instrumentation';  // Always first!
+import express from 'express';
+
+const app = express();
+```
+
+**Impact**: Auto-instrumentation never hooks into Express/Fastify. Zero automatic spans.
+
+### Mistake 2: Forgetting to End Spans
+
+```typescript
+// ❌ BAD: Span never ends if callback style
+tracer.startActiveSpan('operation', (span) => {
+    fetchData((err, data) => {
+        if (err) return handleError(err);
+        processData(data);
+        // span.end() never called!
+    });
+});
+
+// ✅ GOOD: Always end span, even in callbacks
+tracer.startActiveSpan('operation', async (span) => {
+    try {
+        const data = await fetchData();
+        await processData(data);
+    } finally {
+        span.end();  // Always called!
+    }
+});
+```
+
+**Impact**: Memory leaks, incomplete traces, and eventually OOM crashes.
+
+### Mistake 3: Losing Context in Callbacks
+
+```typescript
+// ❌ BAD: Context lost in setTimeout/callback
+tracer.startActiveSpan('parent', (span) => {
+    setTimeout(() => {
+        // trace.getActiveSpan() returns undefined here!
+        const child = tracer.startSpan('child');  // Orphaned!
+    }, 100);
+    span.end();
+});
+
+// ✅ GOOD: Capture and restore context
+tracer.startActiveSpan('parent', (span) => {
+    const currentContext = context.active();
+    
+    setTimeout(() => {
+        context.with(currentContext, () => {
+            // Now getActiveSpan() works!
+            tracer.startActiveSpan('child', (childSpan) => {
+                // Properly linked to parent
+                childSpan.end();
+            });
+        });
+    }, 100);
+    span.end();
+});
+```
+
+**Impact**: Async operations create orphaned traces. Parent-child relationships are lost.
+
+### Mistake 4: Not Propagating Context to HTTP Clients
+
+```typescript
+// ❌ BAD: Downstream service receives no trace context
+const response = await fetch('https://api.example.com/users');
+
+// ✅ GOOD: Inject trace headers
+const headers: Record<string, string> = {};
+propagation.inject(context.active(), headers);
+
+const response = await fetch('https://api.example.com/users', {
+    headers,
+});
+```
+
+**Impact**: Traces break at service boundaries. You can't follow requests across services.
+
+### Mistake 5: Creating Spans for Every Loop Iteration
+
+```typescript
+// ❌ BAD: Creates thousands of spans for large arrays
+for (const item of items) {
+    await tracer.startActiveSpan(`process-${item.id}`, async (span) => {
+        await processItem(item);
+        span.end();
+    });
+}
+
+// ✅ GOOD: One span with events for details
+await tracer.startActiveSpan('processItems', async (span) => {
+    span.setAttribute('items.count', items.length);
+    
+    for (const item of items) {
+        await processItem(item);
+        span.addEvent('item_processed', { 'item.id': item.id });
+    }
+    
+    span.end();
+});
+```
+
+**Impact**: Trace visualization becomes unusable. Storage costs explode.
+
+### Mistake 6: Using Console Exporter in Production
+
+```typescript
+// ❌ BAD: Console exporter blocks event loop, fills logs
+import { ConsoleSpanExporter } from '@opentelemetry/sdk-trace-base';
+
+const sdk = new NodeSDK({
+    traceExporter: new ConsoleSpanExporter(),  // Not for production!
+});
+
+// ✅ GOOD: OTLP exporter with batching
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-grpc';
+
+const sdk = new NodeSDK({
+    traceExporter: new OTLPTraceExporter({
+        url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT,
+    }),
+});
+```
+
+**Impact**: Logs become unreadable, performance degrades, and you're not actually storing traces.
+
+---
+
 ## Troubleshooting
 
 | Issue | Cause | Solution |
@@ -803,4 +948,4 @@ span.setAttributes({
 
 ---
 
-**Next**: [Python Integration →](./python)
+**Previous**: [← .NET Integration](./dotnet) | **Next**: [Python Integration →](./python)

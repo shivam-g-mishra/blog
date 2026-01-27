@@ -1,6 +1,6 @@
 ---
 # Required
-sidebar_position: 10
+sidebar_position: 99
 title: "Observability Glossary — Terms and Concepts"
 description: >-
   Quick reference for observability terms and concepts. Covers distributed tracing, 

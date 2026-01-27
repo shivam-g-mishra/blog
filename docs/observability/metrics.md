@@ -55,29 +55,44 @@ A metric is a numerical measurement of something in your system, collected at re
 
 Unlike logs (which are discrete events with rich context) or traces (which follow individual requests), metrics are **aggregated measurements**. They tell you about the behavior of your system in aggregate, not about individual requests.
 
-```
-┌────────────────────────────────────────────────────────────────────────────┐
-│                        THE METRICS MENTAL MODEL                            │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                                                            │
-│   Imagine a busy highway:                                                  │
-│                                                                            │
-│   LOGS are like dashcam footage from individual cars                       │
-│   └── "Car ABC-123 changed lanes at mile marker 45 at 2:15:03 PM"          │
-│                                                                            │
-│   TRACES are like GPS tracking for a single vehicle's journey              │
-│   └── "Car ABC-123's complete route from home to office, with timing"      │
-│                                                                            │
-│   METRICS are like the highway traffic sensors                             │
-│   └── "450 vehicles passed this point in the last minute"                  │
-│   └── "Average speed: 65 mph, current congestion level: moderate"          │
-│                                                                            │
-│   You need all three:                                                      │
-│   • Traffic sensors (metrics) to know there's a jam                        │
-│   • GPS tracking (traces) to see where the jam affects a specific route    │
-│   • Dashcam footage (logs) to see what caused the accident                 │
-│                                                                            │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph analogy["🛣️ The Highway Analogy"]
+        highway["Imagine a busy highway..."]
+    end
+    
+    subgraph logs["📝 LOGS = Dashcam footage"]
+        l1["Individual car events"]
+        l2["'Car ABC-123 changed lanes at mile 45 at 2:15:03 PM'"]
+    end
+    
+    subgraph traces["🔍 TRACES = GPS tracking"]
+        t1["Single vehicle's journey"]
+        t2["'Car ABC-123's complete route from home to office'"]
+    end
+    
+    subgraph metrics["📊 METRICS = Traffic sensors"]
+        m1["Aggregated measurements"]
+        m2["'450 vehicles/min, avg speed 65 mph'"]
+    end
+    
+    subgraph need["✅ You need all three"]
+        n1["Sensors (metrics) → know there's a jam"]
+        n2["GPS (traces) → see where jam affects your route"]
+        n3["Dashcam (logs) → see what caused the accident"]
+    end
+    
+    analogy --> logs
+    analogy --> traces
+    analogy --> metrics
+    logs --> need
+    traces --> need
+    metrics --> need
+    
+    style logs fill:#fef3c7,stroke:#d97706
+    style traces fill:#f3e8ff,stroke:#9333ea
+    style metrics fill:#dbeafe,stroke:#2563eb
+    style need fill:#dcfce7,stroke:#16a34a
 ```
 
 ### The Time Series Foundation
@@ -279,36 +294,50 @@ Use summaries only if you need exact percentiles and don't need to aggregate acr
 
 Google's SRE book introduced the **Four Golden Signals**—the metrics that most directly indicate user-facing health. If you measure nothing else, measure these.
 
-```
-┌────────────────────────────────────────────────────────────────────────────┐
-│                       THE FOUR GOLDEN SIGNALS                              │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                                                            │
-│   ┌─────────────────┐    ┌─────────────────┐                               │
-│   │     LATENCY     │    │     TRAFFIC     │                               │
-│   │                 │    │                 │                               │
-│   │  How long does  │    │  How much       │                               │
-│   │  it take?       │    │  demand is      │                               │
-│   │                 │    │  there?         │                               │
-│   │  • p50, p95, p99│    │  • req/sec      │                               │
-│   │  • By endpoint  │    │  • By endpoint  │                               │
-│   │  • Success vs   │    │  • By customer  │                               │
-│   │    failure      │    │    tier         │                               │
-│   └─────────────────┘    └─────────────────┘                               │
-│                                                                            │
-│   ┌─────────────────┐    ┌─────────────────┐                               │
-│   │     ERRORS      │    │   SATURATION    │                               │
-│   │                 │    │                 │                               │
-│   │  How often do   │    │  How "full"     │                               │
-│   │  things fail?   │    │  is the         │                               │
-│   │                 │    │  system?        │                               │
-│   │  • Error rate % │    │  • CPU %        │                               │
-│   │  • By type      │    │  • Memory %     │                               │
-│   │  • By endpoint  │    │  • Queue depth  │                               │
-│   │                 │    │  • Connections  │                               │
-│   └─────────────────┘    └─────────────────┘                               │
-│                                                                            │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph golden["🏆 THE FOUR GOLDEN SIGNALS"]
+        direction TB
+        
+        subgraph row1[" "]
+            direction LR
+            subgraph latency["⏱️ LATENCY"]
+                lat1["How long does it take?"]
+                lat2["• p50, p95, p99"]
+                lat3["• By endpoint"]
+                lat4["• Success vs failure"]
+            end
+            
+            subgraph traffic["📈 TRAFFIC"]
+                traf1["How much demand?"]
+                traf2["• req/sec"]
+                traf3["• By endpoint"]
+                traf4["• By customer tier"]
+            end
+        end
+        
+        subgraph row2[" "]
+            direction LR
+            subgraph errors["❌ ERRORS"]
+                err1["How often do things fail?"]
+                err2["• Error rate %"]
+                err3["• By type"]
+                err4["• By endpoint"]
+            end
+            
+            subgraph saturation["🔋 SATURATION"]
+                sat1["How 'full' is the system?"]
+                sat2["• CPU %"]
+                sat3["• Memory %"]
+                sat4["• Queue depth"]
+            end
+        end
+    end
+    
+    style latency fill:#dbeafe,stroke:#2563eb
+    style traffic fill:#dcfce7,stroke:#16a34a
+    style errors fill:#fee2e2,stroke:#dc2626
+    style saturation fill:#fef3c7,stroke:#d97706
 ```
 
 ### 1. Latency: The User Experience Signal
@@ -409,24 +438,32 @@ active_connections / max_connections
 
 For microservices, Tom Wilkie (Grafana) proposed the **RED Method**—a simplified version of the golden signals focused on what matters most for request-driven services.
 
-```
-┌────────────────────────────────────────────────────────────────────────────┐
-│                            THE RED METHOD                                  │
-│                   (for every service, measure these)                       │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                                                            │
-│   R ─ Rate        How many requests per second?                            │
-│                   sum(rate(http_requests_total[5m]))                       │
-│                                                                            │
-│   E ─ Errors      How many of those requests are failing?                  │
-│                   sum(rate(http_requests_total{status=~"5.."}[5m]))        │
-│                   ─────────────────────────────────────────────            │
-│                   sum(rate(http_requests_total[5m]))                       │
-│                                                                            │
-│   D ─ Duration    How long do those requests take?                         │
-│                   histogram_quantile(0.99, rate(request_duration[5m]))     │
-│                                                                            │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph red["🔴 THE RED METHOD<br/>(for every service)"]
+        direction TB
+        
+        subgraph r["R — Rate"]
+            r1["How many requests/sec?"]
+            r2["sum(rate(http_requests_total[5m]))"]
+        end
+        
+        subgraph e["E — Errors"]
+            e1["What % are failing?"]
+            e2["errors / total requests"]
+        end
+        
+        subgraph d["D — Duration"]
+            d1["How long do they take?"]
+            d2["histogram_quantile(0.99, ...)"]
+        end
+    end
+    
+    r --> e --> d
+    
+    style r fill:#fee2e2,stroke:#dc2626
+    style e fill:#fef3c7,stroke:#d97706
+    style d fill:#dbeafe,stroke:#2563eb
 ```
 
 The beauty of RED is consistency. Every service gets the same three metrics. You can build a single dashboard template and apply it everywhere.
@@ -437,24 +474,34 @@ The beauty of RED is consistency. Every service gets the same three metrics. You
 
 While RED is for services, the **USE Method** (by Brendan Gregg) is for infrastructure resources:
 
-```
-┌────────────────────────────────────────────────────────────────────────────┐
-│                           THE USE METHOD                                   │
-│                 (for every resource, measure these)                        │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                                                            │
-│   U ─ Utilization   What percentage of time is the resource busy?          │
-│                     CPU: avg(rate(node_cpu_seconds_total{mode!="idle"}))   │
-│                                                                            │
-│   S ─ Saturation    How much extra work is waiting?                        │
-│                     CPU: node_load1 (1-minute load average)                │
-│                     Disk: node_disk_io_time_weighted_seconds_total         │
-│                                                                            │
-│   E ─ Errors        How many error events occurred?                        │
-│                     Network: node_network_receive_errs_total               │
-│                     Disk: node_disk_write_errors_total                     │
-│                                                                            │
-└────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph use["🔧 THE USE METHOD<br/>(for every resource)"]
+        direction TB
+        
+        subgraph u["U — Utilization"]
+            u1["% time resource is busy"]
+            u2["CPU: rate(node_cpu_seconds_total)"]
+        end
+        
+        subgraph s["S — Saturation"]
+            s1["How much work is waiting?"]
+            s2["CPU: node_load1"]
+            s3["Disk: io_time_weighted"]
+        end
+        
+        subgraph er["E — Errors"]
+            er1["How many error events?"]
+            er2["Network: receive_errs"]
+            er3["Disk: write_errors"]
+        end
+    end
+    
+    u --> s --> er
+    
+    style u fill:#dcfce7,stroke:#16a34a
+    style s fill:#fef3c7,stroke:#d97706
+    style er fill:#fee2e2,stroke:#dc2626
 ```
 
 **When to use which:**
@@ -851,6 +898,165 @@ def create_order():
 
 ---
 
+## Cardinality: The Silent Cost Explosion
+
+Here's a story I've seen play out too many times: A team adds a helpful metric with a `user_id` label. "It'll help us debug individual user issues!" Three months later, their Prometheus instance is using 200GB of memory and queries take 30 seconds.
+
+**Cardinality** is the number of unique time series created by a metric. It's the multiplication of all unique label value combinations.
+
+### Understanding the Math
+
+```
+http_requests_total{method="GET", status="200", endpoint="/api/users"}
+                    └─5 values──┘  └─50 values─┘  └─100 endpoints─┘
+                    
+                    5 × 50 × 100 = 25,000 time series (manageable)
+```
+
+Now add `user_id`:
+
+```
+http_requests_total{method="GET", status="200", endpoint="/api/users", user_id="usr_123"}
+                    └─5 values──┘  └─50 values─┘  └─100 endpoints─┘  └─1M users──┘
+                    
+                    5 × 50 × 100 × 1,000,000 = 25 BILLION time series (disaster)
+```
+
+### What Causes Cardinality Explosions
+
+| Label Type | Cardinality | Impact |
+|------------|-------------|--------|
+| `method` (GET, POST, etc.) | ~10 | ✅ Safe |
+| `status_code` | ~50 | ✅ Safe |
+| `endpoint` | ~100-1000 | ⚠️ Watch it |
+| `user_id` | Millions | ❌ Explosion |
+| `request_id` | Unlimited | ❌ Catastrophic |
+| `error_message` | Unlimited | ❌ Catastrophic |
+| `timestamp` | Unlimited | ❌ Never do this |
+
+### Detecting Cardinality Problems
+
+**Signs you have a problem:**
+
+- Prometheus memory usage climbing steadily
+- Query timeouts on previously-fast queries
+- High CPU on metric ingestion
+- "too many time series" errors
+
+**How to investigate:**
+
+```promql
+# Top 10 metrics by cardinality
+topk(10, count by (__name__)({__name__=~".+"}))
+
+# Cardinality for a specific metric
+count(http_requests_total)
+
+# Cardinality by label
+count by (endpoint) (http_requests_total)
+```
+
+### Fixing Cardinality Problems
+
+**1. Remove unbounded labels:**
+
+```yaml
+# Bad: user_id creates millions of series
+- name: http_requests_total
+  labels: [method, endpoint, user_id]  # Remove user_id!
+
+# Good: bounded labels only
+- name: http_requests_total
+  labels: [method, endpoint, status]
+```
+
+**2. Bucket instead of exact values:**
+
+```go
+// Bad: exact latency creates many series
+histogram.WithLabelValues(method, endpoint, fmt.Sprintf("%.3f", latency))
+
+// Good: use histogram buckets
+histogram.WithLabelValues(method, endpoint).Observe(latency)
+```
+
+**3. Use label value allowlists:**
+
+```go
+// Only accept known endpoints
+var knownEndpoints = map[string]bool{
+    "/api/users": true,
+    "/api/orders": true,
+    // ...
+}
+
+func sanitizeEndpoint(endpoint string) string {
+    if knownEndpoints[endpoint] {
+        return endpoint
+    }
+    return "other"  // Catch-all for unknown
+}
+```
+
+**4. Move high-cardinality data to logs/traces:**
+
+Put `user_id`, `order_id`, `request_id` in:
+- Span attributes (traces) — queryable, context-rich
+- Log fields (logs) — searchable, detailed
+
+Not in metric labels.
+
+### The Right Way to Track Per-User Metrics
+
+Need to know metrics per user? Use exemplars and logs:
+
+```go
+// Metric: count total orders (low cardinality)
+ordersCounter.Add(1, attribute.String("region", region))
+
+// Trace: include user context
+span.SetAttributes(
+    attribute.String("user.id", userID),
+    attribute.String("order.id", orderID),
+)
+
+// Log: include all context
+logger.Info("Order created",
+    "user_id", userID,
+    "order_id", orderID,
+    "amount", amount,
+    "trace_id", span.SpanContext().TraceID(),
+)
+```
+
+Then to debug a specific user:
+1. Search logs for `user_id=usr_123`
+2. Get `trace_id` from log
+3. View full trace with all context
+
+### Cardinality Budgeting
+
+Set limits before problems occur:
+
+| Metric Type | Cardinality Budget | Notes |
+|-------------|-------------------|-------|
+| Request metrics | < 10,000 series | Per service |
+| Business metrics | < 5,000 series | Per service |
+| Infrastructure | < 50,000 series | Cluster-wide |
+| **Total target** | < 1 million | Entire system |
+
+Monitor your cardinality:
+```yaml
+# Alert when approaching limits
+- alert: HighCardinalityMetric
+  expr: count by (__name__) ({__name__=~".+"}) > 50000
+  for: 5m
+  annotations:
+    summary: "Metric {{ $labels.__name__ }} has high cardinality"
+```
+
+---
+
 ## Correlating Metrics with Traces and Logs
 
 Metrics tell you there's a problem. Traces and logs tell you what the problem is. Here's how to connect them.
@@ -956,4 +1162,4 @@ Metrics are your system's vital signs. Like a doctor monitoring heart rate, bloo
 
 ---
 
-**Next**: [Logging Done Right →](./logging)
+**Next**: [Alerting Best Practices →](./alerting)
