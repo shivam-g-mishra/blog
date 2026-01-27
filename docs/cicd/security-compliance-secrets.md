@@ -96,13 +96,6 @@ flowchart TB
     SECRETS --> RUNNER
     RUNNER --> ARTIFACT
     ARTIFACT --> DEPLOY
-    
-    style SC fill:#ffcdd2
-    style DEPS fill:#ffcdd2
-    style SECRETS fill:#ffcdd2
-    style RUNNER fill:#fff9c4
-    style ARTIFACT fill:#fff9c4
-    style DEPLOY fill:#ffcdd2
 ```
 
 ### Attack Vectors

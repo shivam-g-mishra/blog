@@ -133,9 +133,6 @@ flowchart LR
         A1 --> STG2[Staging]
         A1 --> P2[Prod]
     end
-    
-    style wrong fill:#ffebee
-    style right fill:#e8f5e9
 ```
 
 ### The Traceability Chain
@@ -544,11 +541,6 @@ flowchart LR
     subgraph prod["Production"]
         ST -->|Same artifact| P[Deploy to Prod]
     end
-    
-    style A fill:#c8e6c9,stroke:#2e7d32
-    style D fill:#bbdefb
-    style S fill:#fff9c4
-    style P fill:#ffcdd2
 ```
 
 ### Tagging for Promotion

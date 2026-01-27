@@ -77,9 +77,6 @@ flowchart LR
         HUMAN -->|Approve| P1[Production]
         HUMAN -->|Wait| READY
     end
-    
-    style HUMAN fill:#fff9c4
-    style READY fill:#c8e6c9
 ```
 
 ```mermaid
@@ -89,8 +86,6 @@ flowchart LR
         direction LR
         C2[Commit] --> B2[Build] --> T2[Test] --> S2[Stage] --> P2[Production]
     end
-    
-    style P2 fill:#c8e6c9
 ```
 
 **Which should you choose?**
@@ -124,12 +119,6 @@ flowchart LR
     end
     
     REC --> ROLL --> BG --> CAN --> AB
-    
-    style REC fill:#ffcdd2
-    style ROLL fill:#fff9c4
-    style BG fill:#c8e6c9
-    style CAN fill:#bbdefb
-    style AB fill:#e1bee7
 ```
 
 Let me walk through each one in detail.
@@ -176,23 +165,6 @@ flowchart TB
     end
     
     t1 --> t2 --> t3 --> t4
-    
-    style A1 fill:#ffcdd2
-    style A2 fill:#ffcdd2
-    style A3 fill:#ffcdd2
-    style A4 fill:#ffcdd2
-    style B1 fill:#c8e6c9
-    style B2 fill:#ffcdd2
-    style B3 fill:#ffcdd2
-    style B4 fill:#ffcdd2
-    style C1 fill:#c8e6c9
-    style C2 fill:#c8e6c9
-    style C3 fill:#ffcdd2
-    style C4 fill:#ffcdd2
-    style D1 fill:#c8e6c9
-    style D2 fill:#c8e6c9
-    style D3 fill:#c8e6c9
-    style D4 fill:#c8e6c9
 ```
 
 ### How It Works
@@ -289,9 +261,6 @@ flowchart TB
     
     LB --> |100% traffic| blue
     LB -.-> |0% traffic| green
-    
-    style blue fill:#bbdefb
-    style green fill:#c8e6c9
 ```
 
 After switch:
@@ -313,9 +282,6 @@ flowchart TB
     
     LB -.-> |0% traffic| blue
     LB --> |100% traffic| green
-    
-    style blue fill:#bbdefb
-    style green fill:#c8e6c9
 ```
 
 ### How It Works
@@ -478,10 +444,6 @@ flowchart TB
     end
     
     phase1 --> phase2 --> phase3
-    
-    style C1 fill:#fff9c4
-    style C2 fill:#fff9c4
-    style P3 fill:#c8e6c9
 ```
 
 ### How It Works
@@ -683,10 +645,6 @@ flowchart TB
     D1 --> flags
     D2 --> flags
     D3 --> flags
-    
-    style F1 fill:#fff9c4
-    style F2 fill:#bbdefb
-    style F3 fill:#c8e6c9
 ```
 
 ### Feature Flag Implementation
@@ -1013,10 +971,6 @@ Code flows through environments on its way to production. Managing these environ
 flowchart LR
     DEV[Development] --> |"Tests pass"| STAGING[Staging]
     STAGING --> |"Smoke tests pass"| PROD[Production]
-    
-    style DEV fill:#bbdefb
-    style STAGING fill:#fff9c4
-    style PROD fill:#c8e6c9
 ```
 
 ### Configuration Per Environment

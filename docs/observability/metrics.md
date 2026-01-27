@@ -88,11 +88,6 @@ flowchart TB
     logs --> need
     traces --> need
     metrics --> need
-    
-    style logs fill:#fef3c7,stroke:#d97706
-    style traces fill:#f3e8ff,stroke:#9333ea
-    style metrics fill:#dbeafe,stroke:#2563eb
-    style need fill:#dcfce7,stroke:#16a34a
 ```
 
 ### The Time Series Foundation
@@ -333,11 +328,6 @@ flowchart TB
             end
         end
     end
-    
-    style latency fill:#dbeafe,stroke:#2563eb
-    style traffic fill:#dcfce7,stroke:#16a34a
-    style errors fill:#fee2e2,stroke:#dc2626
-    style saturation fill:#fef3c7,stroke:#d97706
 ```
 
 ### 1. Latency: The User Experience Signal
@@ -460,10 +450,6 @@ flowchart LR
     end
     
     r --> e --> d
-    
-    style r fill:#fee2e2,stroke:#dc2626
-    style e fill:#fef3c7,stroke:#d97706
-    style d fill:#dbeafe,stroke:#2563eb
 ```
 
 The beauty of RED is consistency. Every service gets the same three metrics. You can build a single dashboard template and apply it everywhere.
@@ -498,10 +484,6 @@ flowchart LR
     end
     
     u --> s --> er
-    
-    style u fill:#dcfce7,stroke:#16a34a
-    style s fill:#fef3c7,stroke:#d97706
-    style er fill:#fee2e2,stroke:#dc2626
 ```
 
 **When to use which:**

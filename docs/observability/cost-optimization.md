@@ -380,10 +380,6 @@ flowchart TB
     subgraph central["🏢 Central Backends"]
         cb["Reduced cross-region traffic"]
     end
-    
-    style regionA fill:#dbeafe,stroke:#2563eb
-    style regionB fill:#dcfce7,stroke:#16a34a
-    style central fill:#f3e8ff,stroke:#9333ea
 ```
 
 ---

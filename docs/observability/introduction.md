@@ -96,10 +96,6 @@ flowchart TB
         q2["Was it Auth? Order? Payment? Database? Stripe?"]
         q3["Without observability, you're guessing."]
     end
-    
-    style user fill:#dbeafe,stroke:#2563eb
-    style services fill:#fef3c7,stroke:#d97706
-    style question fill:#fee2e2,stroke:#dc2626
 ```
 
 Observability becomes critical when:
@@ -180,13 +176,6 @@ flowchart TB
     otel --> guides
     guides --> single
     single --> scale
-    
-    style start fill:#dcfce7,stroke:#16a34a
-    style deep fill:#dbeafe,stroke:#2563eb
-    style action fill:#fef3c7,stroke:#d97706
-    style standard fill:#f3e8ff,stroke:#9333ea
-    style implement fill:#fce7f3,stroke:#db2777
-    style infra fill:#e0e7ff,stroke:#4f46e5
 ```
 
 ## Deep Dive Guides

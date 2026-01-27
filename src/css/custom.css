@@ -849,6 +849,59 @@ div[class*="announcementBarContent"] {
   border: 1px solid var(--color-border);
 }
 
+/* Mermaid dark mode overrides for better visibility */
+[data-theme='dark'] .docusaurus-mermaid-container {
+  background: #1a1a1a;
+}
+
+/* Override Mermaid node text for dark mode */
+[data-theme='dark'] .docusaurus-mermaid-container .nodeLabel,
+[data-theme='dark'] .docusaurus-mermaid-container .label,
+[data-theme='dark'] .docusaurus-mermaid-container text,
+[data-theme='dark'] .docusaurus-mermaid-container .edgeLabel {
+  fill: #f1f5f9 !important;
+  color: #f1f5f9 !important;
+}
+
+/* Ensure subgraph labels are visible */
+[data-theme='dark'] .docusaurus-mermaid-container .cluster-label text {
+  fill: #f1f5f9 !important;
+}
+
+/* Dark mode node backgrounds - softer colors */
+[data-theme='dark'] .docusaurus-mermaid-container .node rect,
+[data-theme='dark'] .docusaurus-mermaid-container .node circle,
+[data-theme='dark'] .docusaurus-mermaid-container .node polygon {
+  stroke: #4b5563 !important;
+}
+
+/* Subgraph backgrounds in dark mode */
+[data-theme='dark'] .docusaurus-mermaid-container .cluster rect {
+  fill: rgba(255, 255, 255, 0.05) !important;
+  stroke: #374151 !important;
+}
+
+/* Edge/arrow colors for dark mode */
+[data-theme='dark'] .docusaurus-mermaid-container .flowchart-link,
+[data-theme='dark'] .docusaurus-mermaid-container .edge-pattern-solid,
+[data-theme='dark'] .docusaurus-mermaid-container path.path {
+  stroke: #9ca3af !important;
+}
+
+[data-theme='dark'] .docusaurus-mermaid-container marker path {
+  fill: #9ca3af !important;
+  stroke: #9ca3af !important;
+}
+
+/* Timeline styling for dark mode */
+[data-theme='dark'] .docusaurus-mermaid-container .timeline-section {
+  fill: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme='dark'] .docusaurus-mermaid-container .timeline-section text {
+  fill: #f1f5f9 !important;
+}
+
 /* ============================================
    ANIMATIONS
    ============================================ */

@@ -263,10 +263,6 @@ flowchart TB
     log2 --> link
     log3 --> link
     metric --> link
-    
-    style request fill:#f3e8ff,stroke:#9333ea
-    style signals fill:#dbeafe,stroke:#2563eb
-    style power fill:#dcfce7,stroke:#16a34a
 ```
 
 When you search for `trace_id = 7b3e9f2a4c1d8e5b`:
@@ -308,12 +304,6 @@ flowchart TB
     step2 --> step3
     step3 --> step4
     step4 --> step5
-    
-    style step1 fill:#fee2e2,stroke:#dc2626
-    style step2 fill:#dbeafe,stroke:#2563eb
-    style step3 fill:#fef3c7,stroke:#d97706
-    style step4 fill:#f3e8ff,stroke:#9333ea
-    style step5 fill:#dcfce7,stroke:#16a34a
 ```
 
 This investigation took 10 minutes with proper observability. Without it? Could easily be hours of guessing, adding debug logging, redeploying, and hoping you get lucky.

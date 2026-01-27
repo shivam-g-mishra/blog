@@ -475,9 +475,6 @@ GitOps is an operational pattern where the desired state of your infrastructure 
 %%{init: {'theme': 'neutral'}}%%
 flowchart LR
     CI[CI Pipeline] --> |kubectl apply| K8S[Kubernetes Cluster]
-    
-    style CI fill:#bbdefb
-    style K8S fill:#c8e6c9
 ```
 
 CI has credentials to the cluster and pushes changes.
@@ -489,11 +486,6 @@ flowchart LR
     CI[CI Pipeline] --> |push manifests| GIT[Git Repository]
     GITOPS[GitOps Controller] --> |watch| GIT
     GITOPS --> |reconcile| K8S[Kubernetes Cluster]
-    
-    style CI fill:#bbdefb
-    style GIT fill:#fff9c4
-    style GITOPS fill:#e1bee7
-    style K8S fill:#c8e6c9
 ```
 
 A controller inside the cluster watches Git and pulls changes.

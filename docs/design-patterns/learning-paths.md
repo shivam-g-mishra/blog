@@ -123,12 +123,6 @@ flowchart LR
     B --> C["💻 Build in a\ntoy project"]
     C --> D["🔍 Find it in\nreal frameworks"]
     D --> E["✅ Pattern\nmastered"]
-    
-    style A fill:#e1f5fe
-    style B fill:#fff3e0
-    style C fill:#e8f5e9
-    style D fill:#fce4ec
-    style E fill:#f3e5f5
 ```
 
 1. **Read the problem story.** Can you relate to it? If not, you might not need this pattern yet.
@@ -391,11 +385,6 @@ flowchart LR
     X["Read about pattern"] --> Y["Try to apply it"]
     Y --> Z["Feels like overkill"]
     Z --> X
-    
-    style A fill:#e8f5e9
-    style D fill:#e8f5e9
-    style X fill:#ffebee
-    style Z fill:#ffebee
 ```
 
 If you've never struggled with object creation, Factory Method will feel like unnecessary complexity. Learn patterns when you need them, not before.

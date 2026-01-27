@@ -391,8 +391,6 @@ flowchart LR
     app2["App 2"] --> single
     app3["App 3"] --> single
     single["❌ Single Collector"] --> backends["Backends"]
-    
-    style single fill:#fee2e2,stroke:#dc2626
 ```
 
 **Why it hurts**: Single point of failure. When the collector restarts or crashes, all telemetry is lost.
@@ -412,11 +410,6 @@ flowchart LR
     c1 --> backends["Backends"]
     c2 --> backends
     c3 --> backends
-    
-    style lb fill:#dbeafe,stroke:#2563eb
-    style c1 fill:#dcfce7,stroke:#16a34a
-    style c2 fill:#dcfce7,stroke:#16a34a
-    style c3 fill:#dcfce7,stroke:#16a34a
 ```
 
 ---

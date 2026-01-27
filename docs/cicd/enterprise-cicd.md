@@ -84,9 +84,6 @@ flowchart TB
     P2 --> T2
     P2 --> T3
     P2 --> T4
-    
-    style platform fill:#e1bee7
-    style teams fill:#c8e6c9
 ```
 
 **Platform team responsibilities:**
@@ -515,9 +512,6 @@ flowchart TB
     
     P2 --> |replicate| S2
     P3 --> |replicate| S3
-    
-    style primary fill:#c8e6c9
-    style secondary fill:#fff9c4
 ```
 
 ### Failover Testing

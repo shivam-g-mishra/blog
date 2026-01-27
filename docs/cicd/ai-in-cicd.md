@@ -73,10 +73,6 @@ flowchart LR
         B2 --> AI3[Predictive Analysis]
         AI3 --> D2[Deploy]
     end
-    
-    style AI1 fill:#e1bee7
-    style AI2 fill:#e1bee7
-    style AI3 fill:#e1bee7
 ```
 
 **Key integration points:**
@@ -171,8 +167,6 @@ flowchart LR
     B --> D[Predicted Failing Tests]
     D --> E[Run Subset]
     E --> F[90% faster]
-    
-    style B fill:#e1bee7
 ```
 
 The ML model learns from:

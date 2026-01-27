@@ -71,9 +71,6 @@ flowchart LR
     code -->|Manual Spans| sdk
     auto -->|HTTP, DB, etc.| sdk
     sdk -->|OTLP| collector[OTel Collector]
-    
-    style app fill:#e8f4f8,stroke:#0891b2
-    style collector fill:#dcfce7,stroke:#16a34a
 ```
 
 ### Pattern 3: Manual Instrumentation (Full Control)
@@ -141,12 +138,6 @@ flowchart TD
     java --> javaguide["Java Guide<br/>Agent or SDK"]
     node --> nodeguide["Node.js Guide<br/>--require instrumentation"]
     python --> pythonguide["Python Guide<br/>opentelemetry-instrument"]
-    
-    style goguide fill:#00add8,color:#fff
-    style dotnetguide fill:#512bd4,color:#fff
-    style javaguide fill:#f89820,color:#fff
-    style nodeguide fill:#339933,color:#fff
-    style pythonguide fill:#3776ab,color:#fff
 ```
 
 ---

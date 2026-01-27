@@ -146,9 +146,6 @@ flowchart LR
     D --> F
     E --> F
     F --> G[Deploy<br/>60s]
-    
-    style D fill:#ffcdd2
-    style F fill:#ffcdd2
 ```
 
 In this example, the critical path is:

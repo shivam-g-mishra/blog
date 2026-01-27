@@ -100,11 +100,6 @@ flowchart TB
     p1 --> p2
     p2 --> p3
     p3 --> p4
-    
-    style p1 fill:#fee2e2,stroke:#dc2626
-    style p2 fill:#fef3c7,stroke:#d97706
-    style p3 fill:#dbeafe,stroke:#2563eb
-    style p4 fill:#f3f4f6,stroke:#6b7280
 ```
 
 ### P1 - Page (Critical)
@@ -213,10 +208,6 @@ flowchart LR
     end
     
     outcomes --> benefit
-    
-    style indicators fill:#fef3c7,stroke:#d97706
-    style outcomes fill:#dbeafe,stroke:#2563eb
-    style benefit fill:#dcfce7,stroke:#16a34a
 ```
 
 ---
@@ -269,10 +260,6 @@ flowchart TB
     
     critical --> warning
     warning --> ticket
-    
-    style critical fill:#fee2e2,stroke:#dc2626
-    style warning fill:#fef3c7,stroke:#d97706
-    style ticket fill:#dbeafe,stroke:#2563eb
 ```
 
 ### Why Burn Rates Beat Thresholds
@@ -320,14 +307,6 @@ flowchart TB
     E --> F["➕ Team adds MORE alerts to 'catch' problems"]
     F --> A
     F --> G["🔥 Repeat until burnout"]
-    
-    style A fill:#fee2e2,stroke:#dc2626
-    style B fill:#fef3c7,stroke:#d97706
-    style C fill:#fef3c7,stroke:#d97706
-    style D fill:#fef3c7,stroke:#d97706
-    style E fill:#fee2e2,stroke:#dc2626
-    style F fill:#fee2e2,stroke:#dc2626
-    style G fill:#7f1d1d,stroke:#450a0a,color:#fff
 ```
 
 ### Measuring Alert Health
@@ -714,10 +693,6 @@ flowchart TB
         e30["⏱️ 30 min → VP Engineering"]
         e0 --> e10 --> e20 --> e30
     end
-    
-    style severity fill:#dbeafe,stroke:#2563eb
-    style team fill:#fef3c7,stroke:#d97706
-    style escalation fill:#f3e8ff,stroke:#9333ea
 ```
 
 ### On-Call Best Practices
@@ -830,10 +805,6 @@ flowchart TB
     
     metrics --> logs
     logs --> traces
-    
-    style metrics fill:#dbeafe,stroke:#2563eb
-    style logs fill:#fef3c7,stroke:#d97706
-    style traces fill:#f3e8ff,stroke:#9333ea
 ```
 
 See also:

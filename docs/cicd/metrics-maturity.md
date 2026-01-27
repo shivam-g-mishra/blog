@@ -74,10 +74,6 @@ flowchart TB
     
     throughput --> PERF["High Performers excel at BOTH"]
     stability --> PERF
-    
-    style throughput fill:#c8e6c9
-    style stability fill:#bbdefb
-    style PERF fill:#fff9c4
 ```
 
 The key insight from DORA research: **high performers don't trade off speed for stability—they excel at both**. This challenges the traditional assumption that moving fast means breaking things. In fact, organizations that deploy more frequently tend to have *lower* failure rates, not higher.

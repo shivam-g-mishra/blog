@@ -122,9 +122,6 @@ flowchart LR
     end
     
     FC -.->|branch| RP
-    
-    style main fill:#e8f5e9
-    style release fill:#fff3e0
 ```
 
 #### How It Works
@@ -157,15 +154,6 @@ flowchart TB
         M3 --> M4
         M4 --> M5[Continue...]
     end
-    
-    style M1 fill:#90EE90
-    style M2 fill:#90EE90
-    style M3 fill:#90EE90
-    style M4 fill:#90EE90
-    style M5 fill:#90EE90
-    style F1 fill:#87CEEB
-    style F2 fill:#87CEEB
-    style FM1 fill:#DDA0DD
 ```
 
 The branch provides a place for code review without breaking main, but the expectation is clear: branches live for one day, maybe two. Anything longer requires justification.
@@ -236,11 +224,6 @@ flowchart TB
     R1 --> R2
     R2 --> M2
     R2 --> D4
-    
-    style main_branch fill:#ffcdd2
-    style develop_branch fill:#c8e6c9
-    style features fill:#bbdefb
-    style release_branch fill:#fff9c4
 ```
 
 #### The Branch Types
@@ -317,12 +300,6 @@ flowchart LR
     B1 --> M3
     M3 -.-> B3
     B3 --> M4
-    
-    style main_flow fill:#c8e6c9
-    style M1 fill:#81c784
-    style M2 fill:#81c784
-    style M3 fill:#81c784
-    style M4 fill:#81c784
 ```
 
 #### How It Works
@@ -388,10 +365,6 @@ flowchart LR
     M2 --> S2
     S1 --> P1
     S3 --> P2
-    
-    style main_env fill:#e3f2fd
-    style staging_env fill:#fff3e0
-    style prod_env fill:#c8e6c9
 ```
 
 #### The Environment Branch Model
@@ -437,10 +410,6 @@ flowchart TB
     M3 --> S11_1
     S10_2 -.-> M4
     M4 -.-> S11_2
-    
-    style main_branch fill:#e3f2fd
-    style stable_1_0 fill:#fff3e0
-    style stable_1_1 fill:#c8e6c9
 ```
 
 This supports multiple active releases while keeping `main` as the source of truth.
@@ -530,11 +499,6 @@ flowchart TD
     F --> J
     G --> J
     I --> J
-    
-    style E fill:#90EE90,stroke:#228B22
-    style F fill:#87CEEB,stroke:#4169E1
-    style G fill:#DDA0DD,stroke:#8B008B
-    style I fill:#F0E68C,stroke:#DAA520
 ```
 
 ---
@@ -669,11 +633,6 @@ flowchart LR
     S2 -->|Pass| M2["Merge PR#2"]
     M2 --> S3
     S3 -->|Pass| M3["Merge PR#3"]
-    
-    style PR1 fill:#FFE4B5
-    style S1 fill:#90EE90
-    style S2 fill:#90EE90
-    style S3 fill:#90EE90
 ```
 
 ### GitHub Merge Queue

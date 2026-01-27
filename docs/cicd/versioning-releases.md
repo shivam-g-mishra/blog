@@ -750,11 +750,6 @@ flowchart LR
     D --> C
     C -->|Approved| E[Promote to Release]
     E --> F[Publish]
-    
-    style B fill:#fff3e0
-    style C fill:#e3f2fd
-    style E fill:#c8e6c9
-    style F fill:#90EE90
 ```
 
 **Release candidate workflow:**

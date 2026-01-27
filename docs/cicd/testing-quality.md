@@ -113,10 +113,6 @@ flowchart TB
     E2E --- E2E_C
     INT --- INT_C
     UNIT --- UNIT_C
-    
-    style E2E fill:#ffcdd2
-    style INT fill:#fff9c4
-    style UNIT fill:#c8e6c9
 ```
 
 ### Unit Tests: The Foundation
@@ -268,11 +264,6 @@ flowchart TB
         UNIT_T["Unit<br/>(Some)"]
         STATIC["Static Analysis<br/>(Foundational)"]
     end
-    
-    style E2E_T fill:#ffcdd2,stroke:#b71c1c
-    style INT_T fill:#c8e6c9,stroke:#2e7d32
-    style UNIT_T fill:#fff9c4,stroke:#f9a825
-    style STATIC fill:#e1bee7,stroke:#7b1fa2
 ```
 
 The trophy model suggests:

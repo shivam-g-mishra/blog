@@ -438,7 +438,15 @@ const config: Config = {
   
   // Themes: Mermaid for diagrams + Local search for SEO and UX
   themes: [
-    '@docusaurus/theme-mermaid',
+    [
+      '@docusaurus/theme-mermaid',
+      {
+        theme: {
+          light: 'default',
+          dark: 'dark',
+        },
+      },
+    ],
     [
       require.resolve("@easyops-cn/docusaurus-search-local"),
       {

@@ -434,11 +434,6 @@ flowchart LR
     end
     
     metrics --> traces --> logs --> fix
-    
-    style metrics fill:#dbeafe,stroke:#2563eb
-    style traces fill:#f3e8ff,stroke:#9333ea
-    style logs fill:#fef3c7,stroke:#d97706
-    style fix fill:#dcfce7,stroke:#16a34a
 ```
 
 ### What Made This Fast

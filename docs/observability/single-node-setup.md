@@ -84,11 +84,6 @@ flowchart TB
     subgraph viz["📊 Visualization"]
         grafana[Grafana<br/>Dashboards & Alerts]
     end
-    
-    style apps fill:#dbeafe,stroke:#2563eb
-    style collector fill:#dcfce7,stroke:#16a34a
-    style storage fill:#fef3c7,stroke:#d97706
-    style viz fill:#fce7f3,stroke:#db2777
 ```
 
 ## Quick Start (5 Minutes)
@@ -265,10 +260,6 @@ flowchart LR
     attr --> traces
     attr --> metrics
     attr --> logs
-    
-    style receive fill:#dbeafe,stroke:#2563eb
-    style process fill:#dcfce7,stroke:#16a34a
-    style export fill:#fef3c7,stroke:#d97706
 ```
 
 ### The OpenTelemetry Collector
@@ -384,10 +375,6 @@ flowchart LR
     
     go & py & node & net & java --> grpc & http
     grpc & http --> recv
-    
-    style apps fill:#f8fafc,stroke:#64748b
-    style protocols fill:#dbeafe,stroke:#2563eb
-    style collector fill:#dcfce7,stroke:#16a34a
 ```
 
 ### Quick Integration Examples
@@ -514,10 +501,6 @@ flowchart LR
     end
     
     normal ~~~ failure ~~~ recovery
-    
-    style normal fill:#dcfce7,stroke:#16a34a
-    style failure fill:#fef3c7,stroke:#d97706
-    style recovery fill:#dbeafe,stroke:#2563eb
 ```
 
 ### Persistent Queues
@@ -592,11 +575,6 @@ flowchart TD
     
     single -->|"Monitor these signals"| signals["⚠️ Queue > 5K<br/>Memory > 80%<br/>Latency increasing"]
     signals -->|"consistently hitting"| scale
-    
-    style single fill:#dcfce7,stroke:#16a34a
-    style multi fill:#dbeafe,stroke:#2563eb
-    style geo fill:#fef3c7,stroke:#d97706
-    style kafka fill:#fce7f3,stroke:#db2777
 ```
 
 This setup handles most workloads, but consider scaling when:

@@ -106,10 +106,6 @@ flowchart TB
     end
     
     before -.-> |"The shift"| after
-
-    style X1 fill:#ffcccc,stroke:#cc0000
-    style F1 fill:#ffcccc,stroke:#cc0000
-    style G2 fill:#ccffcc,stroke:#00cc00
 ```
 
 Continuous Integration flips this model on its head. Instead of integrating once at the end, you integrate constantly—ideally multiple times per day. Each integration is tiny. Tiny integrations mean tiny conflicts. Tiny conflicts mean you fix them while the context is still fresh in your mind, not three weeks later when you've forgotten why you wrote that code in the first place.
@@ -144,9 +140,6 @@ flowchart TB
     READY --> DECISION{"Ship it?"}
     DECISION -->|"Yes"| PROD["Production<br/>(minutes away)"]
     DECISION -->|"Not yet"| WAIT["Wait for<br/>business reasons"]
-    
-    style READY fill:#90EE90,stroke:#228B22
-    style PROD fill:#4169E1,stroke:#000080,color:#fff
 ```
 
 The key insight is subtle but profound: **CD makes deployment a business decision, not a technical one**. Without CD, the question is "Can we even deploy this?" With CD, the question becomes "Should we deploy this now, or wait for the marketing announcement next week?" That's a much better question to be asking.
