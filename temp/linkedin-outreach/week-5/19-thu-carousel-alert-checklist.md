@@ -24,7 +24,7 @@ Use this checklist before creating any alert ⬇️
 
 📚 Complete alerting best practices:
 
-https://blog.shivam.info/docs/observability/alerting?utm_source=linkedin&utm_medium=social&utm_campaign=week5
+https://blog.shivamm.info/docs/observability/alerting?utm_source=linkedin&utm_medium=social&utm_campaign=week5
 
 Comment "ALERTS" for the direct link!
 
@@ -135,5 +135,5 @@ Every page = real incident
 Want the full alerting guide?
 Comment "ALERTS"
 
-blog.shivam.info
+blog.shivamm.info
 ```

@@ -59,7 +59,7 @@ When did your team start instrumenting - day one or after the fire?
 
 📚 I wrote a complete guide on instrumenting code for observability:
 
-https://blog.shivam.info/blog/instrumenting-code-for-observability?utm_source=linkedin&utm_medium=social&utm_campaign=week4
+https://blog.shivamm.info/blog/instrumenting-code-for-observability?utm_source=linkedin&utm_medium=social&utm_campaign=week4
 
 It covers:
 → Auto-instrumentation basics

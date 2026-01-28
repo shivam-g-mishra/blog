@@ -26,7 +26,7 @@ Here's a visual guide ⬇️
 
 📚 Full logging best practices guide:
 
-https://blog.shivam.info/docs/observability/logging?utm_source=linkedin&utm_medium=social&utm_campaign=week4
+https://blog.shivamm.info/docs/observability/logging?utm_source=linkedin&utm_medium=social&utm_campaign=week4
 
 Comment "LOGS" for the direct link!
 
@@ -131,5 +131,5 @@ Comment "LOGS" for the link.
 
 Follow for more observability content.
 
-blog.shivam.info
+blog.shivamm.info
 ```

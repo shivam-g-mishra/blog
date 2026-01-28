@@ -51,7 +51,7 @@ What metrics does your team prioritize?
 
 📚 I wrote a complete guide on metrics - what to track, how to alert, and common mistakes:
 
-https://blog.shivam.info/docs/observability/metrics?utm_source=linkedin&utm_medium=social&utm_campaign=week2
+https://blog.shivamm.info/docs/observability/metrics?utm_source=linkedin&utm_medium=social&utm_campaign=week2
 
 Key insight: More metrics ≠ better observability.
 

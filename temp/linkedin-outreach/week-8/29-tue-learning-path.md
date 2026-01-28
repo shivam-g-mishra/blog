@@ -60,13 +60,13 @@ Where are you in your observability journey?
 📚 I created free resources for each stage:
 
 **Stage 1 (Fundamentals):**
-https://blog.shivam.info/docs/observability/introduction?utm_source=linkedin&utm_medium=social&utm_campaign=week8
+https://blog.shivamm.info/docs/observability/introduction?utm_source=linkedin&utm_medium=social&utm_campaign=week8
 
 **Stage 2 (Practical):**
-https://blog.shivam.info/blog/single-node-observability-setup?utm_source=linkedin&utm_medium=social&utm_campaign=week8
+https://blog.shivamm.info/blog/single-node-observability-setup?utm_source=linkedin&utm_medium=social&utm_campaign=week8
 
 **Stage 3-4 (Advanced):**
-https://blog.shivam.info/blog/scalable-observability-architecture?utm_source=linkedin&utm_medium=social&utm_campaign=week8
+https://blog.shivamm.info/blog/scalable-observability-architecture?utm_source=linkedin&utm_medium=social&utm_campaign=week8
 
 Plus language-specific guides for Python, Go, Java, and more.
 

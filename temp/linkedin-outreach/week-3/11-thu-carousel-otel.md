@@ -28,7 +28,7 @@ Here's how it actually works ⬇️
 
 📚 Want the complete OpenTelemetry guide?
 
-https://blog.shivam.info/docs/observability/opentelemetry?utm_source=linkedin&utm_medium=social&utm_campaign=week3
+https://blog.shivamm.info/docs/observability/opentelemetry?utm_source=linkedin&utm_medium=social&utm_campaign=week3
 
 It covers concepts, Collector setup, auto-instrumentation, and language-specific guides.
 
@@ -136,5 +136,5 @@ Comment "OTEL" for the link.
 
 Follow for more observability content.
 
-blog.shivam.info
+blog.shivamm.info
 ```

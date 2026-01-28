@@ -8,7 +8,7 @@
 - [ ] Add Featured section: GitHub repo, Fundamentals blog post
 - [ ] Turn ON Creator Mode
 - [ ] Add topics: Observability, DevOps, Software Engineering, OpenTelemetry, SRE
-- [ ] Create banner image with Canva (include blog.shivam.info URL)
+- [ ] Create banner image with Canva (include blog.shivamm.info URL)
 - [ ] Ensure profile photo is professional
 
 ### Content Preparation
@@ -30,7 +30,7 @@
 - [ ] Canva account for carousels (see `linkedin-outreach/carousels/README.md`)
 
 ### Pre-Launch Link Verification
-- [ ] https://blog.shivam.info is live
+- [ ] https://blog.shivamm.info is live
 - [ ] All blog URLs return 200 (test each from `linkedin-outreach/README.md`)
 - [ ] https://github.com/shivam-g-mishra/opensource-otel-setup exists and is public
 - [ ] Google Analytics tracks UTM parameter `utm_source=linkedin`
@@ -163,19 +163,19 @@ When you need quick engagement, comment on posts from:
 
 | Topic | Blog URL |
 |-------|----------|
-| Fundamentals | https://blog.shivam.info/blog/observability-fundamentals |
-| Three Pillars | https://blog.shivam.info/docs/observability/three-pillars |
-| Scalable Architecture | https://blog.shivam.info/blog/scalable-observability-architecture |
-| Single-Node Setup | https://blog.shivam.info/blog/single-node-observability-setup |
-| Instrumenting Code | https://blog.shivam.info/blog/instrumenting-code-for-observability |
-| Observability at Scale | https://blog.shivam.info/blog/observability-at-scale |
-| Logging | https://blog.shivam.info/docs/observability/logging |
-| Metrics | https://blog.shivam.info/docs/observability/metrics |
-| Tracing | https://blog.shivam.info/docs/observability/tracing |
-| Alerting | https://blog.shivam.info/docs/observability/alerting |
-| OpenTelemetry | https://blog.shivam.info/docs/observability/opentelemetry |
-| Python Integration | https://blog.shivam.info/docs/observability/integrations/python |
-| Introduction | https://blog.shivam.info/docs/observability/introduction |
+| Fundamentals | https://blog.shivamm.info/blog/observability-fundamentals |
+| Three Pillars | https://blog.shivamm.info/docs/observability/three-pillars |
+| Scalable Architecture | https://blog.shivamm.info/blog/scalable-observability-architecture |
+| Single-Node Setup | https://blog.shivamm.info/blog/single-node-observability-setup |
+| Instrumenting Code | https://blog.shivamm.info/blog/instrumenting-code-for-observability |
+| Observability at Scale | https://blog.shivamm.info/blog/observability-at-scale |
+| Logging | https://blog.shivamm.info/docs/observability/logging |
+| Metrics | https://blog.shivamm.info/docs/observability/metrics |
+| Tracing | https://blog.shivamm.info/docs/observability/tracing |
+| Alerting | https://blog.shivamm.info/docs/observability/alerting |
+| OpenTelemetry | https://blog.shivamm.info/docs/observability/opentelemetry |
+| Python Integration | https://blog.shivamm.info/docs/observability/integrations/python |
+| Introduction | https://blog.shivamm.info/docs/observability/introduction |
 
 **Add UTM tracking:** `?utm_source=linkedin&utm_medium=social&utm_campaign=observability`
 

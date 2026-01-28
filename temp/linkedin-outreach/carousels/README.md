@@ -46,7 +46,7 @@ Example:
 ## Visual Consistency Tips
 
 - Use same brand colors across all carousels
-- Include `blog.shivam.info` watermark on final slide
+- Include `blog.shivamm.info` watermark on final slide
 - Use consistent font family (recommend: Inter, Montserrat, or Poppins)
 - Keep slide transitions simple (no animations in PDF)
 

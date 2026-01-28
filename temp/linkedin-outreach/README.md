@@ -84,19 +84,19 @@ Each post file contains:
 
 | Topic | URL |
 |-------|-----|
-| Introduction | blog.shivam.info/docs/observability/introduction |
-| Three Pillars | blog.shivam.info/docs/observability/three-pillars |
-| Logging | blog.shivam.info/docs/observability/logging |
-| Metrics | blog.shivam.info/docs/observability/metrics |
-| Tracing | blog.shivam.info/docs/observability/tracing |
-| Alerting | blog.shivam.info/docs/observability/alerting |
-| OpenTelemetry | blog.shivam.info/docs/observability/opentelemetry |
-| Python Integration | blog.shivam.info/docs/observability/integrations/python |
-| Fundamentals Blog | blog.shivam.info/blog/observability-fundamentals |
-| Single-Node Setup | blog.shivam.info/blog/single-node-observability-setup |
-| Scalable Architecture | blog.shivam.info/blog/scalable-observability-architecture |
-| Observability at Scale | blog.shivam.info/blog/observability-at-scale |
-| Instrumenting Code | blog.shivam.info/blog/instrumenting-code-for-observability |
+| Introduction | blog.shivamm.info/docs/observability/introduction |
+| Three Pillars | blog.shivamm.info/docs/observability/three-pillars |
+| Logging | blog.shivamm.info/docs/observability/logging |
+| Metrics | blog.shivamm.info/docs/observability/metrics |
+| Tracing | blog.shivamm.info/docs/observability/tracing |
+| Alerting | blog.shivamm.info/docs/observability/alerting |
+| OpenTelemetry | blog.shivamm.info/docs/observability/opentelemetry |
+| Python Integration | blog.shivamm.info/docs/observability/integrations/python |
+| Fundamentals Blog | blog.shivamm.info/blog/observability-fundamentals |
+| Single-Node Setup | blog.shivamm.info/blog/single-node-observability-setup |
+| Scalable Architecture | blog.shivamm.info/blog/scalable-observability-architecture |
+| Observability at Scale | blog.shivamm.info/blog/observability-at-scale |
+| Instrumenting Code | blog.shivamm.info/blog/instrumenting-code-for-observability |
 
 ## UTM Tracking
 
@@ -129,11 +129,11 @@ Track weekly:
 Before Week 1, verify all links are live:
 
 ### Blog Links (test each one)
-- [ ] https://blog.shivam.info/docs/observability/introduction
-- [ ] https://blog.shivam.info/docs/observability/three-pillars
-- [ ] https://blog.shivam.info/blog/observability-fundamentals
-- [ ] https://blog.shivam.info/blog/single-node-observability-setup
-- [ ] https://blog.shivam.info/blog/scalable-observability-architecture
+- [ ] https://blog.shivamm.info/docs/observability/introduction
+- [ ] https://blog.shivamm.info/docs/observability/three-pillars
+- [ ] https://blog.shivamm.info/blog/observability-fundamentals
+- [ ] https://blog.shivamm.info/blog/single-node-observability-setup
+- [ ] https://blog.shivamm.info/blog/scalable-observability-architecture
 
 ### GitHub Repository
 - [ ] https://github.com/shivam-g-mishra/opensource-otel-setup exists

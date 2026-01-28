@@ -51,7 +51,7 @@ What hidden costs has your team experienced?
 
 📚 I wrote about building cost-effective observability that actually pays for itself:
 
-https://blog.shivam.info/blog/scalable-observability-architecture?utm_source=linkedin&utm_medium=social&utm_campaign=week2
+https://blog.shivamm.info/blog/scalable-observability-architecture?utm_source=linkedin&utm_medium=social&utm_campaign=week2
 
 The key insight: Start with the fundamentals (metrics, logs, traces working together) before worrying about scale.
 

@@ -52,7 +52,7 @@ What's stopping your team from adopting OpenTelemetry?
 
 📚 I wrote a practical guide to OpenTelemetry - from concepts to implementation:
 
-https://blog.shivam.info/docs/observability/opentelemetry?utm_source=linkedin&utm_medium=social&utm_campaign=week3
+https://blog.shivamm.info/docs/observability/opentelemetry?utm_source=linkedin&utm_medium=social&utm_campaign=week3
 
 It covers:
 → Core concepts (spans, traces, metrics, logs)

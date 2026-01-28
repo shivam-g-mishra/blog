@@ -60,7 +60,7 @@ Has your team adopted SLOs?
 
 📚 I wrote about implementing SLO-based alerting in practice:
 
-https://blog.shivam.info/docs/observability/alerting?utm_source=linkedin&utm_medium=social&utm_campaign=week5
+https://blog.shivamm.info/docs/observability/alerting?utm_source=linkedin&utm_medium=social&utm_campaign=week5
 
 It covers:
 → How to define meaningful SLOs

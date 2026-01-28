@@ -44,7 +44,7 @@ What's your worst 3 AM debugging story?
 
 📚 I wrote a complete guide on how metrics, traces, and logs work together to make debugging like this possible:
 
-https://blog.shivam.info/docs/observability/three-pillars?utm_source=linkedin&utm_medium=social&utm_campaign=week1
+https://blog.shivamm.info/docs/observability/three-pillars?utm_source=linkedin&utm_medium=social&utm_campaign=week1
 
 The three pillars are:
 → Traces (follow the request journey)

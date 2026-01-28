@@ -24,7 +24,7 @@ Our 5-layer observability architecture ⬇️
 
 📚 Complete architecture documentation:
 
-https://blog.shivam.info/blog/scalable-observability-architecture?utm_source=linkedin&utm_medium=social&utm_campaign=week6
+https://blog.shivamm.info/blog/scalable-observability-architecture?utm_source=linkedin&utm_medium=social&utm_campaign=week6
 
 Comment "ARCH" for the direct link!
 
@@ -132,5 +132,5 @@ Scale when you need to.
 
 Full guide: Comment "ARCH"
 
-blog.shivam.info
+blog.shivamm.info
 ```

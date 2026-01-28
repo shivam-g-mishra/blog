@@ -45,7 +45,7 @@ What language does your team use most?
 
 📚 I wrote a complete Python instrumentation guide with real examples:
 
-https://blog.shivam.info/docs/observability/integrations/python?utm_source=linkedin&utm_medium=social&utm_campaign=week4
+https://blog.shivamm.info/docs/observability/integrations/python?utm_source=linkedin&utm_medium=social&utm_campaign=week4
 
 It covers:
 → Auto-instrumentation setup

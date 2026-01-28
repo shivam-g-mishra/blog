@@ -52,7 +52,7 @@ I write about:
 → Cost-effective observability architecture
 → Real production lessons (not theory)
 
-📚 Free resources: blog.shivam.info/docs/observability
+📚 Free resources: blog.shivamm.info/docs/observability
 🛠️ Open-source stack: github.com/shivam-g-mishra/opensource-otel-setup
 
 Let's connect if you're working on observability, SRE, or distributed systems.
@@ -73,7 +73,7 @@ Pin these (in order):
 - **Banner**: Create a custom banner with:
   - Your name + title
   - "Building observability at scale"
-  - Your blog URL (blog.shivam.info)
+  - Your blog URL (blog.shivamm.info)
   - Use Canva (free LinkedIn banner templates)
 
 ---
@@ -1554,7 +1554,7 @@ For carousels and any images:
 - **Primary color:** Pick one (e.g., #0066CC - professional blue)
 - **Secondary color:** Pick one for accents
 - **Font:** Same font family across all visuals
-- **Logo/Watermark:** Small "blog.shivam.info" on slide corners
+- **Logo/Watermark:** Small "blog.shivamm.info" on slide corners
 
 ---
 
@@ -1620,5 +1620,5 @@ Ship it. 🚀
 ---
 *Strategy v2.1 (Final) | January 2026*
 *Author: Claude (for Shivam Mishra)*
-*Blog: blog.shivam.info*
+*Blog: blog.shivamm.info*
 *LinkedIn: linkedin.com/in/shivam-g-mishra*

@@ -47,7 +47,7 @@ Which approach does your team use today?
 
 📚 I wrote about why this distinction matters (and how to make the shift):
 
-https://blog.shivam.info/docs/observability/introduction?utm_source=linkedin&utm_medium=social&utm_campaign=week1
+https://blog.shivamm.info/docs/observability/introduction?utm_source=linkedin&utm_medium=social&utm_campaign=week1
 
 The short version: Monitoring tells you THAT something is wrong. Observability helps you understand WHY.
 

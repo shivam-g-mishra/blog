@@ -55,7 +55,7 @@ What's your alert-to-incident ratio?
 
 📚 I wrote a complete guide on alerting - what to alert on, how to reduce noise, and SLO-based alerting:
 
-https://blog.shivam.info/docs/observability/alerting?utm_source=linkedin&utm_medium=social&utm_campaign=week5
+https://blog.shivamm.info/docs/observability/alerting?utm_source=linkedin&utm_medium=social&utm_campaign=week5
 
 Key sections:
 → The 4-question alert test

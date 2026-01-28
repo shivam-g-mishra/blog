@@ -57,7 +57,7 @@ What scale is your observability running at?
 
 📚 I documented our complete scaling journey:
 
-https://blog.shivam.info/blog/scalable-observability-architecture?utm_source=linkedin&utm_medium=social&utm_campaign=week6
+https://blog.shivamm.info/blog/scalable-observability-architecture?utm_source=linkedin&utm_medium=social&utm_campaign=week6
 
 It covers:
 → Single-node starter architecture

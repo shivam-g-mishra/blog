@@ -24,7 +24,7 @@ Works for any production issue ⬇️
 
 📚 This framework is based on the three pillars working together:
 
-https://blog.shivam.info/docs/observability/three-pillars?utm_source=linkedin&utm_medium=social&utm_campaign=week7
+https://blog.shivamm.info/docs/observability/three-pillars?utm_source=linkedin&utm_medium=social&utm_campaign=week7
 
 Comment "DEBUG" for the complete guide!
 
@@ -128,5 +128,5 @@ It becomes muscle memory.
 Want the complete debugging guide?
 Comment "DEBUG"
 
-blog.shivam.info
+blog.shivamm.info
 ```

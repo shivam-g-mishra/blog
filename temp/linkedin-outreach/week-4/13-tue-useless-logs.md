@@ -58,7 +58,7 @@ What's the worst log message you've seen in production?
 
 📚 I wrote a complete logging guide - structured logging, correlation, and common mistakes:
 
-https://blog.shivam.info/docs/observability/logging?utm_source=linkedin&utm_medium=social&utm_campaign=week4
+https://blog.shivamm.info/docs/observability/logging?utm_source=linkedin&utm_medium=social&utm_campaign=week4
 
 Key sections:
 → Structured logging best practices

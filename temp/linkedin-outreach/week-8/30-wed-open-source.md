@@ -56,10 +56,10 @@ PRs welcome.
 https://github.com/shivam-g-mishra/opensource-otel-setup
 
 **Setup Guide:**
-https://blog.shivam.info/blog/single-node-observability-setup?utm_source=linkedin&utm_medium=social&utm_campaign=week8
+https://blog.shivamm.info/blog/single-node-observability-setup?utm_source=linkedin&utm_medium=social&utm_campaign=week8
 
 **Full Documentation:**
-https://blog.shivam.info/docs/observability/introduction?utm_source=linkedin&utm_medium=social&utm_campaign=week8
+https://blog.shivamm.info/docs/observability/introduction?utm_source=linkedin&utm_medium=social&utm_campaign=week8
 
 Why open source?
 

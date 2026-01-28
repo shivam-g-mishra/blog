@@ -29,7 +29,7 @@ Here's a visual breakdown ⬇️
 
 📚 Want to go deeper? I wrote a comprehensive guide on the three pillars of observability:
 
-https://blog.shivam.info/docs/observability/three-pillars?utm_source=linkedin&utm_medium=social&utm_campaign=week1
+https://blog.shivamm.info/docs/observability/three-pillars?utm_source=linkedin&utm_medium=social&utm_campaign=week1
 
 It covers:
 → How traces, metrics, and logs work together
@@ -127,7 +127,7 @@ free observability documentation.
 
 Follow for more DevOps content.
 
-blog.shivam.info
+blog.shivamm.info
 ```
 
 ---

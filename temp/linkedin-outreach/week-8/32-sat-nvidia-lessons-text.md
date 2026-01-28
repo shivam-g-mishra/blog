@@ -53,7 +53,7 @@ What's the biggest lesson from your observability journey?
 
 📚 I wrote the complete story of our observability journey:
 
-https://blog.shivam.info/blog/observability-at-scale?utm_source=linkedin&utm_medium=social&utm_campaign=week8
+https://blog.shivamm.info/blog/observability-at-scale?utm_source=linkedin&utm_medium=social&utm_campaign=week8
 
 It covers:
 → How we started (and what we got wrong)

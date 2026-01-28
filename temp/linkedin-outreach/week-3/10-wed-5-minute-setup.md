@@ -58,7 +58,7 @@ Have you tried running your own observability stack?
 
 📚 I wrote a complete setup guide with everything you need:
 
-https://blog.shivam.info/blog/single-node-observability-setup?utm_source=linkedin&utm_medium=social&utm_campaign=week3
+https://blog.shivamm.info/blog/single-node-observability-setup?utm_source=linkedin&utm_medium=social&utm_campaign=week3
 
 It covers:
 → Architecture overview

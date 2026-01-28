@@ -56,7 +56,7 @@ What's your sampling strategy?
 
 📚 I wrote about sampling strategies in our architecture guide:
 
-https://blog.shivam.info/blog/scalable-observability-architecture?utm_source=linkedin&utm_medium=social&utm_campaign=week7
+https://blog.shivamm.info/blog/scalable-observability-architecture?utm_source=linkedin&utm_medium=social&utm_campaign=week7
 
 Key insight: Sampling happens at the Collector level, not in your app.
 

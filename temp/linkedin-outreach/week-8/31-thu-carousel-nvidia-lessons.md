@@ -26,7 +26,7 @@ Here's what I learned ⬇️
 
 📚 The complete story:
 
-https://blog.shivam.info/blog/observability-at-scale?utm_source=linkedin&utm_medium=social&utm_campaign=week8
+https://blog.shivamm.info/blog/observability-at-scale?utm_source=linkedin&utm_medium=social&utm_campaign=week8
 
 Comment "NVIDIA" for the direct link!
 
@@ -144,5 +144,5 @@ Comment "NVIDIA"
 
 Follow for more.
 
-blog.shivam.info
+blog.shivamm.info
 ```

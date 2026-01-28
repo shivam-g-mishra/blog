@@ -57,7 +57,7 @@ Is your team using distributed tracing?
 
 📚 I wrote a complete guide to distributed tracing:
 
-https://blog.shivam.info/docs/observability/tracing?utm_source=linkedin&utm_medium=social&utm_campaign=week7
+https://blog.shivamm.info/docs/observability/tracing?utm_source=linkedin&utm_medium=social&utm_campaign=week7
 
 It covers:
 → Trace and span concepts

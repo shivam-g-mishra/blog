@@ -69,7 +69,7 @@ Are you using canonical log lines?
 
 📚 I wrote about canonical log lines and other logging patterns:
 
-https://blog.shivam.info/docs/observability/logging?utm_source=linkedin&utm_medium=social&utm_campaign=week7
+https://blog.shivamm.info/docs/observability/logging?utm_source=linkedin&utm_medium=social&utm_campaign=week7
 
 Key insight: Canonical log lines don't REPLACE your other logs.
 

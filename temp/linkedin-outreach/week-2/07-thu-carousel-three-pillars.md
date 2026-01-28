@@ -30,7 +30,7 @@ Here's a visual guide ⬇️
 
 📚 I wrote 10,000+ words on each pillar and how to correlate them:
 
-https://blog.shivam.info/docs/observability/three-pillars?utm_source=linkedin&utm_medium=social&utm_campaign=week2
+https://blog.shivamm.info/docs/observability/three-pillars?utm_source=linkedin&utm_medium=social&utm_campaign=week2
 
 The magic happens when you can:
 1. See a spike in metrics
@@ -161,7 +161,7 @@ Comment "PILLARS" for the link.
 
 Follow for more observability content.
 
-blog.shivam.info
+blog.shivamm.info
 ```
 
 ---

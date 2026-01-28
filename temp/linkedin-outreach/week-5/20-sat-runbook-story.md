@@ -63,7 +63,7 @@ Does your team have runbooks for every alert?
 
 📚 I wrote about alerting best practices including runbook templates:
 
-https://blog.shivam.info/docs/observability/alerting?utm_source=linkedin&utm_medium=social&utm_campaign=week5
+https://blog.shivamm.info/docs/observability/alerting?utm_source=linkedin&utm_medium=social&utm_campaign=week5
 
 Key insight: The runbook should be written by someone who's been paged for this alert.
 

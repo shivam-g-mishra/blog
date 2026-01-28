@@ -57,7 +57,7 @@ When did you add a buffering layer to your observability?
 
 📚 I wrote about our complete observability architecture including the Kafka layer:
 
-https://blog.shivam.info/blog/scalable-observability-architecture?utm_source=linkedin&utm_medium=social&utm_campaign=week6
+https://blog.shivamm.info/blog/scalable-observability-architecture?utm_source=linkedin&utm_medium=social&utm_campaign=week6
 
 Key insight: Don't add Kafka on day one.
 
