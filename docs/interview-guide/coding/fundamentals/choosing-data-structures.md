@@ -40,7 +40,7 @@ flowchart TD
     start -->|"Maintain order<br/>while inserting"| sorted["Sorted Structure"]
     start -->|"Process in<br/>specific order"| order["Stack/Queue"]
     start -->|"Track min/max<br/>efficiently"| heap["Heap"]
-    start -->|"Represent<br/>relationships"| graph["Graph/Tree"]
+    start -->|"Represent<br/>relationships"| graphTree["Graph/Tree"]
     
     sorted -->|"Need fast search"| bst["BST/TreeMap"]
     sorted -->|"Need intervals"| tree2["Segment Tree"]
