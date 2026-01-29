@@ -32,31 +32,32 @@ This guide contains everything I wish I'd known before that first Google intervi
 
 ## What Makes This Guide Different
 
-You could spend $800+ per year on interview prep:
+### Why I Created This
 
-| Resource | What It Covers | Cost |
-|----------|----------------|------|
-| Grokking Coding Interview | 28 patterns | $79 |
-| Grokking System Design | Case studies | $79 |
-| ByteByteGo | System design + ML | $79/yr |
-| LeetCode Premium | Company questions | $159/yr |
-| GreatFrontend | Frontend prep | $228/yr |
-| Negotiation coaching | Salary | $200+ |
-| Mock interviews | Practice | $150/session |
+When I was preparing for interviews, I spent countless hours jumping between dozens of resources—a course here for patterns, a newsletter there for system design, random YouTube videos for behavioral prep, and paid platforms for company-specific questions.
 
-Or you could use this guide. **It's free, and it covers everything.**
+**The pain of finding everything scattered across the internet was exhausting.**
 
-Here's what you get:
+I'd pay for one platform, realize it only covered coding patterns. Pay for another, get system design but no behavioral prep. Buy a book, find it outdated. The total cost? Easily $500-800+ per year. And I still felt unprepared because nothing covered *everything*.
 
-- **32 coding patterns** — More than Grokking, organized by data structure
-- **32 system design case studies** — From URL shorteners to Netflix
-- **15 low-level design problems** — Parking lots, elevators, chess games
-- **Complete behavioral prep** — STAR method, story bank templates, Amazon LPs
-- **25+ company guides** — Google, Meta, Amazon, and startups
-- **Career section** — Resumes, negotiation scripts, offer evaluation
-- **~1,200 hours of content** — More than any paid resource
+I created this guide because **no one should have to go through that**.
 
-**This is the interview guide I wish existed when I was preparing.**
+### What You Get (Free)
+
+| What | Coverage |
+|------|----------|
+| **Coding Patterns** | 28+ patterns organized by data structure |
+| **System Design** | 14 case studies (URL shortener to Netflix) |
+| **Low-Level Design** | 10 OOD problems (parking lot, chess, ATM) |
+| **Behavioral Prep** | STAR method, story bank, leadership questions |
+| **Company Guides** | Google, Amazon, Meta, Microsoft, Apple, startups |
+| **Career Content** | Resume tips, salary negotiation, interview day |
+
+**Average cost on other platforms: $500-800/year.**
+
+**This guide: Free. Forever.**
+
+This is my way of giving back. I've been through the grind, felt the stress, experienced the rejections. If this guide helps even one person land their dream job, it's worth every hour I put into creating it.
 
 ---
 
@@ -223,14 +224,14 @@ See [Preparation Timelines](./learning-paths) for compressed study plans.
 
 ---
 
-## A Note on Free Resources
+## Pay It Forward
 
-This guide is free because I believe everyone deserves access to quality interview preparation, regardless of ability to pay.
+This guide is free because I remember what it felt like—stressing about interviews while also worrying about whether I could afford the "right" resources. Everyone deserves access to quality preparation, regardless of their financial situation.
 
-If this helps you land an offer:
-- Share it with friends who are interviewing
-- Connect with me on [LinkedIn](#)
-- Pay it forward by helping someone else prepare
+If this guide helps you:
+- **Share it** with friends who are preparing for interviews
+- **Connect with me** on [LinkedIn](https://www.linkedin.com/in/shivammishra1/) — I love hearing success stories
+- **Pay it forward** by helping someone else when you're on the other side of the table
 
 **Now let's get you that offer.**
 
