@@ -1,0 +1,12 @@
+{
+  "label": "Interview Guide",
+  "position": 5,
+  "collapsed": false,
+  "link": {
+    "type": "doc",
+    "id": "interview-guide/introduction"
+  },
+  "customProps": {
+    "description": "The most comprehensive FREE software developer interview guide"
+  }
+}

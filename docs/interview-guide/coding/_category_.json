@@ -1,0 +1,10 @@
+{
+  "label": "Coding Interviews",
+  "position": 1,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "Coding Interview Preparation",
+    "description": "Master data structures, algorithms, and coding patterns to ace any technical interview"
+  }
+}

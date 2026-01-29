@@ -1,0 +1,10 @@
+{
+  "label": "System Design",
+  "position": 2,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "System Design Interview Preparation",
+    "description": "Learn to design scalable systems from URL shorteners to distributed databases"
+  }
+}
