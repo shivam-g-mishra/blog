@@ -696,7 +696,7 @@ public int[][] KClosest(int[][] points, int k) {
 
 1. **Min-heap of size K** for K largest—counterintuitive but efficient.
 
-2. **O(n log k)** beats O(n log n) sorting when k << n.
+2. **O(n log k)** beats O(n log n) sorting when k is much smaller than n.
 
 3. **Negate values** to simulate max-heap in Python/languages with only min-heap.
 

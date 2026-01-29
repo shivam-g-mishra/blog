@@ -673,7 +673,7 @@ public int kthSmallest(int[][] matrix, int k) {
 
 2. **Store (value, list_id, index)** to track position in each list.
 
-3. **O(N log K)** beats O(N log N) naive sort when K << N.
+3. **O(N log K)** beats O(N log N) naive sort when K is much smaller than N.
 
 4. **Works for any sorted sequences:** linked lists, arrays, iterators.
 

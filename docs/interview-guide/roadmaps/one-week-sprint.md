@@ -36,7 +36,7 @@ This isn't about learning everything—it's about learning what matters most. 80
 ## The Philosophy
 
 **Ruthless prioritization.** Every hour matters. We skip:
-- Rare patterns (appears in <5% of interviews)
+- Rare patterns (appears in less than 5% of interviews)
 - Advanced optimizations (good enough is good enough)
 - Deep system design (unless you're senior+)
 - Exotic data structures (segment trees, etc.)
