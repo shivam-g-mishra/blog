@@ -524,8 +524,8 @@ Each story should have:
 | Using "we" exclusively | Can't assess YOUR contribution | "The team delivered X. My role was Y." |
 | No metrics | Sounds like unverified claims | "Reduced by X%" / "Improved Y metric" |
 | Blaming others | Shows lack of ownership | Own the situation, not blame |
-| Too short (<1 min) | Insufficient depth | Expand with details and reflection |
-| Too long (>4 min) | Loses interviewer | Practice to hit 2-3 minute sweet spot |
+| Too short (under 1 min) | Insufficient depth | Expand with details and reflection |
+| Too long (over 4 min) | Loses interviewer | Practice to hit 2-3 minute sweet spot |
 
 ---
 
