@@ -6,9 +6,9 @@ Use this file to track your progress through the 8-week campaign.
 
 | Field | Value |
 |-------|-------|
-| **Current Post** | #2 |
+| **Current Post** | #4 |
 | **Current Week** | Week 1 |
-| **Next Post Due** | Wednesday 7:00 AM PT |
+| **Next Post Due** | Saturday 7:00 AM PT |
 | **Campaign Start Date** | _(fill in when you start)_ |
 
 ---
@@ -20,9 +20,9 @@ Use this file to track your progress through the 8-week campaign.
 | # | Day | Post | Status | Date Posted | Notes |
 |---|-----|------|--------|-------------|-------|
 | 1 | Tue | 3 AM Nightmare | ✅ Posted | | |
-| 2 | Wed | Everything is Green | 🟡 NEXT | | |
-| 3 | Thu | Carousel: Monitoring vs Observability | ⬜ Pending | | |
-| 4 | Sat | Poll: Debugging Frustration | ⬜ Pending | | |
+| 2 | Wed | Everything is Green | ✅ Posted | | |
+| 3 | Thu | Carousel: Monitoring vs Observability | ✅ Posted | | |
+| 4 | Sat | Poll: Debugging Frustration | 🟡 NEXT | | |
 
 ### Week 2: The Cost Hook
 
