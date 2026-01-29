@@ -1092,4 +1092,4 @@ Once you memorize the `find` and `union` methods, the same code works for almost
 
 You've completed all core data structures. Continue with algorithm patterns:
 
-**Next up:** [Backtracking Patterns](/docs/interview-guide/coding/patterns/backtracking) — Exploring All Possibilities
+**Next up:** [Backtracking Patterns](/docs/interview-guide/coding/patterns/backtracking-patterns/introduction) — Exploring All Possibilities

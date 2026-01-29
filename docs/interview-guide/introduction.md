@@ -70,7 +70,7 @@ Be honest about your current level:
 | If you... | You're probably... | Start with... |
 |-----------|-------------------|---------------|
 | Can't explain Big-O | Beginner | [Coding Fundamentals](./coding/fundamentals/big-o-notation) |
-| Know basics but struggle with medium LeetCode | Intermediate | [Coding Patterns](./coding/patterns) |
+| Know basics but struggle with medium LeetCode | Intermediate | [Coding Patterns](./patterns-overview) |
 | Solve mediums but fail system design | Ready for SD | [System Design Fundamentals](./system-design/fundamentals/introduction) |
 | Pass technicals but fail behavioral | Need soft skills | [Behavioral Interviews](./behavioral/introduction) |
 
@@ -214,7 +214,7 @@ Ready to begin?
 Start with [Big-O Notation](./coding/fundamentals/big-o-notation). Understanding complexity is foundational to everything else.
 
 **If you know the basics:**
-Jump to [Coding Patterns](./coding/patterns). This is where most interview success comes from.
+Jump to [Coding Patterns](./patterns-overview). This is where most interview success comes from.
 
 **If you're preparing for senior roles:**
 Begin with [System Design Fundamentals](./system-design/fundamentals/introduction). This is your differentiator.

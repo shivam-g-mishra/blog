@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+slug: 24-hours-before
 title: "24 Hours Before Your Interview — Complete Checklist"
 description: >-
   A comprehensive checklist for the 24 hours before your coding interview.
@@ -237,5 +238,4 @@ You can do all of those things. Go show them.
 ## What's Next?
 
 - **Before the interview:** [What If Scenarios — Interview Rescue Guide](/docs/interview-guide/preparation/what-if-scenarios) — What to do when things go wrong
-- **Technical refresher:** [Pattern Cheatsheet](/docs/interview-guide/coding/patterns) — Quick pattern recognition guide
-- **After the interview:** [Post-Interview Guide](/docs/interview-guide/preparation/post-interview) — Thank you notes, following up, and next steps
+- **Technical refresher:** [Pattern Overview](/docs/interview-guide/patterns-overview) — Quick pattern recognition guide

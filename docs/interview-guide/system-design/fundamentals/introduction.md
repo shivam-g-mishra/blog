@@ -249,7 +249,7 @@ Practice with real systems:
 - [Design URL Shortener](../case-studies/url-shortener)
 - [Design Twitter](../case-studies/twitter)
 - [Design Netflix](../case-studies/netflix)
-- [And many more...](../case-studies)
+- [And many more...](../case-studies/url-shortener)
 
 ---
 

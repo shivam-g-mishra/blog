@@ -270,4 +270,4 @@ Do the setup work today. Thank yourself tomorrow.
 
 - **Mental preparation:** [24 Hours Before Your Interview](/docs/interview-guide/preparation/24-hours-before) — What to do the day before
 - **Recovery strategies:** [What If Scenarios](/docs/interview-guide/preparation/what-if-scenarios) — When things go wrong
-- **Interview formats:** [Online IDE Interviews](/docs/interview-guide/formats/online-ide) — Platform-specific strategies
+- **Interview formats:** [What-If Scenarios](/docs/interview-guide/preparation/what-if-scenarios) — Handle unexpected situations

@@ -321,4 +321,4 @@ Be prepared for:
 
 Learn to estimate capacity accurately:
 
-👉 [Capacity Estimation →](./capacity-estimation)
+👉 [System Design Intro →](./introduction)

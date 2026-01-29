@@ -50,7 +50,7 @@ Let's figure out where you should start.
 
 | Interview Type | Primary Resources |
 |----------------|-------------------|
-| **Coding-heavy** (most tech) | [Coding Patterns](/docs/interview-guide/coding/patterns) |
+| **Coding-heavy** (most tech) | [Coding Patterns](/docs/interview-guide/patterns-overview) |
 | **System Design-heavy** (senior+) | [System Design](/docs/interview-guide/system-design/fundamentals/introduction) |
 | **Behavioral-heavy** (Amazon, leadership) | [Behavioral Guide](/docs/interview-guide/behavioral/introduction) |
 | **Full loop** (all of the above) | [30-Day Roadmap](/docs/interview-guide/roadmaps/one-month-standard) |

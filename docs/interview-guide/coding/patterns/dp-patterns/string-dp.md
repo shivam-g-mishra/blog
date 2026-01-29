@@ -1039,4 +1039,4 @@ Once you understand LCS and Edit Distance, most string DP problems are variation
 
 Backtracking for exploring all possibilities with pruning:
 
-**Next up:** [Backtracking Patterns](/docs/interview-guide/coding/patterns/backtracking) — Exploring All Solutions
+**Next up:** [Backtracking Patterns](/docs/interview-guide/coding/patterns/backtracking-patterns/introduction) — Exploring All Solutions

@@ -565,4 +565,4 @@ The stories exist. This guide helps you map them to Amazon's language.
 
 More company-specific preparation:
 
-**See also:** [Google Interview Guide](/docs/interview-guide/behavioral/google-interview) — Problem-Solving and Googleyness
+**See also:** [STAR Method Guide](/docs/interview-guide/behavioral/star-method) — Structure your behavioral answers

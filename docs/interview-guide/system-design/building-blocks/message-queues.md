@@ -407,4 +407,4 @@ def process_order(order_event):
 
 Databases for persistent storage:
 
-👉 [Database Fundamentals →](../databases/introduction)
+👉 [Database Fundamentals →](../databases/sql-vs-nosql)
