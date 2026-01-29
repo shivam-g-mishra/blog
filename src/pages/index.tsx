@@ -57,15 +57,15 @@ const FeatureList: FeatureItem[] = [
     link: '/docs/cicd/introduction',
   },
   {
-    title: 'Best Practices',
-    emoji: '💻',
+    title: 'Interview Prep Guide',
+    emoji: '🎯',
     description: (
       <>
-        Code review guidelines, testing strategies, documentation standards,
-        and software engineering best practices from production experience.
+        Complete interview preparation: data structures, algorithms, system design,
+        LLD, behavioral questions, and company-specific guides for FAANG+.
       </>
     ),
-    link: '/docs/best-practices',
+    link: '/docs/interview-guide/introduction',
   },
   {
     title: 'Observability & Monitoring',
