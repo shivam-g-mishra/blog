@@ -232,7 +232,7 @@ Retry-After: 30
 | Algorithm | Token Bucket | Allows bursts, simple |
 | Storage | Redis | Fast, distributed |
 | Atomicity | Lua scripts | Prevent race conditions |
-| Key format | {type}:{identifier} | Flexible |
+| Key format | `{type}:{identifier}` | Flexible |
 
 ---
 
