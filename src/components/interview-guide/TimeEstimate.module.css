@@ -1,0 +1,66 @@
+.container {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(147, 51, 234, 0.08));
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+}
+
+.icon {
+  font-size: 1.2rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+}
+
+.table tr {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.table tr:last-child {
+  border-bottom: none;
+}
+
+.label {
+  padding: 0.5rem 0;
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-700);
+  width: 40%;
+  vertical-align: top;
+}
+
+.value {
+  padding: 0.5rem 0;
+  color: var(--ifm-color-emphasis-800);
+}
+
+/* Dark mode */
+[data-theme='dark'] .container {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(147, 51, 234, 0.12));
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+[data-theme='dark'] .label {
+  color: var(--ifm-color-emphasis-600);
+}
+
+[data-theme='dark'] .value {
+  color: var(--ifm-color-emphasis-700);
+}
+
+[data-theme='dark'] .table tr {
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+}

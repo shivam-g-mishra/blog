@@ -2,98 +2,67 @@
 sidebar_position: 7
 title: "Graphs — BFS, DFS & Essential Algorithms"
 description: >-
-  Master graph data structures for coding interviews. Learn representations,
-  BFS, DFS, topological sort, and solve classic graph problems.
+  Master graph data structures for coding interviews. Learn BFS, DFS,
+  topological sort, and solve classic graph problems with code in 7 languages.
 keywords:
   - graph interview questions
   - BFS DFS
   - adjacency list
   - topological sort
   - shortest path
-difficulty: Intermediate
-estimated_time: 55 minutes
-prerequisites:
-  - Big-O Notation
-  - Stacks & Queues
-  - Trees
-companies: [Google, Meta, Amazon, Microsoft, Apple]
+  - number of islands
+
+og_title: "Graphs — BFS, DFS & Essential Algorithms"
+og_description: "If a problem involves connections between entities, think graph. Master BFS, DFS, and topological sort."
+og_image: "/img/social-card.svg"
+
+date_published: 2026-01-28
+date_modified: 2026-01-28
+author: shivam
+reading_time: 35
+content_type: explanation
 ---
+
+import { LanguageSelector, TimeEstimate, ConfidenceBuilder, DifficultyBadge } from '@site/src/components/interview-guide';
+import { CodeTabs } from '@site/src/components/design-patterns/CodeTabs';
+import TabItem from '@theme/TabItem';
 
 # Graphs: Where Relationships Get Complex
 
 Trees are graphs with rules: one parent, no cycles. Remove those rules, and you get graphs—the most flexible data structure for modeling relationships.
 
-Social networks. Maps. Course prerequisites. The internet itself. All graphs.
+Social networks. Road maps. Course prerequisites. The internet itself. All graphs.
+
+The first time I solved "Number of Islands," I spent 30 minutes trying to figure out why my solution was visiting cells multiple times. The breakthrough: **marking cells as visited as you add them to the queue, not when you process them.** That single insight eliminated the bug.
 
 **If a problem involves connections between entities, think graph.**
+
+<LanguageSelector />
+
+<TimeEstimate
+  learnTime="40-50 minutes"
+  practiceTime="4-5 hours"
+  masteryTime="15-20 problems"
+  interviewFrequency="60%"
+  difficultyRange="Medium to Hard"
+  prerequisites="Trees, Stacks & Queues"
+/>
 
 ---
 
 ## Graph Representations
 
-### 1. Adjacency List (Most Common)
+### Adjacency List (Use This for Interviews)
+
+<CodeTabs>
+<TabItem value="python" label="Python">
 
 ```python
-# Using dictionary
-graph = {
-    'A': ['B', 'C'],
-    'B': ['A', 'D', 'E'],
-    'C': ['A', 'F'],
-    'D': ['B'],
-    'E': ['B', 'F'],
-    'F': ['C', 'E']
-}
-
-# Using defaultdict for cleaner code
 from collections import defaultdict
-graph = defaultdict(list)
-graph['A'].append('B')
-graph['A'].append('C')
-```
 
-**Space:** O(V + E)
-**Best for:** Sparse graphs, most interview problems
-
-### 2. Adjacency Matrix
-
-```python
-#     A  B  C  D
-# A [[0, 1, 1, 0],
-# B  [1, 0, 0, 1],
-# C  [1, 0, 0, 1],
-# D  [0, 1, 1, 0]]
-
-# Check edge: O(1)
-has_edge = matrix[i][j] == 1
-```
-
-**Space:** O(V²)
-**Best for:** Dense graphs, quick edge lookup
-
-### 3. Edge List
-
-```python
-edges = [
-    ('A', 'B'),
-    ('A', 'C'),
-    ('B', 'D'),
-    ('C', 'D')
-]
-```
-
-**Space:** O(E)
-**Best for:** Simple problems, Kruskal's algorithm
-
----
-
-## Building Graphs from Input
-
-Most interview problems give edges, not a ready graph:
-
-```python
-# From edge list to adjacency list
-def build_graph(edges, directed=False):
-    graph = defaultdict(list)
+# Build graph from edges
+def build_graph(edges: list[list[int]], directed: bool = False) -> dict[int, list[int]]:
+    graph: dict[int, list[int]] = defaultdict(list)
     
     for u, v in edges:
         graph[u].append(v)
@@ -108,19 +77,192 @@ graph = build_graph(edges)
 # {0: [1, 2], 1: [0, 2], 2: [0, 1, 3], 3: [2]}
 ```
 
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
+
+```typescript
+function buildGraph(
+  edges: number[][],
+  directed: boolean = false
+): Map<number, number[]> {
+  const graph = new Map<number, number[]>();
+
+  for (const [u, v] of edges) {
+    if (!graph.has(u)) graph.set(u, []);
+    if (!graph.has(v)) graph.set(v, []);
+    
+    graph.get(u)!.push(v);
+    if (!directed) {
+      graph.get(v)!.push(u);
+    }
+  }
+
+  return graph;
+}
+```
+
+</TabItem>
+<TabItem value="go" label="Go">
+
+```go
+func buildGraph(edges [][]int, directed bool) map[int][]int {
+    graph := make(map[int][]int)
+    
+    for _, edge := range edges {
+        u, v := edge[0], edge[1]
+        graph[u] = append(graph[u], v)
+        if !directed {
+            graph[v] = append(graph[v], u)
+        }
+    }
+    
+    return graph
+}
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+public Map<Integer, List<Integer>> buildGraph(int[][] edges, boolean directed) {
+    Map<Integer, List<Integer>> graph = new HashMap<>();
+    
+    for (int[] edge : edges) {
+        int u = edge[0], v = edge[1];
+        graph.computeIfAbsent(u, k -> new ArrayList<>()).add(v);
+        if (!directed) {
+            graph.computeIfAbsent(v, k -> new ArrayList<>()).add(u);
+        }
+    }
+    
+    return graph;
+}
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+unordered_map<int, vector<int>> buildGraph(vector<vector<int>>& edges, bool directed = false) {
+    unordered_map<int, vector<int>> graph;
+    
+    for (auto& edge : edges) {
+        int u = edge[0], v = edge[1];
+        graph[u].push_back(v);
+        if (!directed) {
+            graph[v].push_back(u);
+        }
+    }
+    
+    return graph;
+}
+```
+
+</TabItem>
+<TabItem value="c" label="C">
+
+```c
+// Simple adjacency list with fixed size
+#define MAX_NODES 1000
+#define MAX_EDGES 10000
+
+typedef struct {
+    int adj[MAX_NODES][MAX_EDGES];
+    int adjSize[MAX_NODES];
+    int numNodes;
+} Graph;
+
+void initGraph(Graph* g, int n) {
+    g->numNodes = n;
+    for (int i = 0; i < n; i++) {
+        g->adjSize[i] = 0;
+    }
+}
+
+void addEdge(Graph* g, int u, int v, int directed) {
+    g->adj[u][g->adjSize[u]++] = v;
+    if (!directed) {
+        g->adj[v][g->adjSize[v]++] = u;
+    }
+}
+```
+
+</TabItem>
+<TabItem value="csharp" label="C#">
+
+```csharp
+public Dictionary<int, List<int>> BuildGraph(int[][] edges, bool directed = false) {
+    var graph = new Dictionary<int, List<int>>();
+    
+    foreach (var edge in edges) {
+        int u = edge[0], v = edge[1];
+        
+        if (!graph.ContainsKey(u)) graph[u] = new List<int>();
+        if (!graph.ContainsKey(v)) graph[v] = new List<int>();
+        
+        graph[u].Add(v);
+        if (!directed) {
+            graph[v].Add(u);
+        }
+    }
+    
+    return graph;
+}
+```
+
+</TabItem>
+</CodeTabs>
+
+**Complexity:** O(V + E) space — best for sparse graphs and most interview problems.
+
+---
+
+## BFS vs DFS Decision Guide
+
+```mermaid
+flowchart TD
+    A[Graph Problem] --> B{What do you need?}
+    
+    B --> C["Shortest path<br/>(unweighted)"]
+    B --> D["Explore all paths"]
+    B --> E["Level-by-level"]
+    B --> F["Detect cycles"]
+    B --> G["Topological order"]
+    
+    C --> H["Use BFS"]
+    D --> I["Use DFS"]
+    E --> H
+    F --> I
+    G --> I2["Use DFS or BFS<br/>(Kahn's)"]
+```
+
+| Use BFS | Use DFS |
+|---------|---------|
+| Shortest path (unweighted) | Explore all paths |
+| Level-by-level processing | Detect cycles |
+| Nearest neighbor | Topological sort |
+| Minimum steps/moves | Connected components |
+
 ---
 
 ## BFS: Breadth-First Search
 
-**Use when:** Shortest path (unweighted), level-by-level processing
+**Use when:** Shortest path in unweighted graph, level-by-level processing.
+
+<CodeTabs>
+<TabItem value="python" label="Python">
 
 ```python
 from collections import deque
 
-def bfs(graph, start):
-    visited = {start}
-    queue = deque([start])
-    order = []
+def bfs(graph: dict[int, list[int]], start: int) -> list[int]:
+    """
+    BFS traversal from start node.
+    Time: O(V + E), Space: O(V)
+    """
+    visited: set[int] = {start}
+    queue: deque[int] = deque([start])
+    order: list[int] = []
     
     while queue:
         node = queue.popleft()
@@ -128,21 +270,22 @@ def bfs(graph, start):
         
         for neighbor in graph[node]:
             if neighbor not in visited:
-                visited.add(neighbor)
+                visited.add(neighbor)  # Mark visited WHEN ADDING
                 queue.append(neighbor)
     
     return order
-```
 
-### BFS for Shortest Path
 
-```python
-def shortest_path(graph, start, end):
+def shortest_path(graph: dict[int, list[int]], start: int, end: int) -> int:
+    """
+    Find shortest path length in unweighted graph.
+    Returns -1 if no path exists.
+    """
     if start == end:
         return 0
     
-    visited = {start}
-    queue = deque([(start, 0)])  # (node, distance)
+    visited: set[int] = {start}
+    queue: deque[tuple[int, int]] = deque([(start, 0)])  # (node, distance)
     
     while queue:
         node, dist = queue.popleft()
@@ -158,74 +301,339 @@ def shortest_path(graph, start, end):
     return -1  # No path
 ```
 
-### Multi-Source BFS
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
 
-Start from multiple sources simultaneously:
+```typescript
+function bfs(graph: Map<number, number[]>, start: number): number[] {
+  const visited = new Set<number>([start]);
+  const queue: number[] = [start];
+  const order: number[] = [];
 
-```python
-# Rotting Oranges - spread from all rotten oranges at once
-def oranges_rotting(grid):
-    rows, cols = len(grid), len(grid[0])
-    queue = deque()
-    fresh = 0
-    
-    # Find all rotten and count fresh
-    for r in range(rows):
-        for c in range(cols):
-            if grid[r][c] == 2:
-                queue.append((r, c))
-            elif grid[r][c] == 1:
-                fresh += 1
-    
-    if fresh == 0:
-        return 0
-    
-    minutes = 0
-    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-    
-    while queue:
-        minutes += 1
-        for _ in range(len(queue)):
-            r, c = queue.popleft()
-            
-            for dr, dc in directions:
-                nr, nc = r + dr, c + dc
-                
-                if (0 <= nr < rows and 0 <= nc < cols and 
-                    grid[nr][nc] == 1):
-                    grid[nr][nc] = 2
-                    fresh -= 1
-                    queue.append((nr, nc))
-    
-    return minutes - 1 if fresh == 0 else -1
+  while (queue.length > 0) {
+    const node = queue.shift()!;
+    order.push(node);
+
+    for (const neighbor of graph.get(node) || []) {
+      if (!visited.has(neighbor)) {
+        visited.add(neighbor);
+        queue.push(neighbor);
+      }
+    }
+  }
+
+  return order;
+}
+
+function shortestPath(
+  graph: Map<number, number[]>,
+  start: number,
+  end: number
+): number {
+  if (start === end) return 0;
+
+  const visited = new Set<number>([start]);
+  const queue: [number, number][] = [[start, 0]];
+
+  while (queue.length > 0) {
+    const [node, dist] = queue.shift()!;
+
+    for (const neighbor of graph.get(node) || []) {
+      if (neighbor === end) return dist + 1;
+
+      if (!visited.has(neighbor)) {
+        visited.add(neighbor);
+        queue.push([neighbor, dist + 1]);
+      }
+    }
+  }
+
+  return -1;
+}
 ```
+
+</TabItem>
+<TabItem value="go" label="Go">
+
+```go
+func bfs(graph map[int][]int, start int) []int {
+    visited := map[int]bool{start: true}
+    queue := []int{start}
+    order := []int{}
+    
+    for len(queue) > 0 {
+        node := queue[0]
+        queue = queue[1:]
+        order = append(order, node)
+        
+        for _, neighbor := range graph[node] {
+            if !visited[neighbor] {
+                visited[neighbor] = true
+                queue = append(queue, neighbor)
+            }
+        }
+    }
+    
+    return order
+}
+
+func shortestPath(graph map[int][]int, start, end int) int {
+    if start == end {
+        return 0
+    }
+    
+    visited := map[int]bool{start: true}
+    queue := [][]int{{start, 0}} // [node, distance]
+    
+    for len(queue) > 0 {
+        node, dist := queue[0][0], queue[0][1]
+        queue = queue[1:]
+        
+        for _, neighbor := range graph[node] {
+            if neighbor == end {
+                return dist + 1
+            }
+            
+            if !visited[neighbor] {
+                visited[neighbor] = true
+                queue = append(queue, []int{neighbor, dist + 1})
+            }
+        }
+    }
+    
+    return -1
+}
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+public List<Integer> bfs(Map<Integer, List<Integer>> graph, int start) {
+    Set<Integer> visited = new HashSet<>();
+    visited.add(start);
+    Queue<Integer> queue = new LinkedList<>();
+    queue.offer(start);
+    List<Integer> order = new ArrayList<>();
+    
+    while (!queue.isEmpty()) {
+        int node = queue.poll();
+        order.add(node);
+        
+        for (int neighbor : graph.getOrDefault(node, Collections.emptyList())) {
+            if (!visited.contains(neighbor)) {
+                visited.add(neighbor);
+                queue.offer(neighbor);
+            }
+        }
+    }
+    
+    return order;
+}
+
+public int shortestPath(Map<Integer, List<Integer>> graph, int start, int end) {
+    if (start == end) return 0;
+    
+    Set<Integer> visited = new HashSet<>();
+    visited.add(start);
+    Queue<int[]> queue = new LinkedList<>();
+    queue.offer(new int[] {start, 0});
+    
+    while (!queue.isEmpty()) {
+        int[] curr = queue.poll();
+        int node = curr[0], dist = curr[1];
+        
+        for (int neighbor : graph.getOrDefault(node, Collections.emptyList())) {
+            if (neighbor == end) return dist + 1;
+            
+            if (!visited.contains(neighbor)) {
+                visited.add(neighbor);
+                queue.offer(new int[] {neighbor, dist + 1});
+            }
+        }
+    }
+    
+    return -1;
+}
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+vector<int> bfs(unordered_map<int, vector<int>>& graph, int start) {
+    unordered_set<int> visited;
+    visited.insert(start);
+    queue<int> q;
+    q.push(start);
+    vector<int> order;
+    
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+        order.push_back(node);
+        
+        for (int neighbor : graph[node]) {
+            if (visited.find(neighbor) == visited.end()) {
+                visited.insert(neighbor);
+                q.push(neighbor);
+            }
+        }
+    }
+    
+    return order;
+}
+
+int shortestPath(unordered_map<int, vector<int>>& graph, int start, int end) {
+    if (start == end) return 0;
+    
+    unordered_set<int> visited;
+    visited.insert(start);
+    queue<pair<int, int>> q;
+    q.push({start, 0});
+    
+    while (!q.empty()) {
+        auto [node, dist] = q.front();
+        q.pop();
+        
+        for (int neighbor : graph[node]) {
+            if (neighbor == end) return dist + 1;
+            
+            if (visited.find(neighbor) == visited.end()) {
+                visited.insert(neighbor);
+                q.push({neighbor, dist + 1});
+            }
+        }
+    }
+    
+    return -1;
+}
+```
+
+</TabItem>
+<TabItem value="c" label="C">
+
+```c
+// BFS using Graph struct defined above
+void bfs(Graph* g, int start, int* order, int* orderSize) {
+    bool visited[MAX_NODES] = {false};
+    int queue[MAX_NODES];
+    int front = 0, rear = 0;
+    
+    visited[start] = true;
+    queue[rear++] = start;
+    *orderSize = 0;
+    
+    while (front < rear) {
+        int node = queue[front++];
+        order[(*orderSize)++] = node;
+        
+        for (int i = 0; i < g->adjSize[node]; i++) {
+            int neighbor = g->adj[node][i];
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                queue[rear++] = neighbor;
+            }
+        }
+    }
+}
+```
+
+</TabItem>
+<TabItem value="csharp" label="C#">
+
+```csharp
+public List<int> Bfs(Dictionary<int, List<int>> graph, int start) {
+    var visited = new HashSet<int> { start };
+    var queue = new Queue<int>();
+    queue.Enqueue(start);
+    var order = new List<int>();
+    
+    while (queue.Count > 0) {
+        int node = queue.Dequeue();
+        order.Add(node);
+        
+        if (graph.ContainsKey(node)) {
+            foreach (int neighbor in graph[node]) {
+                if (!visited.Contains(neighbor)) {
+                    visited.Add(neighbor);
+                    queue.Enqueue(neighbor);
+                }
+            }
+        }
+    }
+    
+    return order;
+}
+
+public int ShortestPath(Dictionary<int, List<int>> graph, int start, int end) {
+    if (start == end) return 0;
+    
+    var visited = new HashSet<int> { start };
+    var queue = new Queue<(int node, int dist)>();
+    queue.Enqueue((start, 0));
+    
+    while (queue.Count > 0) {
+        var (node, dist) = queue.Dequeue();
+        
+        if (graph.ContainsKey(node)) {
+            foreach (int neighbor in graph[node]) {
+                if (neighbor == end) return dist + 1;
+                
+                if (!visited.Contains(neighbor)) {
+                    visited.Add(neighbor);
+                    queue.Enqueue((neighbor, dist + 1));
+                }
+            }
+        }
+    }
+    
+    return -1;
+}
+```
+
+</TabItem>
+</CodeTabs>
+
+<ConfidenceBuilder type="remember" title="Critical BFS Insight">
+
+**Mark nodes as visited when you ADD them to the queue, not when you PROCESS them.**
+
+If you mark when processing, multiple nodes can add the same neighbor to the queue before any of them processes it. This causes duplicate work and can lead to incorrect shortest path results.
+
+</ConfidenceBuilder>
 
 ---
 
 ## DFS: Depth-First Search
 
-**Use when:** Exploring all paths, detecting cycles, topological sort
+**Use when:** Exploring all paths, detecting cycles, topological sort.
+
+<CodeTabs>
+<TabItem value="python" label="Python">
 
 ```python
-# Recursive DFS
-def dfs_recursive(graph, node, visited=None):
+def dfs_recursive(graph: dict[int, list[int]], start: int, 
+                  visited: set[int] | None = None) -> list[int]:
+    """Recursive DFS traversal."""
     if visited is None:
         visited = set()
     
-    visited.add(node)
-    result = [node]
+    visited.add(start)
+    result = [start]
     
-    for neighbor in graph[node]:
+    for neighbor in graph.get(start, []):
         if neighbor not in visited:
             result.extend(dfs_recursive(graph, neighbor, visited))
     
     return result
 
-# Iterative DFS
-def dfs_iterative(graph, start):
-    visited = set()
-    stack = [start]
-    order = []
+
+def dfs_iterative(graph: dict[int, list[int]], start: int) -> list[int]:
+    """Iterative DFS using stack."""
+    visited: set[int] = set()
+    stack: list[int] = [start]
+    order: list[int] = []
     
     while stack:
         node = stack.pop()
@@ -234,135 +642,298 @@ def dfs_iterative(graph, start):
             visited.add(node)
             order.append(node)
             
-            for neighbor in graph[node]:
+            # Add neighbors in reverse order for consistent traversal
+            for neighbor in reversed(graph.get(node, [])):
                 if neighbor not in visited:
                     stack.append(neighbor)
     
     return order
 ```
 
-### DFS for Cycle Detection
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
 
-```python
-# Directed graph - need to track current path
-def has_cycle_directed(graph, n):
-    WHITE, GRAY, BLACK = 0, 1, 2
-    color = [WHITE] * n
-    
-    def dfs(node):
-        color[node] = GRAY  # Currently visiting
-        
-        for neighbor in graph[node]:
-            if color[neighbor] == GRAY:  # Back edge = cycle
-                return True
-            if color[neighbor] == WHITE and dfs(neighbor):
-                return True
-        
-        color[node] = BLACK  # Done visiting
-        return False
-    
-    for node in range(n):
-        if color[node] == WHITE and dfs(node):
-            return True
-    
-    return False
+```typescript
+function dfsRecursive(
+  graph: Map<number, number[]>,
+  start: number,
+  visited: Set<number> = new Set()
+): number[] {
+  visited.add(start);
+  const result = [start];
 
-# Undirected graph - simpler
-def has_cycle_undirected(graph, n):
-    visited = set()
-    
-    def dfs(node, parent):
-        visited.add(node)
-        
-        for neighbor in graph[node]:
-            if neighbor not in visited:
-                if dfs(neighbor, node):
-                    return True
-            elif neighbor != parent:  # Back to non-parent = cycle
-                return True
-        
-        return False
-    
-    for node in range(n):
-        if node not in visited and dfs(node, -1):
-            return True
-    
-    return False
+  for (const neighbor of graph.get(start) || []) {
+    if (!visited.has(neighbor)) {
+      result.push(...dfsRecursive(graph, neighbor, visited));
+    }
+  }
+
+  return result;
+}
+
+function dfsIterative(graph: Map<number, number[]>, start: number): number[] {
+  const visited = new Set<number>();
+  const stack = [start];
+  const order: number[] = [];
+
+  while (stack.length > 0) {
+    const node = stack.pop()!;
+
+    if (!visited.has(node)) {
+      visited.add(node);
+      order.push(node);
+
+      for (const neighbor of (graph.get(node) || []).reverse()) {
+        if (!visited.has(neighbor)) {
+          stack.push(neighbor);
+        }
+      }
+    }
+  }
+
+  return order;
+}
 ```
+
+</TabItem>
+<TabItem value="go" label="Go">
+
+```go
+func dfsRecursive(graph map[int][]int, start int, visited map[int]bool) []int {
+    if visited == nil {
+        visited = make(map[int]bool)
+    }
+    
+    visited[start] = true
+    result := []int{start}
+    
+    for _, neighbor := range graph[start] {
+        if !visited[neighbor] {
+            result = append(result, dfsRecursive(graph, neighbor, visited)...)
+        }
+    }
+    
+    return result
+}
+
+func dfsIterative(graph map[int][]int, start int) []int {
+    visited := make(map[int]bool)
+    stack := []int{start}
+    order := []int{}
+    
+    for len(stack) > 0 {
+        node := stack[len(stack)-1]
+        stack = stack[:len(stack)-1]
+        
+        if !visited[node] {
+            visited[node] = true
+            order = append(order, node)
+            
+            neighbors := graph[node]
+            for i := len(neighbors) - 1; i >= 0; i-- {
+                if !visited[neighbors[i]] {
+                    stack = append(stack, neighbors[i])
+                }
+            }
+        }
+    }
+    
+    return order
+}
+```
+
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+public List<Integer> dfsRecursive(Map<Integer, List<Integer>> graph, 
+                                   int start, Set<Integer> visited) {
+    if (visited == null) visited = new HashSet<>();
+    
+    visited.add(start);
+    List<Integer> result = new ArrayList<>();
+    result.add(start);
+    
+    for (int neighbor : graph.getOrDefault(start, Collections.emptyList())) {
+        if (!visited.contains(neighbor)) {
+            result.addAll(dfsRecursive(graph, neighbor, visited));
+        }
+    }
+    
+    return result;
+}
+
+public List<Integer> dfsIterative(Map<Integer, List<Integer>> graph, int start) {
+    Set<Integer> visited = new HashSet<>();
+    Deque<Integer> stack = new ArrayDeque<>();
+    stack.push(start);
+    List<Integer> order = new ArrayList<>();
+    
+    while (!stack.isEmpty()) {
+        int node = stack.pop();
+        
+        if (!visited.contains(node)) {
+            visited.add(node);
+            order.add(node);
+            
+            List<Integer> neighbors = graph.getOrDefault(node, Collections.emptyList());
+            for (int i = neighbors.size() - 1; i >= 0; i--) {
+                if (!visited.contains(neighbors.get(i))) {
+                    stack.push(neighbors.get(i));
+                }
+            }
+        }
+    }
+    
+    return order;
+}
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+void dfsRecursive(unordered_map<int, vector<int>>& graph, int start, 
+                  unordered_set<int>& visited, vector<int>& result) {
+    visited.insert(start);
+    result.push_back(start);
+    
+    for (int neighbor : graph[start]) {
+        if (visited.find(neighbor) == visited.end()) {
+            dfsRecursive(graph, neighbor, visited, result);
+        }
+    }
+}
+
+vector<int> dfsIterative(unordered_map<int, vector<int>>& graph, int start) {
+    unordered_set<int> visited;
+    stack<int> stk;
+    stk.push(start);
+    vector<int> order;
+    
+    while (!stk.empty()) {
+        int node = stk.top();
+        stk.pop();
+        
+        if (visited.find(node) == visited.end()) {
+            visited.insert(node);
+            order.push_back(node);
+            
+            auto& neighbors = graph[node];
+            for (auto it = neighbors.rbegin(); it != neighbors.rend(); ++it) {
+                if (visited.find(*it) == visited.end()) {
+                    stk.push(*it);
+                }
+            }
+        }
+    }
+    
+    return order;
+}
+```
+
+</TabItem>
+<TabItem value="c" label="C">
+
+```c
+void dfsRecursive(Graph* g, int node, bool* visited, int* order, int* orderSize) {
+    visited[node] = true;
+    order[(*orderSize)++] = node;
+    
+    for (int i = 0; i < g->adjSize[node]; i++) {
+        int neighbor = g->adj[node][i];
+        if (!visited[neighbor]) {
+            dfsRecursive(g, neighbor, visited, order, orderSize);
+        }
+    }
+}
+
+void dfs(Graph* g, int start, int* order, int* orderSize) {
+    bool visited[MAX_NODES] = {false};
+    *orderSize = 0;
+    dfsRecursive(g, start, visited, order, orderSize);
+}
+```
+
+</TabItem>
+<TabItem value="csharp" label="C#">
+
+```csharp
+public List<int> DfsRecursive(Dictionary<int, List<int>> graph, 
+                               int start, HashSet<int>? visited = null) {
+    visited ??= new HashSet<int>();
+    visited.Add(start);
+    var result = new List<int> { start };
+    
+    if (graph.ContainsKey(start)) {
+        foreach (int neighbor in graph[start]) {
+            if (!visited.Contains(neighbor)) {
+                result.AddRange(DfsRecursive(graph, neighbor, visited));
+            }
+        }
+    }
+    
+    return result;
+}
+
+public List<int> DfsIterative(Dictionary<int, List<int>> graph, int start) {
+    var visited = new HashSet<int>();
+    var stack = new Stack<int>();
+    stack.Push(start);
+    var order = new List<int>();
+    
+    while (stack.Count > 0) {
+        int node = stack.Pop();
+        
+        if (!visited.Contains(node)) {
+            visited.Add(node);
+            order.Add(node);
+            
+            if (graph.ContainsKey(node)) {
+                var neighbors = graph[node];
+                for (int i = neighbors.Count - 1; i >= 0; i--) {
+                    if (!visited.Contains(neighbors[i])) {
+                        stack.Push(neighbors[i]);
+                    }
+                }
+            }
+        }
+    }
+    
+    return order;
+}
+```
+
+</TabItem>
+</CodeTabs>
 
 ---
 
-## Topological Sort
+## Classic Problem: Number of Islands
 
-**Use when:** Order tasks with dependencies (DAG only)
-
-```python
-# Using DFS
-def topological_sort(graph, n):
-    visited = set()
-    result = []
-    
-    def dfs(node):
-        visited.add(node)
-        
-        for neighbor in graph[node]:
-            if neighbor not in visited:
-                dfs(neighbor)
-        
-        result.append(node)  # Add after all descendants
-    
-    for node in range(n):
-        if node not in visited:
-            dfs(node)
-    
-    return result[::-1]  # Reverse for correct order
-
-# Using BFS (Kahn's algorithm)
-def topological_sort_bfs(graph, n):
-    indegree = [0] * n
-    
-    # Calculate indegrees
-    for node in range(n):
-        for neighbor in graph[node]:
-            indegree[neighbor] += 1
-    
-    # Start with nodes having no dependencies
-    queue = deque([i for i in range(n) if indegree[i] == 0])
-    result = []
-    
-    while queue:
-        node = queue.popleft()
-        result.append(node)
-        
-        for neighbor in graph[node]:
-            indegree[neighbor] -= 1
-            if indegree[neighbor] == 0:
-                queue.append(neighbor)
-    
-    return result if len(result) == n else []  # Empty if cycle
-```
-
----
-
-## Classic Interview Problems
-
-### Problem 1: Number of Islands
+<CodeTabs>
+<TabItem value="python" label="Python">
 
 ```python
-def num_islands(grid):
+def num_islands(grid: list[list[str]]) -> int:
+    """
+    Count number of islands in a grid.
+    Time: O(rows × cols), Space: O(rows × cols) for recursion stack
+    """
     if not grid:
         return 0
     
     rows, cols = len(grid), len(grid[0])
     count = 0
     
-    def dfs(r, c):
-        if (r < 0 or r >= rows or c < 0 or c >= cols or 
-            grid[r][c] == '0'):
+    def dfs(r: int, c: int) -> None:
+        # Boundary and water check
+        if r < 0 or r >= rows or c < 0 or c >= cols or grid[r][c] == '0':
             return
         
-        grid[r][c] = '0'  # Mark visited
+        grid[r][c] = '0'  # Mark visited by sinking
         
+        # Explore all 4 directions
         dfs(r + 1, c)
         dfs(r - 1, c)
         dfs(r, c + 1)
@@ -372,127 +943,295 @@ def num_islands(grid):
         for c in range(cols):
             if grid[r][c] == '1':
                 count += 1
-                dfs(r, c)
+                dfs(r, c)  # Sink the entire island
     
     return count
 ```
 
-### Problem 2: Clone Graph
+</TabItem>
+<TabItem value="typescript" label="TypeScript">
 
-```python
-def clone_graph(node):
-    if not node:
-        return None
-    
-    cloned = {}
-    
-    def dfs(n):
-        if n in cloned:
-            return cloned[n]
-        
-        copy = Node(n.val)
-        cloned[n] = copy
-        
-        for neighbor in n.neighbors:
-            copy.neighbors.append(dfs(neighbor))
-        
-        return copy
-    
-    return dfs(node)
+```typescript
+function numIslands(grid: string[][]): number {
+  if (!grid || grid.length === 0) return 0;
+
+  const rows = grid.length;
+  const cols = grid[0].length;
+  let count = 0;
+
+  function dfs(r: number, c: number): void {
+    if (r < 0 || r >= rows || c < 0 || c >= cols || grid[r][c] === '0') {
+      return;
+    }
+
+    grid[r][c] = '0'; // Mark visited
+
+    dfs(r + 1, c);
+    dfs(r - 1, c);
+    dfs(r, c + 1);
+    dfs(r, c - 1);
+  }
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (grid[r][c] === '1') {
+        count++;
+        dfs(r, c);
+      }
+    }
+  }
+
+  return count;
+}
 ```
 
-### Problem 3: Course Schedule
+</TabItem>
+<TabItem value="go" label="Go">
 
-```python
-def can_finish(num_courses, prerequisites):
-    graph = defaultdict(list)
-    indegree = [0] * num_courses
-    
-    for course, prereq in prerequisites:
-        graph[prereq].append(course)
-        indegree[course] += 1
-    
-    queue = deque([i for i in range(num_courses) if indegree[i] == 0])
-    completed = 0
-    
-    while queue:
-        course = queue.popleft()
-        completed += 1
-        
-        for next_course in graph[course]:
-            indegree[next_course] -= 1
-            if indegree[next_course] == 0:
-                queue.append(next_course)
-    
-    return completed == num_courses
-```
-
-### Problem 4: Word Ladder
-
-```python
-def ladder_length(begin_word, end_word, word_list):
-    word_set = set(word_list)
-    if end_word not in word_set:
+```go
+func numIslands(grid [][]byte) int {
+    if len(grid) == 0 {
         return 0
+    }
     
-    queue = deque([(begin_word, 1)])
+    rows, cols := len(grid), len(grid[0])
+    count := 0
     
-    while queue:
-        word, length = queue.popleft()
+    var dfs func(r, c int)
+    dfs = func(r, c int) {
+        if r < 0 || r >= rows || c < 0 || c >= cols || grid[r][c] == '0' {
+            return
+        }
         
-        if word == end_word:
-            return length
+        grid[r][c] = '0'
         
-        for i in range(len(word)):
-            for c in 'abcdefghijklmnopqrstuvwxyz':
-                new_word = word[:i] + c + word[i+1:]
-                
-                if new_word in word_set:
-                    word_set.remove(new_word)
-                    queue.append((new_word, length + 1))
+        dfs(r+1, c)
+        dfs(r-1, c)
+        dfs(r, c+1)
+        dfs(r, c-1)
+    }
     
-    return 0
+    for r := 0; r < rows; r++ {
+        for c := 0; c < cols; c++ {
+            if grid[r][c] == '1' {
+                count++
+                dfs(r, c)
+            }
+        }
+    }
+    
+    return count
+}
 ```
 
+</TabItem>
+<TabItem value="java" label="Java">
+
+```java
+public int numIslands(char[][] grid) {
+    if (grid == null || grid.length == 0) return 0;
+    
+    int rows = grid.length;
+    int cols = grid[0].length;
+    int count = 0;
+    
+    for (int r = 0; r < rows; r++) {
+        for (int c = 0; c < cols; c++) {
+            if (grid[r][c] == '1') {
+                count++;
+                dfs(grid, r, c);
+            }
+        }
+    }
+    
+    return count;
+}
+
+private void dfs(char[][] grid, int r, int c) {
+    if (r < 0 || r >= grid.length || c < 0 || c >= grid[0].length || 
+        grid[r][c] == '0') {
+        return;
+    }
+    
+    grid[r][c] = '0';
+    
+    dfs(grid, r + 1, c);
+    dfs(grid, r - 1, c);
+    dfs(grid, r, c + 1);
+    dfs(grid, r, c - 1);
+}
+```
+
+</TabItem>
+<TabItem value="cpp" label="C++">
+
+```cpp
+int numIslands(vector<vector<char>>& grid) {
+    if (grid.empty()) return 0;
+    
+    int rows = grid.size();
+    int cols = grid[0].size();
+    int count = 0;
+    
+    function<void(int, int)> dfs = [&](int r, int c) {
+        if (r < 0 || r >= rows || c < 0 || c >= cols || grid[r][c] == '0') {
+            return;
+        }
+        
+        grid[r][c] = '0';
+        
+        dfs(r + 1, c);
+        dfs(r - 1, c);
+        dfs(r, c + 1);
+        dfs(r, c - 1);
+    };
+    
+    for (int r = 0; r < rows; r++) {
+        for (int c = 0; c < cols; c++) {
+            if (grid[r][c] == '1') {
+                count++;
+                dfs(r, c);
+            }
+        }
+    }
+    
+    return count;
+}
+```
+
+</TabItem>
+<TabItem value="c" label="C">
+
+```c
+void dfsIsland(char** grid, int rows, int cols, int r, int c) {
+    if (r < 0 || r >= rows || c < 0 || c >= cols || grid[r][c] == '0') {
+        return;
+    }
+    
+    grid[r][c] = '0';
+    
+    dfsIsland(grid, rows, cols, r + 1, c);
+    dfsIsland(grid, rows, cols, r - 1, c);
+    dfsIsland(grid, rows, cols, r, c + 1);
+    dfsIsland(grid, rows, cols, r, c - 1);
+}
+
+int numIslands(char** grid, int gridSize, int* gridColSize) {
+    if (gridSize == 0) return 0;
+    
+    int rows = gridSize;
+    int cols = gridColSize[0];
+    int count = 0;
+    
+    for (int r = 0; r < rows; r++) {
+        for (int c = 0; c < cols; c++) {
+            if (grid[r][c] == '1') {
+                count++;
+                dfsIsland(grid, rows, cols, r, c);
+            }
+        }
+    }
+    
+    return count;
+}
+```
+
+</TabItem>
+<TabItem value="csharp" label="C#">
+
+```csharp
+public int NumIslands(char[][] grid) {
+    if (grid == null || grid.Length == 0) return 0;
+    
+    int rows = grid.Length;
+    int cols = grid[0].Length;
+    int count = 0;
+    
+    void Dfs(int r, int c) {
+        if (r < 0 || r >= rows || c < 0 || c >= cols || grid[r][c] == '0') {
+            return;
+        }
+        
+        grid[r][c] = '0';
+        
+        Dfs(r + 1, c);
+        Dfs(r - 1, c);
+        Dfs(r, c + 1);
+        Dfs(r, c - 1);
+    }
+    
+    for (int r = 0; r < rows; r++) {
+        for (int c = 0; c < cols; c++) {
+            if (grid[r][c] == '1') {
+                count++;
+                Dfs(r, c);
+            }
+        }
+    }
+    
+    return count;
+}
+```
+
+</TabItem>
+</CodeTabs>
+
 ---
 
-## When to Use BFS vs DFS
+## 🎯 Pattern Triggers
 
-| Use BFS | Use DFS |
-|---------|---------|
-| Shortest path (unweighted) | Explore all paths |
-| Level-by-level processing | Detect cycles |
-| Nearest neighbor | Topological sort |
-| Minimum steps/moves | Connected components |
+| If the problem mentions... | Pattern |
+|---------------------------|---------|
+| "Shortest path" (unweighted) | **BFS** |
+| "Minimum steps/moves" | **BFS** |
+| "Level-by-level" | **BFS** |
+| "Connected components" | **DFS** or **BFS** |
+| "Detect cycle" | **DFS** |
+| "Topological order" | **DFS** or **Kahn's BFS** |
+| "All paths" | **DFS** with backtracking |
+| "Grid traversal" | **DFS** (usually simpler) |
 
 ---
 
-## Practice Problems
+## 💬 How to Communicate This in Interviews
 
-### Easy
+**When you identify a graph problem:**
+> "This is a graph problem. The entities are [X] and the connections are [Y]. I'll represent this as an adjacency list..."
 
-| Problem | Pattern | Company |
-|---------|---------|---------|
-| Flood Fill | DFS/BFS | Google |
-| Find if Path Exists | BFS/DFS | Meta |
+**Choosing BFS vs DFS:**
+> "Since I need the shortest path in an unweighted graph, I'll use BFS. BFS explores level by level, so the first time I reach the target is guaranteed to be the shortest path."
 
-### Medium
+**For grid problems:**
+> "I'll treat this grid as a graph where each cell connects to its 4 neighbors. I'll use DFS to explore each island completely before counting it."
 
-| Problem | Pattern | Company |
-|---------|---------|---------|
-| Number of Islands | DFS | Amazon, Google |
-| Clone Graph | DFS | Meta |
-| Course Schedule | Topological | Amazon |
-| Pacific Atlantic Water | DFS | Google |
-| Rotting Oranges | Multi-BFS | Amazon |
+---
 
-### Hard
+## 🏋️ Practice Problems
 
-| Problem | Pattern | Company |
-|---------|---------|---------|
-| Word Ladder | BFS | Amazon |
-| Alien Dictionary | Topological | Meta |
-| Shortest Path in Binary Matrix | BFS | Google |
+### Warm-Up (Build Confidence)
+
+| Problem | Difficulty | Time | Pattern |
+|---------|------------|------|---------|
+| [Flood Fill](https://leetcode.com/problems/flood-fill/) | <DifficultyBadge level="easy" /> | 15 min | DFS on grid |
+| [Find if Path Exists](https://leetcode.com/problems/find-if-path-exists-in-graph/) | <DifficultyBadge level="easy" /> | 15 min | BFS or DFS |
+
+### Core Practice (Must Do)
+
+| Problem | Difficulty | Companies | Pattern |
+|---------|------------|-----------|---------|
+| [Number of Islands](https://leetcode.com/problems/number-of-islands/) | <DifficultyBadge level="medium" /> | Amazon, Google, Meta | DFS on grid |
+| [Clone Graph](https://leetcode.com/problems/clone-graph/) | <DifficultyBadge level="medium" /> | Meta, Amazon, Google | DFS with hash map |
+| [Course Schedule](https://leetcode.com/problems/course-schedule/) | <DifficultyBadge level="medium" /> | Amazon, Meta, Google | Topological sort |
+| [Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | <DifficultyBadge level="medium" /> | Amazon, Microsoft | Multi-source BFS |
+| [Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | <DifficultyBadge level="medium" /> | Google, Amazon | DFS from boundaries |
+
+### Challenge (For Mastery)
+
+| Problem | Difficulty | Companies | Why It's Hard |
+|---------|------------|-----------|---------------|
+| [Word Ladder](https://leetcode.com/problems/word-ladder/) | <DifficultyBadge level="hard" /> | Amazon, Meta, Google | BFS + word generation |
+| [Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) | <DifficultyBadge level="hard" /> | Meta, Amazon, Airbnb | Build graph + topo sort |
+| [Shortest Path in Binary Matrix](https://leetcode.com/problems/shortest-path-in-binary-matrix/) | <DifficultyBadge level="medium" /> | Google, Amazon, Meta | BFS with 8 directions |
 
 ---
 
@@ -500,18 +1239,26 @@ def ladder_length(begin_word, end_word, word_list):
 
 1. **Adjacency list for interviews.** O(V + E) space, handles sparse graphs well.
 
-2. **BFS for shortest path** in unweighted graphs. Use queue.
+2. **BFS for shortest path** in unweighted graphs. Mark visited when adding to queue.
 
-3. **DFS for exploration** and backtracking. Use stack or recursion.
+3. **DFS for exploration** and cycle detection. Use recursion or explicit stack.
 
-4. **Topological sort for dependencies.** Only works on DAGs.
+4. **Grid = graph.** Each cell connects to its neighbors.
 
-5. **Grid problems are graphs.** Each cell connects to neighbors.
+5. **Topological sort for dependencies.** Only works on DAGs (Directed Acyclic Graphs).
+
+<ConfidenceBuilder type="youve-got-this">
+
+**Graph problems have clear patterns.**
+
+Once you identify whether you need BFS (shortest path, level-by-level) or DFS (exploration, cycles), the implementation follows naturally. The hard part is recognizing it's a graph problem in the first place.
+
+</ConfidenceBuilder>
 
 ---
 
 ## What's Next?
 
-Heaps are essential for "top K" problems and priority scheduling:
+Binary search extends beyond simple array search to optimization problems:
 
-👉 [Heaps & Priority Queues →](./heaps-priority-queues)
+**Next up:** [Binary Search Pattern](/docs/interview-guide/coding/patterns/search-patterns/binary-search) — Beyond simple search

@@ -1,0 +1,56 @@
+.languageSelector {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.header {
+  margin-bottom: 0.75rem;
+}
+
+.label {
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-800);
+  font-size: 0.95rem;
+}
+
+.tabs {
+  margin-bottom: 0;
+}
+
+.tabs [role="tablist"] {
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.tabItem {
+  padding: 0.25rem 0;
+}
+
+.selectedMessage {
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+/* Make tabs more compact */
+.tabs [role="tab"] {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+/* Dark mode adjustments */
+[data-theme='dark'] .languageSelector {
+  background: var(--ifm-background-color);
+  border-color: var(--ifm-color-emphasis-400);
+}
+
+[data-theme='dark'] .label {
+  color: var(--ifm-color-emphasis-700);
+}
+
+[data-theme='dark'] .selectedMessage {
+  color: var(--ifm-color-emphasis-600);
+}
