@@ -57,6 +57,17 @@ Guidelines for code quality, testing, and documentation.
 - [Testing Strategies](/docs/best-practices/testing-strategies) — Unit, integration, and E2E testing
 - [Documentation](/docs/best-practices/documentation) — Writing effective technical docs
 
+### Interview Guide
+
+The most comprehensive FREE interview preparation guide for software engineers. Covers coding interviews, system design, behavioral questions, and everything you need to land offers at FAANG and top tech companies.
+
+- [Introduction](/docs/interview-guide/introduction) — How to use this guide and get started
+- [Coding Patterns Overview](/docs/interview-guide/patterns-overview) — 28+ patterns organized by data structure
+- [System Design Fundamentals](/docs/interview-guide/system-design/fundamentals/introduction) — Framework for any system design question
+- [Low-Level Design](/docs/interview-guide/lld/introduction) — Object-oriented design problems and SOLID principles
+- [Behavioral Interviews](/docs/interview-guide/behavioral/introduction) — STAR method and story bank
+- [Preparation Roadmaps](/docs/interview-guide/roadmaps/) — 1-week, 1-month, and 3-month study plans
+
 ## Getting Started
 
 **New to CI/CD?** Start with the [Introduction to CI/CD](/docs/cicd/introduction) — it explains the philosophy behind continuous integration and delivery, and sets up the foundation for everything else in the guide.
@@ -64,6 +75,8 @@ Guidelines for code quality, testing, and documentation.
 **Building observability systems?** The [Introduction to Observability](/docs/observability/introduction) covers why observability matters and how to approach it. The [instrumentation blog post](/blog/instrumenting-code-for-observability) gives a practical overview before diving into the detailed guides.
 
 **Learning design patterns?** Start with the [Design Patterns Introduction](/docs/design-patterns/introduction), then use the [catalog](/docs/design-patterns/catalog) to navigate by problem family.
+
+**Preparing for interviews?** The [Interview Guide](/docs/interview-guide/introduction) is a comprehensive, free resource covering coding patterns, system design, behavioral questions, and company-specific prep. Start with the [Introduction](/docs/interview-guide/introduction) to understand the approach.
 
 Browse the sidebar to explore topics, or check out the [blog](/blog) for shorter-form content and insights.
 

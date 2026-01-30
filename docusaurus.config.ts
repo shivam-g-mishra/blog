@@ -215,8 +215,8 @@ const config: Config = {
         },
         blog: {
           showReadingTime: true,
-          readingTime: ({content, defaultReadingTime}) =>
-            defaultReadingTime({content, options: {wordsPerMinute: 200}}),
+          readingTime: ({content, locale, defaultReadingTime}) =>
+            defaultReadingTime({content, locale, options: {wordsPerMinute: 200}}),
           feedOptions: {
             type: ['rss', 'atom'],
             xslt: true,
@@ -310,6 +310,11 @@ const config: Config = {
               docId: 'best-practices/code-review',
               label: 'Best Practices',
             },
+            {
+              type: 'doc',
+              docId: 'interview-guide/introduction',
+              label: 'Interview Guide',
+            },
           ],
         },
         {
@@ -364,6 +369,10 @@ const config: Config = {
             {
               label: 'Best Practices',
               to: '/docs/best-practices/code-review',
+            },
+            {
+              label: 'Interview Guide',
+              to: '/docs/interview-guide/introduction',
             },
           ],
         },
