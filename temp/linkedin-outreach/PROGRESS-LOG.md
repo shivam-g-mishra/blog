@@ -6,9 +6,9 @@ Use this file to track your progress through the 8-week campaign.
 
 | Field | Value |
 |-------|-------|
-| **Current Post** | #4 |
-| **Current Week** | Week 1 |
-| **Next Post Due** | Saturday 7:00 AM PT |
+| **Current Post** | #6 |
+| **Current Week** | Week 2 |
+| **Next Post Due** | Wednesday 7:00 AM PT |
 | **Campaign Start Date** | _(fill in when you start)_ |
 
 ---
@@ -22,14 +22,14 @@ Use this file to track your progress through the 8-week campaign.
 | 1 | Tue | 3 AM Nightmare | ✅ Posted | | |
 | 2 | Wed | Everything is Green | ✅ Posted | | |
 | 3 | Thu | Carousel: Monitoring vs Observability | ✅ Posted | | |
-| 4 | Sat | Poll: Debugging Frustration | 🟡 NEXT | | |
+| 4 | Sat | Poll: Debugging Frustration | ✅ Posted | | Skipped |
 
 ### Week 2: The Cost Hook
 
 | # | Day | Post | Status | Date Posted | Notes |
 |---|-----|------|--------|-------------|-------|
-| 5 | Tue | $1.5M Invoice | ⬜ Pending | | |
-| 6 | Wed | Hidden Cost | ⬜ Pending | | |
+| 5 | Tue | $1.5M Invoice | ✅ Posted | 2026-02-02 | |
+| 6 | Wed | Hidden Cost | 🟡 NEXT | | |
 | 7 | Thu | Carousel: Three Pillars | ⬜ Pending | | |
 | 8 | Sat | 5 Metrics That Matter | ⬜ Pending | | |
 
