@@ -6,9 +6,9 @@ Use this file to track your progress through the 12-week campaign.
 
 | Field | Value |
 |-------|-------|
-| **Current Post** | #1 |
+| **Current Post** | #3 |
 | **Current Week** | Week 1 |
-| **Next Post Due** | Tuesday 7:00 AM PT |
+| **Next Post Due** | Thursday 7:00 AM PT |
 | **Campaign Start Date** | _(fill in when you start)_ |
 
 ---
@@ -19,9 +19,9 @@ Use this file to track your progress through the 12-week campaign.
 
 | # | Day | Post | Status | Date Posted | Notes |
 |---|-----|------|--------|-------------|-------|
-| 1 | Tue | 200K+ Lines + Docs NVIDIA Story | 🟡 NEXT | | |
-| 2 | Wed | Progress Log Trick | ⬜ Pending | | |
-| 3 | Thu | Carousel: 5-Phase Workflow | ⬜ Pending | | |
+| 1 | Tue | 200K+ Lines + Docs NVIDIA Story | ✅ Posted | | |
+| 2 | Wed | Progress Log Trick | ✅ Posted | | |
+| 3 | Thu | Carousel: 5-Phase Workflow | 🟡 NEXT | | |
 | 4 | Sat | Poll: Which AI Phase Most Helpful | ⬜ Pending | | |
 
 ### Week 2: Documentation & Standards
