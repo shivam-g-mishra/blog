@@ -6,8 +6,8 @@ Use this file to track your progress through the 8-week campaign.
 
 | Field | Value |
 |-------|-------|
-| **Current Post** | #6 |
-| **Current Week** | Week 2 |
+| **Current Post** | #14 |
+| **Current Week** | Week 4 |
 | **Next Post Due** | Wednesday 7:00 AM PT |
 | **Campaign Start Date** | _(fill in when you start)_ |
 
@@ -29,8 +29,8 @@ Use this file to track your progress through the 8-week campaign.
 | # | Day | Post | Status | Date Posted | Notes |
 |---|-----|------|--------|-------------|-------|
 | 5 | Tue | $1.5M Invoice | ✅ Posted | 2026-02-02 | |
-| 6 | Wed | Hidden Cost | 🟡 NEXT | | |
-| 7 | Thu | Carousel: Three Pillars | ⬜ Pending | | |
+| 6 | Wed | Hidden Cost | ✅ Posted | 2026-02-03 | |
+| 7 | Thu | Carousel: Three Pillars | ⏭️ Skipped | | |
 | 8 | Sat | 5 Metrics That Matter | ⬜ Pending | | |
 
 ### Week 3: OpenTelemetry Foundation
@@ -46,8 +46,8 @@ Use this file to track your progress through the 8-week campaign.
 
 | # | Day | Post | Status | Date Posted | Notes |
 |---|-----|------|--------|-------------|-------|
-| 13 | Tue | Why Your Logs Are Useless | ⬜ Pending | | |
-| 14 | Wed | Python Instrumentation | ⬜ Pending | | |
+| 13 | Tue | Why Your Logs Are Useless | ✅ Posted | 2026-02-04 | |
+| 14 | Wed | Python Instrumentation | 🟡 NEXT | | |
 | 15 | Thu | Carousel: Good vs Bad Logs | ⬜ Pending | | |
 | 16 | Sat | Instrumentation Mistake | ⬜ Pending | | |
 

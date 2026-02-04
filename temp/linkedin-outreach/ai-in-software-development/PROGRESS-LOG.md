@@ -6,9 +6,9 @@ Use this file to track your progress through the 12-week campaign.
 
 | Field | Value |
 |-------|-------|
-| **Current Post** | #3 |
-| **Current Week** | Week 1 |
-| **Next Post Due** | Thursday 7:00 AM PT |
+| **Current Post** | #5 |
+| **Current Week** | Week 2 |
+| **Next Post Due** | Tuesday 7:00 AM PT |
 | **Campaign Start Date** | _(fill in when you start)_ |
 
 ---
@@ -21,17 +21,17 @@ Use this file to track your progress through the 12-week campaign.
 |---|-----|------|--------|-------------|-------|
 | 1 | Tue | 200K+ Lines + Docs NVIDIA Story | ✅ Posted | | |
 | 2 | Wed | Progress Log Trick | ✅ Posted | | |
-| 3 | Thu | Carousel: 5-Phase Workflow | 🟡 NEXT | | |
-| 4 | Sat | Poll: Which AI Phase Most Helpful | ⬜ Pending | | |
+| 3 | Thu | Carousel: 5-Phase Workflow | ✅ Posted | | |
+| 4 | Sat | Poll: Which AI Phase Most Helpful | ⏭️ Skipped | | Replaced with Multi-Phase Technique |
 
 ### Week 2: Documentation & Standards
 
 | # | Day | Post | Status | Date Posted | Notes |
 |---|-----|------|--------|-------------|-------|
-| 5 | Tue | Documentation-First Development | ⬜ Pending | | |
+| 5 | Tue | Documentation-First Development | 🟡 NEXT | | |
 | 6 | Wed | AI for Golang Best Practices | ⬜ Pending | | |
 | 7 | Thu | Carousel: 5 Prompts | ⬜ Pending | | |
-| 8 | Sat | 3-Prompt Refactoring Technique | ⬜ Pending | | |
+| 8 | Sat | 3-Prompt Refactoring Technique | ✅ Posted | | Modified: Multi-Phase AI Technique |
 
 ### Week 3: Hot Takes
 
